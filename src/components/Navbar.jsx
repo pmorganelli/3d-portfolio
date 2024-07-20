@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { styles } from '../styles';
 import { navLinks } from '../constants';
 import { hero, menu, close } from '../assets';
+import { Github } from './FeatherIcons/githubIcon';
+import { Instagram } from './FeatherIcons/instagram';
+import { Linkedin } from './FeatherIcons/linkedIn';
 
 
 const Navbar = () => {
@@ -28,7 +31,19 @@ const Navbar = () => {
           <img src={hero} alt='heroImage' className="w-9 h-9 object-contain" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex">Peter Morganelli &nbsp;<span className="sm:block hidden"> &nbsp;</span></p>
         </Link>
+
+      
+
         <ul className='list-none hidden sm:flex flex-row gap-10'>
+        <h1>
+          <a href="https://github.com/pmorganelli"><Github /></a>
+        </h1>
+        <h1>
+          <a href="https://www.linkedin.com/in/peter-morganelli-102860258/"><Linkedin /></a>
+        </h1>
+        <h1>
+          <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
+        </h1>
           {navLinks.map((nav) => (
             <li
               key={nav.id}
@@ -46,7 +61,6 @@ const Navbar = () => {
           <img src={toggle ? close : menu} alt="menu" className="w-[28px] h-[28px] object-contain cursor-pointer"
             onClick={() => setToggle(!toggle)} 
           />
-
           <div className={`${!toggle ? 'hidden' : 'flex'} p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}>
               <ul className='list-none flex justify-end items-start flex-col gap-4'>
               {navLinks.map((nav) => (
@@ -59,6 +73,15 @@ const Navbar = () => {
                   <a href={`#${nav.id}`}>{nav.title}</a>
                 </li>
               ))}
+            <h1 className="ps-8 justify-self-center">
+          <a href="https://github.com/pmorganelli"><Github /></a>
+        </h1>
+        <h1 className="ps-8 justify-self-center">
+          <a href="https://www.linkedin.com/in/peter-morganelli-102860258/"><Linkedin /></a>
+        </h1>
+        <h1 className="ps-8 justify-self-center">
+          <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
+        </h1>
             </ul>
           </div>
         </div>

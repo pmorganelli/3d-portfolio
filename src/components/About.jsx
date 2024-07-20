@@ -6,9 +6,9 @@ import { styles } from "../styles";
 import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
+import { Github } from "./FeatherIcons/githubIcon";
 
-
-const ServiceCard = ({ index, title, icon }) => (
+const ServiceCard = ({ index, title, icon, desc }) => (
   <Tilt className='xs:w-[250px] w-full'>
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
@@ -28,9 +28,12 @@ const ServiceCard = ({ index, title, icon }) => (
           className='w-16 h-16 object-contain'
         />
 
-        <h3 className='text-white text-[20px] font-bold text-center'>
+        <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-green-500  via-red-500 to-violet-600'>
           {title}
         </h3>
+        <h1 className="text-semibold text-[13px] text-center">
+          {desc}
+        </h1>
       </div>
     </motion.div>
   </Tilt>

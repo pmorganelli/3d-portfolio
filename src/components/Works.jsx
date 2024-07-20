@@ -8,7 +8,7 @@ import { projects } from '../constants'
 import { fadeIn, textVariant } from '../utils/motion'
 
 
-const ProjectCard = ({ index, name, description, tags, image, source_code_link }) => {
+const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link }) => {
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt options={{
@@ -18,7 +18,8 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link }
       }}
       className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full"
       >
-        <div className='relative w-full h-[230px]'>
+        <div className='relative w-full h-[230px]'
+        >
           <img 
             src={image}
             alt={name}
@@ -34,12 +35,12 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link }
           </div>
         </div>
 
-        <div className='mt-5'>
+        <div className='mt-5' onClick={() => window.open(demo_link, "blank")}>
           <h3 className='text-white font-bold text-[24px]'>{name}</h3>
           <p className='mt-2 text-secondary text-[14px]'>{description}</p>
         </div>
 
-        <div className='mt-4 flex flex-wrap gap-2'>
+        <div className='mt-4 flex flex-wrap gap-2' onClick={() => window.open(demo_link, "blank")}>
           {tags.map((tag) => (
             <p key={tag.name} className={`text-[14px] ${tag.color}`}>
               {tag.name}
@@ -62,7 +63,7 @@ const Works = () => {
       <div className='w-full flex'>
         <motion.p variants={fadeIn("", "", 0.1, 1)} className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'>
           The following projects showcases my skills and experience through real-world examples of my work. Each project is briefly
-          described with links to code repositories and live demos in it. It reflects my ability to solve complex problems, work
+          described with links to code repositories and live demos. It reflects my ability to solve complex problems, work
           with different technologies, and manage projects effectively. Please reach out to me using the contact form with any questions!
         </motion.p>
       </div>
