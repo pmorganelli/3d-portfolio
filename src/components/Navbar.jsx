@@ -29,10 +29,8 @@ const Navbar = () => {
           }}
         >
           <img src={hero} alt='heroImage' className="w-9 h-9 object-contain" />
-          <p className="text-white text-[18px] font-bold cursor-pointer flex">Peter Morganelli &nbsp;<span className="sm:block hidden"> &nbsp;</span></p>
+          <p className="text-white text-[18px] font-bold cursor-pointer flex">Peter Morganelli &nbsp; <span className="sm:block hidden"> &nbsp;</span></p>
         </Link>
-
-      
 
         <ul className='list-none hidden sm:flex flex-row gap-10'>
         <h1>
@@ -52,7 +50,7 @@ const Navbar = () => {
               } hover:text-white text-[18px] font-medium cursor-pointer`}
               onClick={() => setActive(nav.title)}
             >
-              <a href={`#${nav.id}`}>{nav.title}</a>
+              <a href={nav.title === "Résumé" ? `/resume.pdf` : `#${nav.id}`}>{nav.title}</a>
             </li>
           ))}
         </ul>
@@ -70,18 +68,21 @@ const Navbar = () => {
                     setToggle(!toggle);
                   }}
                 >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
+                  <a href={nav.title === "Résumé" ? `/resume.pdf` : `#${nav.id}`}>{nav.title}</a>
                 </li>
               ))}
-            <h1 className="ps-8 justify-self-center">
-          <a href="https://github.com/pmorganelli"><Github /></a>
-        </h1>
-        <h1 className="ps-8 justify-self-center">
-          <a href="https://www.linkedin.com/in/peter-morganelli-102860258/"><Linkedin /></a>
-        </h1>
-        <h1 className="ps-8 justify-self-center">
-          <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
-        </h1>
+              <h1 className="ps-8 justify-self-center">
+                <a href="https://github.com/pmorganelli"><Github /></a>
+              </h1>
+              <h1 className="ps-8 justify-self-center">
+                <a href="https://www.linkedin.com/in/peter-morganelli-102860258/"><Linkedin /></a>
+              </h1>
+              <h1 className="ps-8 justify-self-center">
+                <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
+              </h1>
+              {/* <h1>
+                <a href="public/resume.pdf">Résumé</a>
+              </h1> */}
             </ul>
           </div>
         </div>

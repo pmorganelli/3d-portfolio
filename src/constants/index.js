@@ -39,6 +39,10 @@ import {
       id: "contact",
       title: "Contact",
     },
+    {
+      id: "public/resume.pdf",
+      title: "Résumé",
+    }
   ];
   
   const services = [
