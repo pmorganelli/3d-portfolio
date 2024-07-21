@@ -12,7 +12,6 @@ const Navbar = () => {
   const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);
 
-
   return (
     
     <nav
@@ -80,9 +79,6 @@ const Navbar = () => {
               <h1 className="ps-8 justify-self-center">
                 <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
               </h1>
-              {/* <h1>
-                <a href="public/resume.pdf">Résumé</a>
-              </h1> */}
             </ul>
           </div>
         </div>
