@@ -286,6 +286,7 @@ import {
       ],
       image: portfolio,
       source_code_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      demo_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     },
     {
       name: "CalcYouLater",
@@ -303,6 +304,7 @@ import {
       ],
       image: rpn,
       source_code_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      demo_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", 
     },
   ];
   
