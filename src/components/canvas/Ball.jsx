@@ -21,13 +21,52 @@ const Ball = (props) => {
           polygonOffsetFactor={-5}
           flatShading
         />
-        <Decal
-          position={[0, 0, 1]}
-          rotation={[2 * Math.PI, 0, 6.25]}
-          scale={1}
-          map={decal}
-          flatShading
-        />
+      <Decal
+        position={[0, 0, 1]}
+        rotation={[2 * Math.PI, 0, 6.25]}
+        scale={1}
+        map={decal}
+        flatShading
+      />
+      {/* Second Decal */}
+      <Decal
+        position={[0, 0, -1]}
+        rotation={[2 * Math.PI, Math.PI, 6.25]}
+        scale={1}
+        map={decal}
+        flatShading
+      />
+      {/* Third Decal */}
+      <Decal
+        position={[0, 1, 0]}
+        rotation={[Math.PI / 2, 0, 6.25]}
+        scale={1}
+        map={decal}
+        flatShading
+      />
+      {/* Fourth Decal */}
+      <Decal
+        position={[0, -1, 0]}
+        rotation={[-Math.PI / 2, 0, 6.25]}
+        scale={1}
+        map={decal}
+        flatShading
+      />
+      {/* Fifth Decal */}
+      <Decal
+        position={[1, 0, 0]}
+        rotation={[0, Math.PI / 2, 6.25]}
+        scale={1}
+        map={decal}
+        flatShading
+      />
+      <Decal
+        position={[-1, 0, 0]}
+        rotation={[0, -Math.PI / 2, 6.25]} // Adjusted rotation
+        scale={1}
+        map={decal}
+        flatShading
+      />
       </mesh>
     </Float>
   )
@@ -36,12 +75,16 @@ const Ball = (props) => {
 const BallCanvas = ({ icon }) => {
   return (
     <Canvas
+      shadows
       frameloop='demand'
       dpr={[1, 2]}
       gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls enableZoom={false} />
+        <OrbitControls 
+          autoRotate 
+          enableZoom={false} 
+          />
         <Ball imgUrl={icon} />
       </Suspense>
       <Preload all />
