@@ -269,41 +269,41 @@ import {
       source_code_link: "https://github.com/pmorganelli/portfolio-website",
       demo_link: "https://basicpetermorganelli.vercel.app/",
     },
-    // {
-    //   name: "gerp",
-    //   description:
-    //     "Replicated the Unix “grep” program using C++, Hash Tables, and Vectors. Made with a partner for a Data Structures class. Source and demo unavailable... ;)",
-    //   tags: [
-    //     {
-    //       name: "c++",
-    //       color: "blue-text-gradient",
-    //     },
-    //     {
-    //       name: "data structures",
-    //       color: "green-text-gradient",
-    //     },
+    {
+      name: "gerp",
+      description:
+        "Replicated the Unix “grep” program using C++, Hash Tables, and Vectors. Made with a partner for a Data Structures class. Source and demo unavailable... ;)",
+      tags: [
+        {
+          name: "c++",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "data structures",
+          color: "green-text-gradient",
+        },
 
-    //   ],
-    //   image: portfolio,
-    //   source_code_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    // },
-    // {
-    //   name: "CalcYouLater",
-    //   description:
-    //     "A postfix notation calculator that can handle complex arithmetic and string parsing. Source and demo unavailable... ;)",
-    //   tags: [
-    //     {
-    //       name: "c++",
-    //       color: "blue-text-gradient",
-    //     },
-    //     {
-    //       name: "data structures",
-    //       color: "green-text-gradient",
-    //     },
-    //   ],
-    //   image: rpn,
-    //   source_code_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    // },
+      ],
+      image: portfolio,
+      source_code_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      name: "CalcYouLater",
+      description:
+        "A postfix notation calculator that can handle complex arithmetic and string parsing. Source and demo unavailable... ;)",
+      tags: [
+        {
+          name: "c++",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "data structures",
+          color: "green-text-gradient",
+        },
+      ],
+      image: rpn,
+      source_code_link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
   ];
   
   export { services, technologies, experiences, projects };
