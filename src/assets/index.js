@@ -21,6 +21,8 @@ import jumbocode from "./company/jumbocode.png";
 import jumbocodedark from "./company/jumbocodedark.svg"
 import tufts from "./company/tufts_transparent.png"
 import mit from "./mit.png";
+import flow from "./flow.jpeg";
+import c from "./c.png"
 
 import breakmatcher from "./breakmatcher.png";
 import rpn from "./rpn.png";
@@ -62,8 +64,7 @@ export {
   cplusplus,
   basic,
   hero,
-  // githubicon,
-  // mail,
-  // linkedin,
+  flow,
+  c,
   mit,
 };
