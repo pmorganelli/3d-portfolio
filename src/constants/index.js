@@ -54,7 +54,7 @@ import {
       desc: "I've constructed multiple sites with complex front-end frameworks",
     },
     {
-      title: "UI + UX Designer",
+      title: "UI + UX Skilled",
       icon: mobile,
       desc: "I'm passionate about optimizing the user experience for every site that I work on",
     },
@@ -74,34 +74,42 @@ import {
     {
       name: "HTML 5",
       icon: html,
+      color: "#e95d15"
     },
     {
       name: "CSS 3",
       icon: css,
+      color: "#0080c3"
     },
     {
       name: "JavaScript",
       icon: javascript,
+      color: "#e6d450"
     },
     {
       name: "TypeScript",
       icon: typescript,
+      color: "#0080d0"
     },
     {
       name: "React JS",
       icon: reactjs,
+      color: "#7ec8d6"
     },
     {
       name: "C++",
       icon: cplusplus,
+      color: "#0154a7"
     },
     {
       name: "c",
       icon: c,
+      color: "#0154a7"
     },
     {
       name: "Tailwind CSS",
       icon: tailwind,
+      color: "#33b7ca"
     },
     {
       name: "Three JS",
@@ -110,6 +118,7 @@ import {
     {
       name: "git",
       icon: git,
+      color: "#f15f24"
     },
   ];
   
@@ -171,50 +180,30 @@ import {
       iconBg: "#383E56",
       date: "June - August 2022, 2023, and 2024",
       points: [
-        "Rescued seven children in the water",
-        "Responded to all emergencies and ensured proper cleanliness of the facility while enforcing pool rules and scanning zones in the water",
+        "Rescued eight drowing victims in the water",
+        "Responded to all emergencies and ensured proper cleanliness of the facility while enforcing pool rules and scanning zones according to Red Cross standards",
       ],
     }
   ];
     
   const projects = [
     {
-      name: "College Break Matcher",
+      name: "Image Compressor/Decompressor",
       description:
-        "Select two colleges. See their overlapping breaks. Currently in progress!",
+        "Utilizes a lossy compression algorithm to compress and decompress a given image. Written in C.",
       tags: [
         {
-          name: "react",
+          name: "c",
           color: "blue-text-gradient",
         },
         {
-          name: "typescript",
+          name: "makefile",
           color: "green-text-gradient",
-        },
-        {
-          name: "tailwind",
-          color: "pink-text-gradient",
-        },
-        {
-          name: "python",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "flask",
-          color: "green-text-gradient",
-        },
-        {
-          name: "beautifulsoup",
-          color: "orange-text-gradient",
-        },
-        {
-          name: "next",
-          color: "blue-text-gradient",
         },
       ],
-      image: breakmatcher,
-      source_code_link: "https://github.com/jpizzzel/academic-calendar",
-      demo_link: "",
+      image: flow,
+      source_code_link: "https://github.com/pmorganelli/image-compressor",
+      demo_link: "https://github.com/pmorganelli/image-compressor", 
     },
     {
       name: "Theatre@First",
@@ -249,8 +238,8 @@ import {
 
       //React.js, Clerk, TypeScript, Next.js, TailwindCSS, DrizzleORM, GitHub, Slack, Figma 
       image: theatre,
-      source_code_link: "",
-      demo_link: "", 
+      source_code_link: "https://github.com/JumboCode/theatre-at-first",
+      demo_link: "https://github.com/JumboCode/theatre-at-first", 
     },
     {
       name: "Basic Portfolio Website",
@@ -299,27 +288,9 @@ import {
 
       ],
       image: portfolio,
-      source_code_link: "",
-      demo_link: "",
-    },
-    {
-      name: "Image Compressor/Decompressor",
-      description:
-        "Utilizes a lossy compression algorithm to compress and decompress a given image. Written in C.",
-      tags: [
-        {
-          name: "c",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "makefile",
-          color: "green-text-gradient",
-        },
-      ],
-      image: flow,
-      source_code_link: "",
-      demo_link: "", 
-    },
+      source_code_link: "https://github.com/pmorganelli/grep-clone",
+      demo_link: "https://github.com/pmorganelli/grep-clone",
+    }
 
   ];
   

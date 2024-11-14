@@ -6,17 +6,16 @@ import {
 
 import CanvasLoader from '../Loader'
 
-const Ball = (props) => {
-  const [decal] = useTexture([props.imgUrl]);
-
+const Ball = ({ imgUrl, color }) => {
+  const [decal] = useTexture([imgUrl]);
   return (
     <Float speed={0.5} rotationIntensity={1} floatIntensity={2}>
-      <ambientLight intensity={0.25} />
+      <ambientLight intensity={1.5} />
       <directionalLight position={[0, 0, 0.05]} />
       <mesh castShadow receiveShadow scale={2.75}>
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
-          color='#fff8eb'
+          color={color}
           polygonOffset
           polygonOffsetFactor={-5}
           flatShading
@@ -37,42 +36,42 @@ const Ball = (props) => {
         flatShading
       />
       {/* Third Decal */}
-      <Decal
+      {/* <Decal
         position={[0, 1, 0]}
         rotation={[Math.PI / 2, 0, 6.25]}
         scale={1}
         map={decal}
         flatShading
-      />
+      /> */}
       {/* Fourth Decal */}
-      <Decal
+      {/* <Decal
         position={[0, -1, 0]}
         rotation={[-Math.PI / 2, 0, 6.25]}
         scale={1}
         map={decal}
         flatShading
-      />
+      /> */}
       {/* Fifth Decal */}
-      <Decal
+      {/* <Decal
         position={[1, 0, 0]}
         rotation={[0, Math.PI / 2, 6.25]}
         scale={1}
         map={decal}
         flatShading
-      />
-      <Decal
+      /> */}
+      {/* <Decal
         position={[-1, 0, 0]}
         rotation={[0, -Math.PI / 2, 6.25]} // Adjusted rotation
         scale={1}
         map={decal}
         flatShading
-      />
+      /> */}
       </mesh>
     </Float>
   )
 }
 
-const BallCanvas = ({ icon }) => {
+const BallCanvas = ({ icon, ballColor }) => {
   return (
     <Canvas
       shadows
@@ -85,7 +84,7 @@ const BallCanvas = ({ icon }) => {
           autoRotate 
           enableZoom={false} 
           />
-        <Ball imgUrl={icon} />
+        <Ball imgUrl={icon} color={ballColor} />
       </Suspense>
       <Preload all />
     </Canvas>
