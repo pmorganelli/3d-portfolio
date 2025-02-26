@@ -24,6 +24,7 @@ import {
     cplusplus,
     flow,
     mit,
+    codeclock,
     c,
     launch,
   } from "../assets";
@@ -199,6 +200,40 @@ import {
   ];
     
   const projects = [
+    {
+      name: "CodeClock",
+      description:
+        "Are you a Tufts CS student? Are you sick and tired of keeping track of how long you spend on CS40, CS15, or any other courses? Meet CodeClock, a quick and seamless way to achieve this goal!",
+      tags: [
+        {
+          name: "react.js",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "node.js",
+          color: "brown-text-gradient",
+        },
+        {
+          name: "aws",
+          color: "yellow-text-gradient",
+        },
+        {
+          name: "tailwindcss",
+          color: "red-text-gradient",
+        },
+        {
+          name: "vscode api",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "mongodb",
+          color: "purple-text-gradient",
+        },
+      ],
+      image: codeclock,
+      source_code_link: "https://github.com/pmorganelli/vscode-timer/tree/main",
+      demo_link: "https://devpost.com/software/codeclock", 
+    },
     {
       name: "Image Compressor/Decompressor",
       description:

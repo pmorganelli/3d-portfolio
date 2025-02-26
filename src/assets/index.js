@@ -30,6 +30,7 @@ import theatre from "./logo.png";
 import basic from "./basicportfolio.png"
 import hero from "./pfppeter.png";
 import launch from "./launchLogo.jpg";
+import codeclock from "./codeclockv1.png"
 
 export {
   backend,
@@ -43,6 +44,7 @@ export {
   figma,
   git,
   html,
+  codeclock,
   launch,
   javascript,
   reactjs,
