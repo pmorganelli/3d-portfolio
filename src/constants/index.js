@@ -25,7 +25,7 @@ import {
     flow,
     mit,
     c,
-    github,
+    launch,
   } from "../assets";
   
   export const navLinks = [
@@ -123,6 +123,18 @@ import {
   ];
   
   const experiences = [
+    {
+      title: "Full-Stack Developer Intern",
+      company_name: "Launch",
+      icon: launch,
+      iconBg: "#383E56",
+      date: "February 2025 - Present",
+      points: [
+        "Developing a full-stack AI-powered website builder from scratch at a startup company, working on back and front end development",
+        "Created an interface for end-users to customize generated websites (dragging and dropping website components, etc).",
+        "Implement innovative solutions in a timely manner to enhance user experience and functionality while learning new technologies",
+      ],
+    },
     {
       title: "Founder and Executive Director",
       company_name: "Tufts Leadership Training Institute (LTI)",

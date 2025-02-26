@@ -29,6 +29,7 @@ import portfolio from "./portfolio.png";
 import theatre from "./logo.png";
 import basic from "./basicportfolio.png"
 import hero from "./pfppeter.png";
+import launch from "./launchLogo.jpg";
 
 export {
   backend,
@@ -42,6 +43,7 @@ export {
   figma,
   git,
   html,
+  launch,
   javascript,
   reactjs,
   tailwind,
