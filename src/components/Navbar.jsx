@@ -7,7 +7,6 @@ import { Github } from './FeatherIcons/githubIcon';
 import { Instagram } from './FeatherIcons/instagram';
 import { Linkedin } from './FeatherIcons/linkedIn';
 
-
 const Navbar = () => {
   const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);

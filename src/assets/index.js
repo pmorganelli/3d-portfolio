@@ -23,18 +23,12 @@ import tufts from "./company/tufts_transparent.png"
 import mit from "./mit.png";
 import flow from "./flow.jpeg";
 import c from "./c.png"
-
 import breakmatcher from "./breakmatcher.png";
 import rpn from "./rpn.png";
 import portfolio from "./portfolio.png";
 import theatre from "./logo.png";
 import basic from "./basicportfolio.png"
-
 import hero from "./pfppeter.png";
-
-// import githubicon from "../FeatherIcons/githubIcon.jsx";
-// import mail from "./mailIcon.svg";
-// import linkedin from "./linkedIn.svg";
 
 export {
   backend,
