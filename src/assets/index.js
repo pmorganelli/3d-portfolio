@@ -30,12 +30,16 @@ import theatre from "./logo.png";
 import basic from "./basicportfolio.png"
 import hero from "./pfppeter.png";
 import launch from "./launchLogo.jpg";
-import codeclock from "./codeclockv1.png"
+import codeclock from "./codeclockv1.png";
+import snowplowdriver from "./snowplowDriver.png";
+import csharp from "./cSharp.png"
 
 export {
   backend,
   creator,
+  snowplowdriver,
   mobile,
+  csharp,
   web,
   github,
   menu,

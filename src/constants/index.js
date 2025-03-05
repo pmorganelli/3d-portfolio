@@ -27,6 +27,8 @@ import {
     codeclock,
     c,
     launch,
+    snowplowdriver,
+    csharp
   } from "../assets";
   
   export const navLinks = [
@@ -88,9 +90,9 @@ import {
       color: "#e6d450"
     },
     {
-      name: "TypeScript",
-      icon: typescript,
-      color: "#0080d0"
+      name: "Tailwind CSS",
+      icon: tailwind,
+      color: "#33b7ca"
     },
     {
       name: "React JS",
@@ -108,9 +110,9 @@ import {
       color: "#0154a7"
     },
     {
-      name: "Tailwind CSS",
-      icon: tailwind,
-      color: "#33b7ca"
+      name: "C#",
+      icon: csharp,
+      color: "#8204fb"
     },
     {
       name: "Three JS",
@@ -201,6 +203,24 @@ import {
     
   const projects = [
     {
+      name: "Snowplow Race",
+      description:
+        "You're a snowplow driver on a busy night shift. Clear all the snow before time runs out!",
+      tags: [
+        {
+          name: "c#",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "unity",
+          color: "green-text-gradient",
+        },
+      ],
+      image: snowplowdriver,
+      source_code_link: "https://github.com/pmorganelli/snowplow-race",
+      demo_link: "https://gamedesignb11.itch.io/snowplow-race", 
+    },
+    {
       name: "CodeClock",
       description:
         "Are you a Tufts CS student? Are you sick and tired of keeping track of how long you spend on CS40, CS15, or any other courses? Meet CodeClock, a quick and seamless way to achieve this goal!",
@@ -211,23 +231,23 @@ import {
         },
         {
           name: "node.js",
-          color: "brown-text-gradient",
+          color: "green-text-gradient",
         },
         {
           name: "aws",
-          color: "yellow-text-gradient",
+          color: "pink-text-gradient",
         },
         {
           name: "tailwindcss",
-          color: "red-text-gradient",
-        },
-        {
-          name: "vscode api",
           color: "blue-text-gradient",
         },
         {
+          name: "vscode api",
+          color: "orange-text-gradient",
+        },
+        {
           name: "mongodb",
-          color: "purple-text-gradient",
+          color: "green-text-gradient",
         },
       ],
       image: codeclock,
