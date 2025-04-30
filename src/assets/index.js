@@ -33,6 +33,7 @@ import launch from "./launchLogo.jpg";
 import codeclock from "./codeclockv1.png";
 import snowplowdriver from "./snowplowDriver.png";
 import csharp from "./cSharp.png"
+import slingshotSquire from "./slingshoteSquiresTitle.png"
 
 export {
   backend,
@@ -42,6 +43,7 @@ export {
   csharp,
   web,
   github,
+  slingshotSquire,
   menu,
   close,
   css,

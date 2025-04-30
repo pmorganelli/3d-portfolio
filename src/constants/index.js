@@ -28,7 +28,8 @@ import {
     c,
     launch,
     snowplowdriver,
-    csharp
+    csharp,
+    slingshotSquire
   } from "../assets";
   
   export const navLinks = [
@@ -131,11 +132,11 @@ import {
       company_name: "Launch",
       icon: launch,
       iconBg: "#383E56",
-      date: "February 2025 - Present",
+      date: "February 2025 - April 2025",
       points: [
-        "Developing a full-stack AI-powered website builder from scratch at a startup company, working on back and front end development",
+        "Contributed to the early development of an AI-powered website builder, collaborating with a small team of designers and engineers",
         "Created an interface for end-users to customize generated websites (dragging and dropping website components, etc).",
-        "Implement innovative solutions in a timely manner to enhance user experience and functionality while learning new technologies",
+        "Implemented innovative solutions in a timely manner to enhance user experience and functionality in a fast-paced startup environment",
       ],
     },
     {
@@ -219,6 +220,24 @@ import {
       image: snowplowdriver,
       source_code_link: "https://github.com/pmorganelli/snowplow-race",
       demo_link: "https://gamedesignb11.itch.io/snowplow-race", 
+    },
+    {
+      name: "Slingshot Squires",
+      description:
+        "Buy crops. Defend your land at all costs.",
+      tags: [
+        {
+          name: "c#",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "unity",
+          color: "green-text-gradient",
+        },
+      ],
+      image: slingshotSquire,
+      source_code_link: "https://github.com/pmorganelli/slingshot-squires",
+      demo_link: "https://slingshotsquires.itch.io/slingshot-squires", 
     },
     {
       name: "CodeClock",
