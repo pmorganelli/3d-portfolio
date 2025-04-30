@@ -29,7 +29,8 @@ import {
     launch,
     snowplowdriver,
     csharp,
-    slingshotSquire
+    slingshotSquire,
+    smCapture
   } from "../assets";
   
   export const navLinks = [
@@ -204,27 +205,47 @@ import {
     
   const projects = [
     {
-      name: "Snowplow Race",
+      name: "Somerville Museum Database",
       description:
-        "You're a snowplow driver on a busy night shift. Clear all the snow before time runs out!",
+      "A full-stack inventory project made for the Somerville Museum to keep track of borrowed items and props. Made for Tufts JumboCode. Click to demo!",
       tags: [
         {
-          name: "c#",
+          name: "react",
           color: "blue-text-gradient",
         },
         {
-          name: "unity",
+          name: "javascript",
+          color: "orange-text-gradient",
+        },
+        {
+          name: "nextjs",
+          color: "pink-text-gradient",
+        },
+        {
+          name: "nodejs",
           color: "green-text-gradient",
         },
+        {
+          name: "css",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "sql",
+          color: "orange-text-gradient",
+        },
+        {
+          name: "neon",
+          color: "pink-text-gradient",
+        },
       ],
-      image: snowplowdriver,
-      source_code_link: "https://github.com/pmorganelli/snowplow-race",
-      demo_link: "https://gamedesignb11.itch.io/snowplow-race", 
+      image: smCapture,
+      source_code_link: "https://github.com/JumboCode/somerville-museum",
+      demo_link: "https://somervillemuseum.vercel.app/", 
     },
     {
       name: "Slingshot Squires",
       description:
-        "Buy crops. Defend your land at all costs.",
+      "Buy crops. Defend your land at all costs. Click to demo!",
       tags: [
         {
           name: "c#",
@@ -238,6 +259,24 @@ import {
       image: slingshotSquire,
       source_code_link: "https://github.com/pmorganelli/slingshot-squires",
       demo_link: "https://slingshotsquires.itch.io/slingshot-squires", 
+    },
+    {
+      name: "Snowplow Race",
+      description:
+        "You're a snowplow driver on a busy night shift. Clear all the snow before time runs out! Click to demo.",
+      tags: [
+        {
+          name: "c#",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "unity",
+          color: "green-text-gradient",
+        },
+      ],
+      image: snowplowdriver,
+      source_code_link: "https://github.com/pmorganelli/snowplow-race",
+      demo_link: "https://gamedesignb11.itch.io/snowplow-race", 
     },
     {
       name: "CodeClock",

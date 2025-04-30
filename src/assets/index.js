@@ -34,6 +34,7 @@ import codeclock from "./codeclockv1.png";
 import snowplowdriver from "./snowplowDriver.png";
 import csharp from "./cSharp.png"
 import slingshotSquire from "./slingshotSquiresTitle.png"
+import smCapture from "./smCapture.png"
 
 export {
   backend,
@@ -42,6 +43,7 @@ export {
   mobile,
   csharp,
   web,
+  smCapture,
   github,
   slingshotSquire,
   menu,
