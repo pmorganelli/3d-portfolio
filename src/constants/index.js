@@ -171,11 +171,9 @@ import {
       iconBg: "#E6DEDD",
       date: "October 2023 - Present",
       points: [
-        "Helped develop a full-stack inventory website for a local Somerville theater with a group of 10 developers",
-        "Contributed through weekly GitHub tickets assigned by lead developers (Liam Strand and Amitav Nott)",
-        "Constructed GET and POST API handlers in TypeScript, created and fixed several React components, and styled them with Tailwind CSS",
-        "Designed a page to allow the user to take a picture of an item and post their product’s name, description, filters, and custom image carousel",
-        "JumboHack Hackathon Participant",
+        "2024-2025: Developed a full-stack inventory management system to help the Somerville Museum catalog and organize its collection of artifacts. Built with a PostgreSQL database (managed via Neon) and a React/Next.js frontend. Collaborated with a team of 10 developers, completing weekly tickets assigned by lead developers. \n Mentors/Tech Leads: Holden Kittelberger and Zack White",
+        "2023-2024: Helped develop a full-stack inventory website for a local Somerville theatre, Theatre@First, with a group of 10 developers through weekly assigned tickets by lead developers. \n Mentors/Tech Leads: Liam Strand and Amitav Nott",
+        "JumboHack Hackathon x2",
       ],
     },
     {
