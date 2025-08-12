@@ -1,13 +1,13 @@
 # Peter Morganelli's 3D Developer Portfolio
 
-An immersive, interactive 3D portfolio built with **React**, **Vite**, **Tailwind CSS**, and **Three.js** to showcase my projects, skills, and experience in a visually compelling way.
+An immersive, interactive 3D portfolio built with **React**, **Vite**, **Tailwind CSS**, and **Three.js** to showcase my projects, skills, and technical experience in a visually compelling way.
 
 <img width="2354" height="1548" alt="landingPagePortfolio" src="https://github.com/user-attachments/assets/dda5b898-b27a-4071-998e-78c5f6ecdc72" />
 
 ---
 
 ## Live Demo
- [View Live Site](https://www.petermorganelli.dev) <!-- Replace with deployed URL -->
+ [petermorganelli.dev](https://www.petermorganelli.dev) <!-- Replace with deployed URL -->
 
 ---
 
