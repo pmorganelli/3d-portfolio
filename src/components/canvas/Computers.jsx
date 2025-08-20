@@ -1,31 +1,29 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
+import {
+  OrbitControls,
+  Preload,
+  useGLTF,
+  Bounds,
+  Center,
+  AdaptiveDpr,
+  AdaptiveEvents,
+} from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
 
-const Computers = ({ isMobile }) => {
-  const computer = useGLTF("./rubiks_cube/scene.gltf");
+const RubiksCube = () => {
+  const { scene } = useGLTF("/rubiks_cube/scene.gltf");
 
   return (
-    <mesh>
-      <ambientLight intensity={0.15} groundColor="black" />
-      <spotLight
-        position={[-20, 50, 10]}
-        angle={0.12}
-        penumbra={1}
-        intensity={1}
-        castShadow
-        shadow-mapSize={1024}
-      />
-      <pointLight intensity={1} />
+    <Center>
       <primitive
-        object={computer.scene}
-        scale={isMobile ? 17 : 35}
-        position={isMobile ? [-0.3, -1.5, -1.5] : [-1, -1.7, 0]}
-        rotation={[-0.01, -0.2, -0.1]}
+        object={scene}
+        rotation={[-0.1, -0.3, -0.05]}
+        castShadow
+        receiveShadow
       />
-    </mesh>
+    </Center>
   );
 };
 
@@ -33,42 +31,64 @@ const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 500px)");
-
-    setIsMobile(mediaQuery.matches);
-
-    const handleMediaQueryChange = (event) => {
-      setIsMobile(event.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
-    };
+    const mq = window.matchMedia("(max-width: 640px)");
+    const onChange = (e) => setIsMobile(e.matches);
+    setIsMobile(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
   }, []);
 
   return (
     <Canvas
-      frameloop='demand'
+      frameloop="demand"
       shadows
       dpr={[1, 2]}
-      camera={{ position: [20, 3, 5], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}
+      // bigger = FOV subject looks smaller in frame
+      camera={{ position: [0, 0, 6], fov: isMobile ? 52 : 46, near: 0.1, far: 100 }}
+      gl={{ antialias: true, preserveDrawingBuffer: true }}
+      style={{ width: "100%", height: "100%", touchAction: "none" }}
     >
-      <ambientLight intensity={4} />
-      <directionalLight color="blue" position={[0, 0, 5]} />
+      <AdaptiveDpr />
+      <AdaptiveEvents />
+
+      <ambientLight intensity={0.6} />
+      <directionalLight
+        position={[6, 8, 5]}
+        intensity={1.2}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+      <hemisphereLight intensity={0.25} groundColor={"#222"} />
+
       <Suspense fallback={<CanvasLoader />}>
+        {/* Full 360° horizontal rotation restored; almost full vertical */}
         <OrbitControls
+          makeDefault
           enableZoom={false}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
+          enablePan={false}
+          enableDamping
+          dampingFactor={0.08}
+          rotateSpeed={0.9}
+          // allow full azimuth (no left/right constraint)
+          // keep polar nearly full range to avoid flipping through the poles
+          minPolarAngle={0.05}
+          maxPolarAngle={Math.PI - 0.05}
+          target={[0, 0, 0]}
         />
-        <Computers isMobile={isMobile} />
+
+        {/* Auto-fit keeps size in check on all screens */}
+        <Bounds fit clip observe margin={1.15}>
+          <RubiksCube />
+        </Bounds>
+
+        <Preload all />
       </Suspense>
-      <Preload all />
     </Canvas>
   );
 };
 
 export default ComputersCanvas;
+
+// Preload for snappier first paint
+useGLTF.preload("/rubiks_cube/scene.gltf");
