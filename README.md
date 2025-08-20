@@ -2,7 +2,8 @@
 
 An immersive, interactive 3D portfolio built with **React**, **Vite**, **Tailwind CSS**, and **Three.js** to showcase my projects, skills, and technical experience in a visually compelling way.
 
-<img width="2354" height="1548" alt="landingPagePortfolio" src="https://github.com/user-attachments/assets/dda5b898-b27a-4071-998e-78c5f6ecdc72" />
+<img width="2747" height="1564" alt="Capture-2025-08-20-185017" src="https://github.com/user-attachments/assets/c78dff21-7a65-404a-97e2-c8c31c978465" />
+
 
 ---
 
