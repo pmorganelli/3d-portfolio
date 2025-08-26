@@ -35,6 +35,7 @@ import snowplowdriver from "./snowplowDriver.png";
 import csharp from "./cSharp.png"
 import slingshotSquire from "./slingshotSquiresTitle.png"
 import smCapture from "./smCapture.png"
+import interpHomePage from "./interpHomePage.png"
 
 export {
   backend,
@@ -73,4 +74,5 @@ export {
   flow,
   c,
   mit,
+  interpHomePage,
 };

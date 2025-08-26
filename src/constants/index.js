@@ -30,7 +30,8 @@ import {
     snowplowdriver,
     csharp,
     slingshotSquire,
-    smCapture
+    smCapture,
+    interpHomePage
   } from "../assets";
   
   export const navLinks = [
@@ -206,6 +207,32 @@ import {
   ];
     
   const projects = [
+    {
+      name: "CS105 Programming Languages Interpreter",
+      description:
+      "An educational, in-browser, no setup, IDE for interpreting seven CS105 languages like Impcore, μScheme, nano-ML, etc. Source code not available due to class confidentiality but open-source version coming soon!",
+      tags: [
+        {
+          name: "elm",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "javascript",
+          color: "green-text-gradient",
+        },
+        {
+          name: "html",
+          color: "pink-text-gradient",
+        },
+        {
+          name: "css",
+          color: "orange-text-gradient",
+        },
+      ],
+      image: interpHomePage,
+      source_code_link: "https://github.com/pmorganelli",
+      demo_link: "https://www.elm-ide.vercel.app", 
+    },
     {
       name: "Somerville Museum Database",
       description:
