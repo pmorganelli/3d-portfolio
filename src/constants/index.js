@@ -231,7 +231,7 @@ import {
       ],
       image: interpHomePage,
       source_code_link: "https://github.com/pmorganelli",
-      demo_link: "https://www.elm-ide.vercel.app", 
+      demo_link: "https://elm-ide-105.vercel.app/index.html", 
     },
     {
       name: "Somerville Museum Database",
