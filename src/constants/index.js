@@ -344,7 +344,7 @@ import {
     {
       name: "Image Compressor/Decompressor",
       description:
-        "Utilizes a lossy compression algorithm to compress and decompress a given image. Written in C.",
+        "Utilizes a lossy compression algorithm to compress and decompress a given image. Written in C. Source code hidden for this project.",
       tags: [
         {
           name: "c",
