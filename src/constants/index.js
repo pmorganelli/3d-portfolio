@@ -134,15 +134,15 @@ import {
   
   const experiences = [
     {
-      title: "Full-Stack Developer Intern",
-      company_name: "Launch",
-      icon: launch,
+      title: "Data Structures TA",
+      company_name: "Tufts University",
+      icon: tufts,
       iconBg: "#383E56",
-      date: "February 2025 - April 2025",
+      date: "September 2024 - Present",
       points: [
-        "Contributed to the early development of an AI-powered website builder, collaborating with a small team of designers and engineers",
-        "Created an interface for end-users to customize generated websites (dragging and dropping website components, etc).",
-        "Implemented innovative solutions in a timely manner to enhance user experience and functionality in a fast-paced startup environment",
+        "Held regular office hours to support students with homework assignments and course concepts",
+        "Evaluated and graded student submissions, assessing code functionality, style, and organization",
+        "Provided constructive feedback to students, facilitating their understanding and application of data structures principles",
       ],
     },
     {
@@ -158,15 +158,15 @@ import {
       ],
     },
     {
-      title: "Data Structures TA",
-      company_name: "Tufts University",
-      icon: tufts,
+      title: "Full-Stack Developer Intern",
+      company_name: "Launch",
+      icon: launch,
       iconBg: "#383E56",
-      date: "September 2024 - Present",
+      date: "February 2025 - April 2025",
       points: [
-        "Held regular office hours to support students with homework assignments and course concepts",
-        "Evaluated and graded student submissions, assessing code functionality, style, and organization",
-        "Provided constructive feedback to students, facilitating their understanding and application of data structures principles",
+        "Contributed to the early development of an AI-powered website builder, collaborating with a small team of designers and engineers",
+        "Created an interface for end-users to customize generated websites (dragging and dropping website components, etc).",
+        "Implemented innovative solutions in a timely manner to enhance user experience and functionality in a fast-paced startup environment",
       ],
     },
     {
@@ -174,7 +174,7 @@ import {
       company_name: "Tufts JumboCode",
       icon: jumbocode,
       iconBg: "#E6DEDD",
-      date: "October 2023 - Present",
+      date: "October 2023 - May 2025",
       points: [
         "2024-2025: Developed a full-stack inventory management system to help the Somerville Museum catalog and organize its collection of artifacts. Built with a PostgreSQL database (managed via Neon) and a React/Next.js frontend. Collaborated with a team of 10 developers, completing weekly tickets assigned by lead developers. \n Mentors/Tech Leads: Holden Kittelberger and Zack White",
         "2023-2024: Helped develop a full-stack inventory website for a local Somerville theatre, Theatre@First, with a group of 10 developers through weekly assigned tickets by lead developers. \n Mentors/Tech Leads: Liam Strand and Amitav Nott",
