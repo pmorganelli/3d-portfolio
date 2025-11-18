@@ -82,6 +82,20 @@ const WorksPlain = () => (
       The following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories and live demos. These examples reflect my ability to solve complex problems, work with various technologies, and manage projects effectively. Please reach out to me using the contact form with any questions!
     </p>
 
+    {/* Embedded live demo iframe
+    <div className="z-40 mt-8 w-full">
+      <h3 className="text-white font-bold text-[20px] mb-3">Live Embed</h3>
+      <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+        <iframe
+          src="https://jumbdletest.vercel.app/"
+          title="Jumbled Test"
+          className="absolute top-0 left-0 w-full h-full rounded-xl"
+          frameBorder="0"
+          allowFullScreen
+        />
+      </div>
+    </div> */}
+
     <div className="z-40 mt-20 flex flex-wrap gap-7">
       {projects.map((project, index) => (
         <ProjectCard key={`project-${index}`} index={index} {...project} />
