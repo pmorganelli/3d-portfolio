@@ -15,6 +15,10 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const isFormValid =
+    form.name.trim() !== "" &&
+    form.email.trim() !== "" &&
+    form.message.trim() !== "";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +26,9 @@ const Contact = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isFormValid) {
+      return;
+    }
     setLoading(true);
 
     emailjs.send(
@@ -77,6 +84,7 @@ const Contact = () => {
               name="name"
               value={form.name}
               onChange={handleChange}
+              required
               placeholder="What's your name?"
               className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
             />
@@ -88,6 +96,7 @@ const Contact = () => {
               name="email"
               value={form.email}
               onChange={handleChange}
+              required
               placeholder="What's your email?"
               className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
             />
@@ -99,12 +108,17 @@ const Contact = () => {
               name='message'
               value={form.message}
               onChange={handleChange}
+              required
               placeholder='What you want to say?'
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
           </label>
 
-          <button type="submit" className="bg-tertiary py-3 px-8 outline-none text-white font-bold shadow-md shadow-primary rounded-xl">
+          <button
+            type="submit"
+            disabled={!isFormValid || loading}
+            className="bg-tertiary py-3 px-8 outline-none text-white font-bold shadow-md shadow-primary rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             {loading ? 'Sending...' : 'Send'}
           </button>
         </form>
