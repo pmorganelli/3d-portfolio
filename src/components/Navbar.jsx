@@ -37,9 +37,9 @@ const Navbar = () => {
         <h1>
           <a href="https://www.linkedin.com/in/peter-morganelli-102860258/"><Linkedin /></a>
         </h1>
-        <h1>
+        {/* <h1>
           <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
-        </h1>
+        </h1> */}
           {navLinks.map((nav) => (
             <li
               key={nav.id}
