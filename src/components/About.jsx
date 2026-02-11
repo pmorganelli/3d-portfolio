@@ -28,7 +28,7 @@ const ServiceCard = ({ index, title, icon, desc }) => (
           className='w-16 h-16 object-contain'
         />
 
-        <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-green-500  via-red-500 to-violet-600'>
+        <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-white  via-red-500 to-violet-600'>
           {title}
         </h3>
         <h1 className="text-semibold text-[13px] text-center">
