@@ -1,47 +1,75 @@
-import { useState, useRef, Suspense } from "react"
+import { Suspense, useMemo, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { Points, PointMaterial, Preload, Point } from "@react-three/drei"
-import * as random from "maath/random/dist/maath-random.esm";
+import { OrbitControls, Points, PointMaterial } from "@react-three/drei"
+import * as random from "maath/random/dist/maath-random.esm"
 
+const StarLayer = ({ count, radius, size, color, speed = 1 }) => {
+  const ref = useRef()
+  const sphere = useMemo(
+    () => random.inSphere(new Float32Array(count), { radius }),
+    [count, radius]
+  )
 
-
-const Stars = (props) => {
-  const ref = useRef();
-  const sphere = random.inSphere(new Float32Array(5000), { radius: 1.2 })
-
-  useFrame((state, delta) => {
-    ref.current.rotation.x -= delta / 10;
-    ref.current.rotation.y -= delta / 15;
-  });
+  useFrame((state) => {
+    if (!ref.current) return
+    const t = state.clock.getElapsedTime()
+    ref.current.rotation.y = t * 0.03 * speed
+    ref.current.rotation.x = Math.sin(t * 0.25) * 0.1
+    ref.current.rotation.z = Math.PI / 4 + Math.cos(t * 0.16) * 0.05
+  })
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled  {...props}>
-        <PointMaterial 
+    <Points ref={ref} positions={sphere} stride={3} frustumCulled>
+      <PointMaterial
           transparent
-          color="#f272c8"
-          size={0.002}
+          color={color}
+          size={size}
           sizeAttenuation={true}
           depthWrite={false}
         />
-      
-      </Points>
-    </group>
+    </Points>
   )
 }
+
+const Stars = () => (
+  <group>
+    <StarLayer
+      count={3600}
+      radius={2.1}
+      size={0.0024}
+      color="#f19dd9"
+      speed={1}
+    />
+    <StarLayer
+      count={2400}
+      radius={2.6}
+      size={0.0019}
+      color="#ffd5ef"
+      speed={0.8}
+    />
+  </group>
+)
 
 const StarsCanvas = () => {
   return (
-    <div className="w-full h-auto absolute inset-0 z-[-1]">
-      <Canvas camera={{ position: [0, 0, 1]}}>
+    <div className="pointer-events-none fixed inset-0 z-0">
+      <Canvas
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 0, 1.9] }}
+        gl={{ antialias: false, powerPreference: "high-performance" }}
+      >
         <Suspense fallback={null}>
           <Stars />
         </Suspense>
-        <Preload all />
+        <OrbitControls
+          autoRotate
+          autoRotateSpeed={0.25}
+          enableZoom={false}
+          enablePan={false}
+          enableRotate={false}
+        />
       </Canvas>
-
     </div>
   )
 }
-
 export default StarsCanvas

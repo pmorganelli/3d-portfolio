@@ -17,7 +17,7 @@ const Navbar = () => {
       className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary`}
     >
       {/* <img src={hero} alt='hero'/> */}
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+      <div className="w-full text-secondary flex justify-between items-center max-w-7xl mx-auto">
         <Link 
           to="/" 
           className="flex items-center gap-2"
@@ -27,7 +27,7 @@ const Navbar = () => {
           }}
         >
           <img src={hero} alt='heroImage' className="w-9 h-9 object-contain" />
-          <p className="text-white text-[18px] font-bold cursor-pointer flex">Peter Morganelli &nbsp; <span className="sm:block hidden"> &nbsp;</span></p>
+          <p className="text-secondary hover:text-white text-[18px] font-bold cursor-pointer flex transition-colors">Peter Morganelli &nbsp; <span className="sm:block hidden"> &nbsp;</span></p>
         </Link>
 
         <ul className='list-none hidden sm:flex flex-row gap-10'>
@@ -43,9 +43,7 @@ const Navbar = () => {
           {navLinks.map((nav) => (
             <li
               key={nav.id}
-              className={`${
-                active === nav.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
+              className="text-secondary hover:text-white text-[18px] font-medium cursor-pointer transition-colors"
               onClick={() => setActive(nav.title)}
             >
               <a href={nav.title === "Résumé" ? `/resume.pdf` : `#${nav.id}`}>{nav.title}</a>
@@ -60,7 +58,7 @@ const Navbar = () => {
           <div className={`${!toggle ? 'hidden' : 'flex'} p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}>
               <ul className='list-none flex justify-end items-start flex-col gap-4'>
               {navLinks.map((nav) => (
-                <li key={nav.id} className={`${active === nav.title ? "text-white" : "text-secondary"} font-poppins font-medium cursor-pointer text-[16px]`}
+                <li key={nav.id} className="text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px] transition-colors"
                   onClick={() => {
                     setActive(nav.title);
                     setToggle(!toggle);
@@ -75,9 +73,9 @@ const Navbar = () => {
               <h1 className="ps-8 justify-self-center">
                 <a href="https://www.linkedin.com/in/peter-morganelli-102860258/"><Linkedin /></a>
               </h1>
-              <h1 className="ps-8 justify-self-center">
+              {/* <h1 className="ps-8 justify-self-center">
                 <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
-              </h1>
+              </h1> */}
             </ul>
           </div>
         </div>

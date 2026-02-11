@@ -31,7 +31,7 @@ const ServiceCard = ({ index, title, icon, desc }) => (
         <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-white  via-red-500 to-violet-600'>
           {title}
         </h3>
-        <h1 className="text-semibold text-[13px] text-center">
+        <h1 className="text-semibold text-[13px] text-white text-center">
           {desc}
         </h1>
       </div>
