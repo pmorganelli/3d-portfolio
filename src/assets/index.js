@@ -6,6 +6,8 @@ import github from "./github.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
 
+import ltiLogo from "./ltiLogoPortfolio.png";
+import mitre from "./mitreLogo.png";
 import css from "./tech/css.png";
 import cplusplus from "./tech/cPng.png";
 import figma from "./tech/figma.png";
@@ -62,9 +64,11 @@ export {
   threejs,
   dcr,
   jumbocode,
+  mitre,
   jumbocodedark,
   tufts,
   breakmatcher,
+  ltiLogo,
   rpn,
   portfolio,
   theatre,

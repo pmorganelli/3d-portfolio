@@ -16,6 +16,7 @@ import {
     jumbocodedark,
     tufts,
     breakmatcher,
+    ltiLogo,
     rpn,
     portfolio,
     theatre,
@@ -31,7 +32,8 @@ import {
     csharp,
     slingshotSquire,
     smCapture,
-    interpHomePage
+    interpHomePage,
+    mitre
   } from "../assets";
   
   export const navLinks = [
@@ -134,6 +136,16 @@ import {
   
   const experiences = [
     {
+      title: "Incoming Software Engineer Intern",
+      company_name: "MITRE",
+      icon: mitre,
+      iconBg: "#ffffff",
+      date: "Starting May 2026",
+      points: [
+        "Incoming SWE Intern on the L537 team under Abby Chapman and Dave Hirst"
+      ],
+    },
+    {
       title: "Data Structures TA",
       company_name: "Tufts University",
       icon: tufts,
@@ -148,8 +160,8 @@ import {
     {
       title: "Founder and Executive Director",
       company_name: "Tufts Leadership Training Institute (LTI)",
-      icon: tufts,
-      iconBg: "#383E56",
+      icon: ltiLogo,
+      iconBg: "#ffffff",
       date: "September 2024 - Present",
       points: [
         "Successfully recruited 10+ mentors for an intensive 8-week mentorship program, ensuring a high-quality and organized experience",
@@ -161,7 +173,7 @@ import {
       title: "Full-Stack Developer Intern",
       company_name: "Launch",
       icon: launch,
-      iconBg: "#383E56",
+      iconBg: "#ffffff",
       date: "February 2025 - April 2025",
       points: [
         "Contributed to the early development of an AI-powered website builder, collaborating with a small team of designers and engineers",
