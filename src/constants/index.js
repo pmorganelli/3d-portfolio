@@ -63,7 +63,7 @@ import {
     {
       title: "Web Developer",
       icon: web,
-      desc: "I've constructed multiple sites with complex front-end frameworks",
+      desc: "I've constructed multiple websites with modern frontend frameworks",
     },
     {
       title: "UI + UX Skilled",

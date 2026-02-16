@@ -51,11 +51,10 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-        I'm a skilled software developer with experience in TypeScript and
-        JavaScript in a React framework. 
-        I'm a quick learner and collaborate closely with clients to
-        create efficient, scalable, and user-friendly solutions that solve
-        real-world problems. Let's work together to bring your ideas to life!
+        I'm a skilled software developer with experience working in teams
+        rooted in strong communication and collaboration. I'm a quick learner 
+        who enjoys complicated problems and interesting conversations.
+        Let's connect!
       </motion.p>
       
 
