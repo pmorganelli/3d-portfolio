@@ -150,7 +150,7 @@ import {
       company_name: "Tufts University",
       icon: tufts,
       iconBg: "#383E56",
-      date: "September 2024 - Present",
+      date: "September 2024 - December 2025",
       points: [
         "Held regular office hours to support students with homework assignments and course concepts",
         "Evaluated and graded student submissions, assessing code functionality, style, and organization",
@@ -162,7 +162,7 @@ import {
       company_name: "Tufts Leadership Training Institute (LTI)",
       icon: ltiLogo,
       iconBg: "#ffffff",
-      date: "September 2024 - Present",
+      date: "September 2024 - September 2025",
       points: [
         "Successfully recruited 10+ mentors for an intensive 8-week mentorship program, ensuring a high-quality and organized experience",
         "Spearheaded all meetings, planning, funding, organization, room reservation, recruitment, and admission to the program",
