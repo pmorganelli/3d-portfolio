@@ -6,35 +6,44 @@ import { styles } from "../styles";
 import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
-import { Github } from "./FeatherIcons/githubIcon";
+import ElectricBorder from "./ui/ElectricBorder";
 
 const ServiceCard = ({ index, title, icon, desc }) => (
   <Tilt className='xs:w-[250px] w-full'>
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
-      className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
+      className='w-full rounded-[20px] shadow-card'
     >
-      <div
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
-        className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
+      <ElectricBorder
+        color='#9b80ff'
+        speed={1}
+        chaos={0.12}
+        thickness={2}
+        borderRadius={20}
+        style={{ borderRadius: 20 }}
       >
-        <img
-          src={icon}
-          alt='web-development'
-          className='w-16 h-16 object-contain'
-        />
+        <div
+          options={{
+            max: 45,
+            scale: 1,
+            speed: 450,
+          }}
+          className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
+        >
+          <img
+            src={icon}
+            alt='web-development'
+            className='w-16 h-16 object-contain'
+          />
 
-        <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-white  via-red-500 to-violet-600'>
-          {title}
-        </h3>
-        <h1 className="text-semibold text-[13px] text-white text-center">
-          {desc}
-        </h1>
-      </div>
+          <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-white  via-red-500 to-violet-600'>
+            {title}
+          </h3>
+          <h1 className='text-semibold text-[13px] text-white text-center'>
+            {desc}
+          </h1>
+        </div>
+      </ElectricBorder>
     </motion.div>
   </Tilt>
 );
