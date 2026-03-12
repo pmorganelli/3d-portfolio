@@ -33,6 +33,7 @@ import {
     slingshotSquire,
     smCapture,
     interpHomePage,
+    foodWasteHome,
     mitre
   } from "../assets";
   
@@ -219,6 +220,41 @@ import {
   ];
     
   const projects = [
+    {
+      name: "Mobile Food Waste Tracking App",
+      description:
+      "In Progress! A smart and easy way to keep track of your food that's going bad. Scan a barcode, store your item, and even make an AI-generated recipe with your ingredients!",
+      tags: [
+        {
+          name: "react native",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "typescript",
+          color: "green-text-gradient",
+        },
+        {
+          name: "firebase",
+          color: "pink-text-gradient",
+        },
+        {
+          name: "springboot",
+          color: "orange-text-gradient",
+        },
+        {
+          name: "postgresql",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "docker",
+          color: "green-text-gradient",
+        }
+      ],
+      image: foodWasteHome,
+      source_code_link: "https://github.com/pmorganelli",
+      demo_link: "https://elm-ide-105.vercel.app/index.html",
+      inProgress: true,
+    },
     {
       name: "CS105 Programming Languages Interpreter",
       description:

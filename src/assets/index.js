@@ -38,9 +38,11 @@ import csharp from "./cSharp.png"
 import slingshotSquire from "./slingshotSquiresTitle.png"
 import smCapture from "./smCapture.png"
 import interpHomePage from "./interpHomePage.png"
+import foodWasteHome from "./foodWasteTrackerHomePage.png"
 
 export {
   backend,
+  foodWasteHome,
   creator,
   snowplowdriver,
   mobile,
