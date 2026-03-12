@@ -72,7 +72,7 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
 
 // Plain, static version for mobile (no HOC/motion)
 const WorksPlain = () => (
-  <section id="projects" className={`${styles.padding} max-w-7xl mx-auto`}>
+  <section className={`${styles.padding} max-w-7xl mx-auto`}>
     <div>
       <p className={styles.sectionSubText}>My work.</p>
       <h2 className={styles.sectionHeadText}>Projects.</h2>
@@ -104,12 +104,16 @@ const WorksPlain = () => (
   </section>
 );
 
-// Animated version wrapped with HOC for tablet+ screens
-const WorksAnimated = SectionWrapper(WorksPlain, 'projects');
+// Animated version wrapped with HOC for tablet+ screens (anchor lives at Works level)
+const WorksAnimated = SectionWrapper(WorksPlain, '');
 
 // Main component choosing static vs animated by breakpoint
 const Works = () => (
-  <>
+  <div className="relative">
+    {/* Scroll anchor: absolutely positioned so it takes no visual space.
+        top: -100px offsets the fixed navbar height. */}
+    <span id="projects" className="absolute" style={{ top: '-100px' }} />
+
     {/* Mobile: static plain version */}
     <div className="block sm:hidden">
       <WorksPlain />
@@ -119,7 +123,7 @@ const Works = () => (
     <div className="hidden sm:block">
       <WorksAnimated />
     </div>
-  </>
+  </div>
 );
 
-export default SectionWrapper(Works, "projects");
+export default Works;

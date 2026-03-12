@@ -88,12 +88,12 @@ const Navbar = () => {
                   </a>
                 </li>
               ))}
-              <h1 className="ps-8 justify-self-center">
-                <a href="https://github.com/pmorganelli"><Github /></a>
-              </h1>
-              <h1 className="ps-8 justify-self-center">
-                <a href="https://www.linkedin.com/in/peter-morganelli-102860258/"><Linkedin /></a>
-              </h1>
+              <li className="ps-8 justify-self-center">
+                <a href="https://github.com/pmorganelli" aria-label="GitHub"><Github /></a>
+              </li>
+              <li className="ps-8 justify-self-center">
+                <a href="https://www.linkedin.com/in/peter-morganelli-102860258/" aria-label="LinkedIn"><Linkedin /></a>
+              </li>
               {/* <h1 className="ps-8 justify-self-center">
                 <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
               </h1> */}

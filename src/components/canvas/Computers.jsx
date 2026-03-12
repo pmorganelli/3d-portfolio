@@ -40,7 +40,7 @@ const ComputersCanvas = () => {
 
   return (
     <Canvas
-      frameloop="demand"
+      frameloop="always"
       shadows
       dpr={[1, 2]}
       // bigger = FOV subject looks smaller in frame
@@ -70,6 +70,8 @@ const ComputersCanvas = () => {
           enableDamping
           dampingFactor={0.08}
           rotateSpeed={0.9}
+          autoRotate
+          autoRotateSpeed={0.6}
           // allow full azimuth (no left/right constraint)
           // keep polar nearly full range to avoid flipping through the poles
           minPolarAngle={0.05}

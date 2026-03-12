@@ -1,7 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
 import { About, Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } from './components';
-import { ContainerScroll } from "./components/ui/container-scroll-animation";
-import { HeroScrollDemo } from "./components/ui/containerDemo";
 
 const App = () => {
   return (

@@ -1,6 +1,6 @@
 import { Suspense, useMemo, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, Points, PointMaterial } from "@react-three/drei"
+import { Points, PointMaterial } from "@react-three/drei"
 import * as random from "maath/random/dist/maath-random.esm"
 
 const StarLayer = ({ count, radius, size, color, speed = 1 }) => {
@@ -61,13 +61,6 @@ const StarsCanvas = () => {
         <Suspense fallback={null}>
           <Stars />
         </Suspense>
-        <OrbitControls
-          autoRotate
-          autoRotateSpeed={0.25}
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-        />
       </Canvas>
     </div>
   )

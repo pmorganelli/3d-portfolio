@@ -9,7 +9,10 @@ import { fadeIn, textVariant } from "../utils/motion";
 import ElectricBorder from "./ui/ElectricBorder";
 
 const ServiceCard = ({ index, title, icon, desc }) => (
-  <Tilt className='xs:w-[250px] w-full'>
+  <Tilt
+    className='xs:w-[250px] w-full'
+    options={{ max: 45, scale: 1, speed: 450 }}
+  >
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
       className='w-full rounded-[20px] shadow-card'
@@ -23,11 +26,6 @@ const ServiceCard = ({ index, title, icon, desc }) => (
         style={{ borderRadius: 20 }}
       >
         <div
-          options={{
-            max: 45,
-            scale: 1,
-            speed: 450,
-          }}
           className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
         >
           <img
