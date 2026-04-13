@@ -87,51 +87,62 @@ import {
     {
       name: "HTML 5",
       icon: html,
-      color: "#e95d15"
+      color: "#e95d15",
+      tag: "markup",
     },
     {
       name: "CSS 3",
       icon: css,
-      color: "#0080c3"
+      color: "#0080c3",
+      tag: "style",
     },
     {
       name: "JavaScript",
       icon: javascript,
-      color: "#e6d450"
+      color: "#e6d450",
+      tag: "ES2024",
     },
     {
       name: "Tailwind CSS",
       icon: tailwind,
-      color: "#33b7ca"
+      color: "#33b7ca",
+      tag: "v3.x",
     },
     {
       name: "React JS",
       icon: reactjs,
-      color: "#7ec8d6"
+      color: "#7ec8d6",
+      tag: "v18",
     },
     {
       name: "C++",
       icon: cplusplus,
-      color: "#0154a7"
+      color: "#0154a7",
+      tag: "STL",
     },
     {
-      name: "c",
+      name: "C",
       icon: c,
-      color: "#0154a7"
+      color: "#0154a7",
+      tag: "C99",
     },
     {
       name: "C#",
       icon: csharp,
-      color: "#8204fb"
+      color: "#8204fb",
+      tag: ".NET",
     },
     {
-      name: "Three JS",
+      name: "Three.js",
       icon: threejs,
+      color: "#ffffff",
+      tag: "r166",
     },
     {
-      name: "git",
+      name: "Git",
       icon: git,
-      color: "#f15f24"
+      color: "#f15f24",
+      tag: "VCS",
     },
   ];
   
