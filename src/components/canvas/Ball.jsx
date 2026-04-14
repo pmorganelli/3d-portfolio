@@ -126,7 +126,7 @@ function lighten(hex, ratio) {
 }
 
 // ─── Ball component ───────────────────────────────────────────────────────────
-const Ball = ({ imgUrl, color, name, tag }) => {
+const Ball = ({ imgUrl, color, name, tag, noLabel }) => {
   const [decal] = useTexture([imgUrl]);
 
   // Label texture built once per [name, tag, color] — Pretext prepare() runs here
@@ -163,15 +163,17 @@ const Ball = ({ imgUrl, color, name, tag }) => {
         Sprite scale = [LBL_W/LBL_H ratio × height, height, 1]
         LBL_W:LBL_H = 320:88 ≈ 3.636:1  →  [2.4, 0.66, 1]
       */}
-      <sprite position={[0, -3.5, 0]} scale={[2.4, 0.66, 1]}>
-        <spriteMaterial map={labelTexture} transparent depthWrite={false} />
-      </sprite>
+      {!noLabel && (
+        <sprite position={[0, -3.5, 0]} scale={[2.4, 0.66, 1]}>
+          <spriteMaterial map={labelTexture} transparent depthWrite={false} />
+        </sprite>
+      )}
     </>
   );
 };
 
 // ─── BallCanvas ───────────────────────────────────────────────────────────────
-const BallCanvas = ({ icon, ballColor, name, tag }) => {
+const BallCanvas = ({ icon, ballColor, name, tag, noLabel }) => {
   return (
     <Canvas
       shadows
@@ -180,13 +182,13 @@ const BallCanvas = ({ icon, ballColor, name, tag }) => {
       gl={{ preserveDrawingBuffer: true }}
       // Pull camera back slightly from default z=5 so the label below the ball
       // is fully within the frustum. FOV tightened for a crisper look.
-      camera={{ position: [0, 0, 6.5], fov: 65 }}
+      camera={{ position: [0, 0, 6.5], fov: noLabel ? 55 : 65 }}
     >
       <ambientLight intensity={1.5} />
       <directionalLight position={[0, 0, 0.05]} />
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls autoRotate enableZoom={false} />
-        <Ball imgUrl={icon} color={ballColor} name={name} tag={tag} />
+        <Ball imgUrl={icon} color={ballColor} name={name} tag={tag} noLabel={noLabel} />
       </Suspense>
       <Preload all />
     </Canvas>

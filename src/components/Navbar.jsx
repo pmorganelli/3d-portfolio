@@ -22,26 +22,26 @@ const Navbar = () => {
   return (
     
     <nav
-      className='w-full flex items-center py-4 sm:py-5 fixed top-0 z-20 bg-primary px-4 sm:px-16'
+      className='w-full flex items-center py-4 md:py-5 fixed top-0 z-20 bg-primary px-4 md:px-16'
     >
       {/* <img src={hero} alt='hero'/> */}
       <div className="w-full text-secondary flex justify-between items-center max-w-7xl mx-auto">
-        <Link 
-          to="/" 
-          className="flex items-center gap-2 min-w-0"
+        <Link
+          to="/"
+          className="flex items-center gap-2 shrink-0"
           onClick={() => {
             setActive("");
             window.scrollTo(0, 0)
           }}
         >
           <img src={hero} alt='heroImage' className="w-9 h-9 object-contain" />
-          <p className="text-secondary hover:text-white text-[16px] sm:text-[18px] font-bold cursor-pointer transition-colors whitespace-nowrap">
-            <span className='sm:hidden'>Peter M.</span>
-            <span className='hidden sm:inline'>Peter Morganelli</span>
+          <p className="text-secondary hover:text-white text-[16px] md:text-[18px] font-bold cursor-pointer transition-colors whitespace-nowrap">
+            <span className='md:hidden'>Peter M.</span>
+            <span className='hidden md:inline'>Peter Morganelli</span>
           </p>
         </Link>
 
-        <div className='hidden sm:flex items-center gap-6'>
+        <div className='hidden md:flex items-center gap-6'>
           <GooeyNav
             items={desktopNavItems}
             particleCount={10}
@@ -66,7 +66,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="sm:hidden flex flex-1 justify-end items-center">
+        <div className="md:hidden flex flex-1 justify-end items-center">
           <img src={toggle ? close : menu} alt="menu" className="w-[28px] h-[28px] object-contain cursor-pointer"
             onClick={() => setToggle(!toggle)} 
           />

@@ -322,7 +322,7 @@ import {
     {
       name: "Three.js",
       icon: threejs,
-      color: "#ffffff",
+      color: "#049ef4",
       tag: "r166",
       isSun: false,
       size: 1.5,
