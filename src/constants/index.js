@@ -34,7 +34,10 @@ import {
     smCapture,
     interpHomePage,
     foodWasteHome,
-    mitre
+    mitre,
+    typeScriptIcon,
+    dockerLogo,
+    gitlabLogo,
   } from "../assets";
   
   export const navLinks = [
@@ -83,66 +86,259 @@ import {
     },
   ];
   
+  // Solar system hierarchy:
+  //   Sun    — C++ (center of proficiency)
+  //   Ring 1 — C, Git          (r=6.5,  180° apart)  — small rocky
+  //   Ring 2 — JS, React, TS, Tailwind (r=12.0, 90°) — medium planets
+  //   Ring 3 — C#              (r=17.5)               — gas giant
+  //   Ring 4 — Three.js        (r=22.5)               — outer planet
+  //
+  // decalScale adjusts the projected icon size to compensate for image padding.
   const technologies = [
-    {
-      name: "HTML 5",
-      icon: html,
-      color: "#e95d15",
-      tag: "markup",
-    },
-    {
-      name: "CSS 3",
-      icon: css,
-      color: "#0080c3",
-      tag: "style",
-    },
-    {
-      name: "JavaScript",
-      icon: javascript,
-      color: "#e6d450",
-      tag: "ES2024",
-    },
-    {
-      name: "Tailwind CSS",
-      icon: tailwind,
-      color: "#33b7ca",
-      tag: "v3.x",
-    },
-    {
-      name: "React JS",
-      icon: reactjs,
-      color: "#7ec8d6",
-      tag: "v18",
-    },
+    // ── Sun ────────────────────────────────────────────────────────────────────
     {
       name: "C++",
       icon: cplusplus,
       color: "#0154a7",
       tag: "STL",
+      isSun: true,
+      size: 3.8,
+      orbitRadius: 0,
+      orbitSpeed: 0,
+      angleOffset: 0,
+      decalScale: 1.0,
+      info: {
+        level: "Proficient",
+        orbits: "Center of the System",
+        description:
+          "Extensively used in Tufts Computer Science curriculum. Made every CS15: Data Structres assignment in C++ and then subsequently became a TA for three semesters and Grading TF for one semester.",
+        projects: [
+          { name: "gerp (grep clone)", link: "https://github.com/pmorganelli/grep-clone" },
+        ],
+      },
     },
+    // ── Ring 1 — C and Git (same orbit, 180° apart) ───────────────────────────
     {
       name: "C",
       icon: c,
       color: "#0154a7",
       tag: "C99",
-    },
-    {
-      name: "C#",
-      icon: csharp,
-      color: "#8204fb",
-      tag: ".NET",
-    },
-    {
-      name: "Three.js",
-      icon: threejs,
-      color: "#ffffff",
-      tag: "r166",
+      isSun: false,
+      size: 0.85,
+      orbitRadius: 6.5,
+      orbitSpeed: 0.35,
+      angleOffset: 0,
+      decalScale: 1.0,
+      info: {
+        level: "Intermediate",
+        orbits: "Low-Level Systems Language",
+        description:
+          "Used in systems programming coursework at Tufts. Comfortable with manual memory management, pointers, bit manipulation, and low-level I/O.",
+        projects: [
+          { name: "Image Compressor", link: "https://github.com/pmorganelli/image-compressor" },
+        ],
+      },
     },
     {
       name: "Git",
       icon: git,
       color: "#f15f24",
       tag: "VCS",
+      isSun: false,
+      size: 0.85,
+      orbitRadius: 6.5,
+      orbitSpeed: 0.35,
+      angleOffset: 3.14159,
+      decalScale: 1.0,
+      info: {
+        level: "Proficient",
+        orbits: "Version Control System",
+        description:
+          "Daily driver for version control. Comfortable with branching, merging, rebasing, and collaborative GitHub workflows across team projects.",
+        projects: [
+          { name: "Somerville Museum DB", link: "https://github.com/JumboCode/somerville-museum" },
+          { name: "Theatre@First", link: "https://github.com/JumboCode/theatre-at-first" },
+        ],
+      },
+    },
+    // ── Ring 2 — JS, React, TypeScript, Tailwind (same orbit, 90° apart) ──────
+    {
+      name: "JavaScript",
+      icon: javascript,
+      color: "#e6d450",
+      tag: "ES2024",
+      isSun: false,
+      size: 1.5,
+      orbitRadius: 12.0,
+      orbitSpeed: 0.20,
+      angleOffset: 0,
+      decalScale: 1.0,
+      info: {
+        level: "Advanced",
+        orbits: "Scripting Language",
+        description:
+          "My primary language for web development. Used across full-stack apps, browser extensions, and interactive UIs — including this portfolio.",
+        projects: [
+          { name: "CS105 Interpreter", link: "https://elm-ide-105.vercel.app/index.html" },
+          { name: "Somerville Museum DB", link: "https://somervillemuseum.vercel.app/" },
+          { name: "CodeClock", link: "https://devpost.com/software/codeclock" },
+        ],
+      },
+    },
+    {
+      name: "React JS",
+      icon: reactjs,
+      color: "#7ec8d6",
+      tag: "v18",
+      isSun: false,
+      size: 1.4,
+      orbitRadius: 12.0,
+      orbitSpeed: 0.20,
+      angleOffset: 1.5708,
+      decalScale: 1.0,
+      info: {
+        level: "Advanced",
+        orbits: "JavaScript Framework",
+        description:
+          "My go-to frontend framework. Used in multiple full-stack projects including two JumboCode teams, a hackathon, and this portfolio.",
+        projects: [
+          { name: "Somerville Museum DB", link: "https://somervillemuseum.vercel.app/" },
+          { name: "Theatre@First", link: "https://github.com/JumboCode/theatre-at-first" },
+          { name: "CodeClock", link: "https://devpost.com/software/codeclock" },
+        ],
+      },
+    },
+    {
+      name: "TypeScript",
+      icon: typeScriptIcon,
+      color: "#3178c6",
+      tag: "v5",
+      isSun: false,
+      size: 1.4,
+      orbitRadius: 12.0,
+      orbitSpeed: 0.20,
+      angleOffset: 3.14159,
+      decalScale: 0.75,
+      info: {
+        level: "Learning",
+        orbits: "JavaScript Superset",
+        description:
+          "Increasingly using TypeScript in React projects for type safety. Applied it in Theatre@First and the Food Waste Tracking App.",
+        projects: [
+          { name: "Theatre@First", link: "https://github.com/JumboCode/theatre-at-first" },
+          { name: "Food Waste App", link: "https://github.com/pmorganelli" },
+        ],
+      },
+    },
+    {
+      name: "Tailwind CSS",
+      icon: tailwind,
+      color: "#33b7ca",
+      tag: "v3.x",
+      isSun: false,
+      size: 1.2,
+      orbitRadius: 12.0,
+      orbitSpeed: 0.20,
+      angleOffset: 4.7124,
+      decalScale: 1.0,
+      info: {
+        level: "Proficient",
+        orbits: "CSS Utility Framework",
+        description:
+          "Preferred utility framework for rapid, consistent UI styling in React projects. Used it on every recent web project.",
+        projects: [
+          { name: "Theatre@First", link: "https://github.com/JumboCode/theatre-at-first" },
+          { name: "CodeClock", link: "https://devpost.com/software/codeclock" },
+        ],
+      },
+    },
+    // ── Ring 3 — C# ────────────────────────────────────────────────────────────
+    {
+      name: "C#",
+      icon: csharp,
+      color: "#8204fb",
+      tag: ".NET",
+      isSun: false,
+      size: 2.0,
+      orbitRadius: 17.5,
+      orbitSpeed: 0.11,
+      angleOffset: 0.5,
+      decalScale: 1.4,
+      info: {
+        level: "Intermediate",
+        orbits: "Object-Oriented Language",
+        description:
+          "Used with Unity for game development. Familiar with component-based architecture, MonoBehaviour lifecycles, and game loops.",
+        projects: [
+          { name: "Slingshot Squires", link: "https://slingshotsquires.itch.io/slingshot-squires" },
+          { name: "Snowplow Race", link: "https://gamedesignb11.itch.io/snowplow-race" },
+        ],
+      },
+    },
+    // Docker: 0.5 + 2π/3 ≈ 2.5944 rad   GitLab: 0.5 + 4π/3 ≈ 4.6888 rad
+    {
+      name: "Docker",
+      icon: dockerLogo,
+      color: "#1d63ed",
+      tag: "v27",
+      isSun: false,
+      size: 1.8,
+      orbitRadius: 17.5,
+      orbitSpeed: 0.11,
+      angleOffset: 2.5944,
+      decalScale: 1.0,
+      info: {
+        level: "Learning",
+        orbits: "Containerization Platform",
+        description:
+          "Using Docker to containerize services in the Food Waste Tracking App. Comfortable with Dockerfiles, docker-compose, and multi-service setups.",
+        projects: [
+          { name: "Food Waste App", link: "https://github.com/pmorganelli" },
+        ],
+      },
+    },
+    {
+      name: "GitLab",
+      icon: gitlabLogo,
+      color: "#fc6d26",
+      tag: "CI/CD",
+      isSun: false,
+      size: 1.8,
+      orbitRadius: 17.5,
+      orbitSpeed: 0.11,
+      angleOffset: 4.6888,
+      decalScale: 1.0,
+      info: {
+        level: "Learning",
+        orbits: "DevOps Platform",
+        description:
+          "Introduced to GitLab pipelines and CI/CD workflows during the Food Waste Tracker project. Familiar with merge requests, pipelines, and repository management.",
+        projects: [
+          { name: "Food Waste Tracker", link: "#projects" },
+        ],
+      },
+    },
+    // ── Ring 4 — Three.js ──────────────────────────────────────────────────────
+    {
+      name: "Three.js",
+      icon: threejs,
+      color: "#ffffff",
+      tag: "r166",
+      isSun: false,
+      size: 1.5,
+      orbitRadius: 22.5,
+      orbitSpeed: 0.07,
+      angleOffset: 1.2,
+      decalScale: 1.0,
+      info: {
+        level: "Learning",
+        orbits: "3D Graphics Library",
+        description:
+          "Currently using it to build this portfolio! Exploring R3F, Drei helpers, custom shaders, and GPU-rendered text via Pretext.",
+        projects: [
+          { name: "This Portfolio", link: "#" },
+        ],
+      },
     },
   ];
   

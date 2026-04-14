@@ -39,6 +39,9 @@ import slingshotSquire from "./slingshotSquiresTitle.png"
 import smCapture from "./smCapture.png"
 import interpHomePage from "./interpHomePage.png"
 import foodWasteHome from "./foodWasteTrackerHomePage.png"
+import typeScriptIcon from "./typeScript.png"
+import dockerLogo from "./dockerLogo.png"
+import gitlabLogo from "./gitlabLogo.png"
 
 export {
   backend,
@@ -81,4 +84,7 @@ export {
   c,
   mit,
   interpHomePage,
+  typeScriptIcon,
+  dockerLogo,
+  gitlabLogo,
 };
