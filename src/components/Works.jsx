@@ -80,7 +80,7 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
   >
     <Tilt
       options={{ max: 45, scale: 1, speed: 450, gyroscope: false }}
-      className="relative z-50 bg-tertiary p-5 rounded-2xl h-full"
+      className="bg-tertiary p-5 rounded-2xl h-full"
     >
       <div className="relative w-full h-[230px]">
         {/* Demo image link */}

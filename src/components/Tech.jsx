@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { createPortal } from "react-dom"
 import { SolarSystemCanvas, BallCanvas } from "./canvas"
 import { SectionWrapper } from "../hoc"
 import { technologies } from "../constants"
@@ -19,8 +20,9 @@ const MobileTechCard = ({ tech, onClose }) => {
       transition={{ type: 'spring', damping: 24, stiffness: 240 }}
       className="fixed inset-x-4 bottom-6 z-50 rounded-2xl p-6 max-h-[58vh] overflow-y-auto"
       style={{
-        background: 'rgba(10, 8, 28, 0.97)',
+        background: 'rgb(10, 8, 28)',
         backdropFilter: 'blur(14px)',
+        WebkitBackdropFilter: 'blur(14px)',
         border: `1px solid ${borderColor}`,
       }}
     >
@@ -100,6 +102,7 @@ const Tech = () => {
     () => typeof window !== 'undefined' && window.innerWidth < 768
   )
   const [selectedTech, setSelectedTech] = useState(null)
+  const sectionRef = useRef(null)
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
@@ -111,8 +114,23 @@ const Tech = () => {
     return () => mq.removeEventListener('change', handler)
   }, [])
 
+  // Dismiss the card only when the tech section scrolls off the top of the viewport
+  useEffect(() => {
+    if (!selectedTech || !sectionRef.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+          setSelectedTech(null)
+        }
+      },
+      { threshold: 0 }
+    )
+    observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [selectedTech])
+
   return (
-    <div>
+    <div ref={sectionRef}>
       <motion.div variants={textVariant()}>
         <p className={styles.sectionSubText}>The Stack</p>
         <h2 className={styles.sectionHeadText}>Technologies.</h2>
@@ -146,26 +164,30 @@ const Tech = () => {
         </div>
       )}
 
-      {/* Mobile TechCard overlay */}
-      <AnimatePresence>
-        {selectedTech && isMobile && (
-          <>
-            <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/50"
-              onClick={() => setSelectedTech(null)}
-            />
-            <MobileTechCard
-              key={selectedTech.name}
-              tech={selectedTech}
-              onClose={() => setSelectedTech(null)}
-            />
-          </>
-        )}
-      </AnimatePresence>
+      {/* Mobile TechCard overlay — rendered via portal to escape Framer Motion's
+          CSS transform context, which otherwise breaks position:fixed */}
+      {createPortal(
+        <AnimatePresence>
+          {selectedTech && isMobile && (
+            <>
+              <motion.div
+                key="backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-40 bg-black/50"
+                onClick={() => setSelectedTech(null)}
+              />
+              <MobileTechCard
+                key={selectedTech.name}
+                tech={selectedTech}
+                onClose={() => setSelectedTech(null)}
+              />
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   )
 }
