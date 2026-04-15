@@ -34,12 +34,12 @@ const ServiceCard = ({ index, title, icon, desc }) => (
             className='w-16 h-16 object-contain'
           />
 
-          <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-white  via-red-500 to-violet-600'>
+          <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-white via-red-400 to-violet-400'>
             {title}
           </h3>
-          <h1 className='text-semibold text-[13px] text-white text-center'>
+          <p className='text-[13px] text-white text-center'>
             {desc}
-          </h1>
+          </p>
         </div>
       </ElectricBorder>
     </motion.div>

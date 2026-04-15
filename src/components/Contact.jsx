@@ -32,17 +32,16 @@ const Contact = () => {
     setLoading(true);
 
     emailjs.send(
-        'service_xuqx7o9', 
-        'template_dnxjapm', 
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
           from_name: form.name,
           to_name: 'Peter',
           from_email: form.email,
           to_email: 'petercarlmorganelli@gmail.com',
           message: form.message,
-
         },
-        'xfNWIl9HrmmFM8N7b'
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then(
         () => {

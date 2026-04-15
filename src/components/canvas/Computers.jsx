@@ -31,7 +31,7 @@ const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 640px)");
+    const mq = window.matchMedia("(max-width: 767px)");
     const onChange = (e) => setIsMobile(e.matches);
     setIsMobile(mq.matches);
     mq.addEventListener("change", onChange);

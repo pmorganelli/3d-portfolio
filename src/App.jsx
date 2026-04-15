@@ -9,7 +9,6 @@ const App = () => {
         <div className="relative z-10">
           <Navbar />
           <Hero />
-          {/* <ContainerScroll /> */}
           <About />
           <Experience />
           <Tech />
