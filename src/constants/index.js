@@ -174,7 +174,7 @@ import {
       angleOffset: 0,
       decalScale: 1.0,
       info: {
-        level: "Advanced",
+        level: "Intermediate",
         orbits: "Scripting Language",
         description:
           "My primary language for web development. Used across full-stack apps, browser extensions, and interactive UIs — including this portfolio.",
@@ -197,10 +197,10 @@ import {
       angleOffset: 1.5708,
       decalScale: 1.0,
       info: {
-        level: "Advanced",
+        level: "Intermediate",
         orbits: "JavaScript Framework",
         description:
-          "My go-to frontend framework. Used in multiple full-stack projects including two JumboCode teams, a hackathon, and this portfolio.",
+          "My go-to frontend framework. Used in nearly all my full-stack projects including two JumboCode teams, a hackathon, and this portfolio.",
         projects: [
           { name: "Somerville Museum DB", link: "https://somervillemuseum.vercel.app/" },
           { name: "Theatre@First", link: "https://github.com/JumboCode/theatre-at-first" },
@@ -268,7 +268,7 @@ import {
         level: "Intermediate",
         orbits: "Object-Oriented Language",
         description:
-          "Used with Unity for game development. Familiar with component-based architecture, MonoBehaviour lifecycles, and game loops.",
+          "Used with Unity for game development for CS23: Game Design at Tufts University.",
         projects: [
           { name: "Slingshot Squires", link: "https://slingshotsquires.itch.io/slingshot-squires" },
           { name: "Snowplow Race", link: "https://gamedesignb11.itch.io/snowplow-race" },
@@ -288,10 +288,10 @@ import {
       angleOffset: 2.5944,
       decalScale: 1.0,
       info: {
-        level: "Learning",
+        level: "Familiar",
         orbits: "Containerization Platform",
         description:
-          "Using Docker to containerize services in the Food Waste Tracking App. Comfortable with Dockerfiles, docker-compose, and multi-service setups.",
+          "Currently using Docker to containerize services in my Food Waste Tracking App. Comfortable with Dockerfiles, docker-compose, and multi-service setups.",
         projects: [
           { name: "Food Waste App", link: "https://github.com/pmorganelli" },
         ],
@@ -334,7 +334,7 @@ import {
         level: "Learning",
         orbits: "3D Graphics Library",
         description:
-          "Currently using it to build this portfolio! Exploring R3F, Drei helpers, custom shaders, and GPU-rendered text via Pretext.",
+          "Currently using it to build this portfolio! Exploring R3F, Drei helpers, custom shaders, and GPU-rendered text via Cheng Lou's recently created Pretext library.",
         projects: [
           { name: "This Portfolio", link: "#" },
         ],
