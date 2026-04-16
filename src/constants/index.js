@@ -468,6 +468,7 @@ import {
       image: interpHomePage,
       source_code_link: "https://github.com/pmorganelli",
       demo_link: "https://elm-ide-105.vercel.app/index.html",
+      privateRepo: true,
       details: {
         overview: "A fully in-browser IDE built for Tufts' CS105 Programming Languages course. Students can write and run code in seven different languages — ranging from Impcore to nano-ML — without installing anything. The interpreter runs entirely client-side, making it accessible from any device, but it's designed to be used on a computer.",
         role: "Led the entire fullstack architecture and the Elm-based interpreter integration, working within the constraints of a course confidentiality agreement by obfuscating source code.",
@@ -615,6 +616,8 @@ import {
       image: flow,
       source_code_link: "https://github.com/pmorganelli/image-compressor",
       demo_link: "https://github.com/pmorganelli/image-compressor",
+      privateRepo: true,
+      noDemo: true,
       details: {
         overview: "A lossy image compression and decompression pipeline written entirely in C for Tufts' CS40: Machine Structure and Assembly Language Programming. The program converts raster images into a compact binary format and reconstructs them with controlled quality loss, similar in spirit to how JPEG compression works.",
         role: "Co-author alongside a lab partner — responsible for the color space conversion pipeline and the quantization stages.",
@@ -647,7 +650,7 @@ import {
       // React.js, Clerk, TypeScript, Next.js, TailwindCSS, DrizzleORM, GitHub, Slack, Figma
       image: theatre,
       source_code_link: "https://github.com/JumboCode/theatre-at-first",
-      demo_link: "https://github.com/JumboCode/theatre-at-first",
+      noDemo: true,
       details: {
         overview: "A full-stack costume and prop inventory system built for Theatre@First, a community theater in Somerville, MA. The app allows staff to browse, check out, and track the status of hundreds of items across productions — replacing their previous paper-and-spreadsheet system.",
         role: "Full-stack developer on a 10-person JumboCode team, working under tech leads Liam Strand and Amitav Nott. Completed weekly feature tickets across both the frontend and backend.",
@@ -708,6 +711,8 @@ import {
       image: portfolio,
       source_code_link: "https://github.com/pmorganelli/grep-clone",
       demo_link: "https://github.com/pmorganelli/grep-clone",
+      privateRepo: true,
+      noDemo: true,
       details: {
         overview: "A full reimplementation of the Unix grep command-line tool, built in C++ for Tufts' CS15 Data Structures course. Given a query string and a directory, gerp recursively indexes every file and returns all lines containing a match — case-sensitive or case-insensitive — in milliseconds.",
         role: "Co-author with a lab partner. Responsible for the hash table implementation, the file traversal pipeline, and query normalization.",

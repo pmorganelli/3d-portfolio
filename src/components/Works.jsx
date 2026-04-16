@@ -114,7 +114,7 @@ const LearnMoreModal = ({ project, onClose }) =>
             </Section>
 
             <div className="flex gap-3 pt-1 items-center">
-              {!project.inProgress && (
+              {!project.inProgress && !project.noDemo && (
                 <GlowButton
                   href={project.demo_link}
                   target="_blank"
@@ -123,16 +123,18 @@ const LearnMoreModal = ({ project, onClose }) =>
                   Live Demo
                 </GlowButton>
               )}
-              <a
-                href={project.source_code_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-2.5 px-5 rounded-xl text-center text-[13px] font-semibold
-                           border border-white/15 text-white/70 hover:text-white
-                           hover:border-white/30 transition-colors"
-              >
-                View Code
-              </a>
+              {!project.privateRepo && (
+                <a
+                  href={project.source_code_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2.5 px-5 rounded-xl text-center text-[13px] font-semibold
+                             border border-white/15 text-white/70 hover:text-white
+                             hover:border-white/30 transition-colors"
+                >
+                  View Code
+                </a>
+              )}
             </div>
           </div>
         </motion.div>
@@ -214,7 +216,7 @@ const InProgressModal = ({ project, onClose }) =>
   );
 
 // ── Project card ──────────────────────────────────────────────────────────────
-const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, inProgress, onInProgressClick, onLearnMore }) => (
+const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, inProgress, privateRepo, onInProgressClick, onLearnMore }) => (
   <motion.div
     variants={fadeIn('up', 'spring', index * 0.5, 0.75)}
     className="w-full sm:w-[360px]"
@@ -242,15 +244,17 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
           </a>
         )}
 
-        {/* GitHub — top left */}
-        <div className="absolute top-0 left-0 z-10">
-          <button
-            onClick={() => window.open(source_code_link, '_blank')}
-            className="black-gradient w-10 h-10 rounded-full flex justify-center items-center"
-          >
-            <img src={github} alt="github" className="w-1/2 h-1/2 object-contain" />
-          </button>
-        </div>
+        {/* GitHub — top left (hidden for private repos) */}
+        {!privateRepo && (
+          <div className="absolute top-0 left-0 z-10">
+            <button
+              onClick={() => window.open(source_code_link, '_blank')}
+              className="black-gradient w-10 h-10 rounded-full flex justify-center items-center"
+            >
+              <img src={github} alt="github" className="w-1/2 h-1/2 object-contain" />
+            </button>
+          </div>
+        )}
 
         {/* Learn More — top right */}
         <div className="absolute top-0 right-0 z-10">
