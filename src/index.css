@@ -215,6 +215,115 @@ body {
 
 
 
+/* ── UIverse glow button ─────────────────────────────────────────────────── */
+.glow-btn {
+  cursor: pointer;
+  border-radius: 16px;
+  border: none;
+  padding: 2px;
+  background: radial-gradient(circle 80px at 80% -10%, #ffffff22, #181b1b);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.glow-btn::after {
+  content: "";
+  position: absolute;
+  width: 65%;
+  height: 60%;
+  border-radius: 120px;
+  top: 0;
+  right: 0;
+  box-shadow: 0 0 20px #ffffff22;
+  z-index: 0;
+  pointer-events: none;
+}
+.glow-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px #3b82f633;
+}
+.glow-btn:active {
+  transform: translateY(0);
+}
+
+.glow-blob1 {
+  position: absolute;
+  width: 70px;
+  height: 100%;
+  border-radius: 16px;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(circle 60px at 0% 100%, #3fe9ff, #0055ff80, transparent);
+  box-shadow: -8px 8px 24px #0051ff33;
+  animation: glow-blob1-idle 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+.glow-blob2 {
+  position: absolute;
+  width: 70px;
+  height: 100%;
+  border-radius: 16px;
+  top: 0;
+  right: 0;
+  background: radial-gradient(circle 60px at 100% 0%, #a78bfa, #7c3aed66, transparent);
+  box-shadow: 8px -8px 24px #7c3aed33;
+  animation: glow-blob2-idle 3.2s ease-in-out infinite 1.6s;
+  pointer-events: none;
+}
+.glow-inner {
+  padding: 6px 14px;
+  border-radius: 14px;
+  color: #fff;
+  z-index: 2;
+  position: relative;
+  background: radial-gradient(circle 80px at 80% -50%, #555, #0c0e10);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.25s ease;
+}
+.glow-inner::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 14px;
+  background: radial-gradient(circle 60px at 0% 100%, #00e1ff18, #0000ff0e, transparent);
+  position: absolute;
+  pointer-events: none;
+}
+.glow-btn:hover .glow-blob1 {
+  animation: glow-blob1-hover 1.4s ease-in-out infinite;
+  box-shadow: -12px 10px 36px #0051ff55;
+}
+.glow-btn:hover .glow-blob2 {
+  animation: glow-blob2-hover 1.4s ease-in-out infinite 0.7s;
+  box-shadow: 12px -10px 36px #7c3aed55;
+}
+.glow-btn:hover .glow-inner {
+  background: radial-gradient(circle 80px at 80% -50%, #777, #14171a);
+}
+
+@keyframes glow-blob1-idle {
+  0%, 100% { transform: scale(1)   translateX(0); opacity: 0.9; }
+  50%       { transform: scale(1.1) translateX(4px); opacity: 1; }
+}
+@keyframes glow-blob2-idle {
+  0%, 100% { transform: scale(1)   translateX(0); opacity: 0.8; }
+  50%       { transform: scale(1.1) translateX(-4px); opacity: 1; }
+}
+@keyframes glow-blob1-hover {
+  0%, 100% { transform: scale(1.15) translateX(0); }
+  50%       { transform: scale(1.3)  translateX(6px); }
+}
+@keyframes glow-blob2-hover {
+  0%, 100% { transform: scale(1.15) translateX(0); }
+  50%       { transform: scale(1.3)  translateX(-6px); }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

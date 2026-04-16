@@ -528,8 +528,8 @@ import {
       source_code_link: "https://github.com/pmorganelli/slingshot-squires",
       demo_link: "https://slingshotsquires.itch.io/slingshot-squires",
       details: {
-        overview: "A medieval tower-defense / resource-management game where you purchase crops, build defenses, and fend off waves of enemies trying to overrun your land. Built for a Tufts game design course and published on itch.io.",
-        role: "Lead programmer responsible for the core gameplay loop, enemy AI, and resource economy systems.",
+        overview: "A medieval crop defense and resource-management game where you purchase crops, sell them for currency, and fend off waves of enemies trying to overrun your land. Built for a Tufts game design course and published on itch.io.",
+        role: "Programmer in a group of six responsible for the core slingshot mechanics, enemy pathfinding, and occasionally the resource economy systems.",
         built: [
           "Unity game engine with C# scripts driving all gameplay systems",
           "Implemented a physics-based slingshot inspired by Angry birds",
@@ -541,6 +541,7 @@ import {
           "Designed and balanced the entire resource economy from scratch — finding the fun through iteration",
           "Implemented pathfinding for enemy units navigating around dynamically placed defenses",
           "Shipped a complete, playable game within a single semester under tight deadlines",
+          "Styling and themes inspired by Stardew Valley"
         ],
       },
     },

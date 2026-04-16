@@ -8,6 +8,18 @@ import { SectionWrapper } from '../hoc';
 import { projects } from '../constants';
 import { fadeIn, textVariant } from '../utils/motion';
 
+// ── Reusable UIverse-style glow button ───────────────────────────────────────
+const GlowButton = ({ children, onClick, href, target, rel }) => {
+  const Tag = href ? 'a' : 'button';
+  return (
+    <Tag href={href} target={target} rel={rel} onClick={onClick} className="glow-btn">
+      <div className="glow-blob1" />
+      <div className="glow-blob2" />
+      <div className="glow-inner">{children}</div>
+    </Tag>
+  );
+};
+
 // ── Learn More modal ──────────────────────────────────────────────────────────
 const LearnMoreModal = ({ project, onClose }) =>
   createPortal(
@@ -31,11 +43,11 @@ const LearnMoreModal = ({ project, onClose }) =>
           onClick={(e) => e.stopPropagation()}
         >
           {/* Hero image — close button sits on top of it */}
-          <div className="relative w-full h-[200px] shrink-0 overflow-hidden rounded-t-2xl">
+          <div className="relative w-full aspect-video shrink-0 overflow-hidden rounded-t-2xl">
             <img
               src={project.image}
               alt={project.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
             <button
               onClick={onClose}
@@ -101,25 +113,22 @@ const LearnMoreModal = ({ project, onClose }) =>
               </ul>
             </Section>
 
-            <div className="flex gap-3 pt-1">
+            <div className="flex gap-3 pt-1 items-center">
               {!project.inProgress && (
-                <a
+                <GlowButton
                   href={project.demo_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-2.5 rounded-xl text-center text-[14px] font-semibold
-                             bg-gradient-to-r from-blue-600 to-violet-600 text-white
-                             hover:opacity-90 transition-opacity"
                 >
                   Live Demo
-                </a>
+                </GlowButton>
               )}
               <a
                 href={project.source_code_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-2.5 rounded-xl text-center text-[14px] font-semibold
-                           border border-white/15 text-white/80 hover:text-white
+                className="py-2.5 px-5 rounded-xl text-center text-[13px] font-semibold
+                           border border-white/15 text-white/70 hover:text-white
                            hover:border-white/30 transition-colors"
               >
                 View Code
@@ -243,18 +252,10 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
           </button>
         </div>
 
-        {/* Learn More — top right (commented out, not ready for prod)
+        {/* Learn More — top right */}
         <div className="absolute top-0 right-0 z-10">
-          <button
-            onClick={onLearnMore}
-            className="black-gradient px-3 h-10 rounded-full flex items-center justify-center
-                       text-white text-[12px] font-semibold hover:opacity-80 transition-opacity
-                       whitespace-nowrap"
-          >
-            Learn More
-          </button>
+          <GlowButton onClick={onLearnMore}>Learn More</GlowButton>
         </div>
-        */}
       </div>
 
       <div className="mt-5">
