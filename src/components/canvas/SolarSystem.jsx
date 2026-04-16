@@ -320,9 +320,20 @@ const PlanetCard = ({ tech, onClose }) => {
 // ─── Canvas + overlay wrapper ─────────────────────────────────────────────────
 const SolarSystemCanvas = ({ technologies }) => {
   const [selectedTech, setSelectedTech] = useState(null);
+  const containerRef = useRef(null);
+
+  // When a planet is selected, ensure the card (top-right of the canvas) is in view
+  useEffect(() => {
+    if (!selectedTech || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const navbarHeight = 80;
+    if (rect.top < navbarHeight) {
+      window.scrollTo({ top: window.scrollY + rect.top - navbarHeight, behavior: 'smooth' });
+    }
+  }, [selectedTech]);
 
   return (
-    <div className="relative w-full h-full">
+    <div ref={containerRef} className="relative w-full h-full">
       <Canvas
         shadows
         frameloop="always"

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Tilt } from 'react-tilt';
 import { motion, AnimatePresence } from 'framer-motion';
 import { styles } from '../styles';
@@ -7,71 +8,204 @@ import { SectionWrapper } from '../hoc';
 import { projects } from '../constants';
 import { fadeIn, textVariant } from '../utils/motion';
 
-// Modal shown for in-progress projects
-const InProgressModal = ({ project, onClose }) => (
-  <motion.div
-    className="fixed inset-0 z-[9999] flex items-center justify-center"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    onClick={onClose}
-  >
-    {/* Backdrop */}
-    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-
-    {/* Card */}
+// ── Learn More modal ──────────────────────────────────────────────────────────
+const LearnMoreModal = ({ project, onClose }) =>
+  createPortal(
     <motion.div
-      className="relative z-10 bg-tertiary rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-white/10"
-      initial={{ scale: 0.85, opacity: 0, y: 40 }}
-      animate={{ scale: 1, opacity: 1, y: 0 }}
-      exit={{ scale: 0.85, opacity: 0, y: 40 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-      onClick={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-[9999] overflow-y-auto"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
     >
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-secondary hover:text-white transition-colors text-xl leading-none"
-        aria-label="Close"
-      >
-        ✕
-      </button>
+      <div className="fixed inset-0 bg-black/75 backdrop-blur-sm" />
 
-      {/* Project image */}
-      <div className="w-full h-[180px] rounded-xl overflow-hidden mb-6">
-        <img
-          src={project.image}
-          alt={project.name}
-          className="w-full h-full object-cover"
-        />
+      <div className="flex min-h-full items-start justify-center px-4 py-8">
+        <motion.div
+          className="relative z-10 bg-[#0d0b1f] rounded-2xl w-full max-w-2xl
+                     shadow-2xl border border-white/10 flex flex-col"
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 32 }}
+          transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Hero image — close button sits on top of it */}
+          <div className="relative w-full h-[200px] shrink-0 overflow-hidden rounded-t-2xl">
+            <img
+              src={project.image}
+              alt={project.name}
+              className="w-full h-full object-cover"
+            />
+            <button
+              onClick={onClose}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center
+                         justify-center bg-black/60 text-white/70 hover:text-white
+                         hover:bg-black/80 transition-colors text-xl leading-none"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Content */}
+          <div className="p-7 flex flex-col gap-6">
+            {/* Title + tags */}
+            <div>
+              <h2 className="text-white font-bold text-[22px] leading-snug">
+                {project.name}
+              </h2>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {project.tags.map((tag, i) => (
+                  <span
+                    key={`${tag.name}-${i}`}
+                    className={`text-[12px] font-medium ${tag.color}`}
+                  >
+                    #{tag.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <Section title="Overview">
+              <p className="text-secondary text-[15px] leading-relaxed">
+                {project.details.overview}
+              </p>
+            </Section>
+
+            <Section title="My Role">
+              <p className="text-secondary text-[15px] leading-relaxed">
+                {project.details.role}
+              </p>
+            </Section>
+
+            <Section title="How It Was Built">
+              <ul className="flex flex-col gap-2">
+                {project.details.built.map((item, i) => (
+                  <li key={i} className="flex gap-2.5 text-secondary text-[15px] leading-relaxed">
+                    <span className="text-blue-400 shrink-0 mt-0.5">▸</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Section>
+
+            <Section title="Highlights">
+              <ul className="flex flex-col gap-2">
+                {project.details.highlights.map((item, i) => (
+                  <li key={i} className="flex gap-2.5 text-secondary text-[15px] leading-relaxed">
+                    <span className="text-violet-400 shrink-0 mt-0.5">★</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Section>
+
+            <div className="flex gap-3 pt-1">
+              {!project.inProgress && (
+                <a
+                  href={project.demo_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-2.5 rounded-xl text-center text-[14px] font-semibold
+                             bg-gradient-to-r from-blue-600 to-violet-600 text-white
+                             hover:opacity-90 transition-opacity"
+                >
+                  Live Demo
+                </a>
+              )}
+              <a
+                href={project.source_code_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 rounded-xl text-center text-[14px] font-semibold
+                           border border-white/15 text-white/80 hover:text-white
+                           hover:border-white/30 transition-colors"
+              >
+                View Code
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
+    </motion.div>,
+    document.body
+  );
 
-      {/* Heading */}
-      <h3 className="text-white font-bold text-[22px] mb-2">{project.name}</h3>
-
-      {/* In-progress message */}
-      <div className="mt-4 flex flex-col items-center gap-3 py-4">
-        <span className="text-4xl">🚧</span>
-        <p className="text-white font-semibold text-[18px] text-center">In progress!</p>
-        <p className="text-secondary text-[15px] text-center leading-relaxed">
-          Source code and demo available soon :)
-        </p>
-      </div>
-
-      {/* Tags */}
-      <div className="mt-4 flex flex-wrap gap-2 justify-center">
-        {project.tags.map((tag, i) => (
-          <p key={`${tag.name}-${i}`} className={`text-[13px] ${tag.color}`}>
-            {tag.name}
-          </p>
-        ))}
-      </div>
-    </motion.div>
-  </motion.div>
+// Small reusable section block inside the modal
+const Section = ({ title, children }) => (
+  <div>
+    <h4 className="text-white font-semibold text-[13px] uppercase tracking-widest mb-2.5
+                   text-white/40">
+      {title}
+    </h4>
+    {children}
+  </div>
 );
 
-// Single project card with tilt and animation
-const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, inProgress, onInProgressClick }) => (
+// ── In-progress modal ─────────────────────────────────────────────────────────
+const InProgressModal = ({ project, onClose }) =>
+  createPortal(
+    <motion.div
+      className="fixed inset-0 z-[9999] overflow-y-auto"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" />
+
+      <div className="flex min-h-full items-start justify-center px-4 py-8">
+        <motion.div
+          className="relative z-10 bg-tertiary rounded-2xl w-full max-w-md
+                     shadow-2xl border border-white/10 flex flex-col"
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 32 }}
+          transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Hero image — close button sits on top of it */}
+          <div className="relative w-full h-[180px] shrink-0 overflow-hidden rounded-t-2xl">
+            <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
+            <button
+              onClick={onClose}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center
+                         justify-center bg-black/60 text-white/70 hover:text-white
+                         hover:bg-black/80 transition-colors text-xl leading-none"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="p-7 flex flex-col gap-4">
+            <h3 className="text-white font-bold text-[22px]">{project.name}</h3>
+
+            <div className="flex flex-col items-center gap-3 py-4">
+              <span className="text-4xl">🚧</span>
+              <p className="text-white font-semibold text-[18px] text-center">In progress!</p>
+              <p className="text-secondary text-[15px] text-center leading-relaxed">
+                Source code and demo available soon :)
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2 justify-center">
+              {project.tags.map((tag, i) => (
+                <p key={`${tag.name}-${i}`} className={`text-[13px] ${tag.color}`}>
+                  {tag.name}
+                </p>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>,
+    document.body
+  );
+
+// ── Project card ──────────────────────────────────────────────────────────────
+const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, inProgress, onInProgressClick, onLearnMore }) => (
   <motion.div
     variants={fadeIn('up', 'spring', index * 0.5, 0.75)}
     className="w-full sm:w-[360px]"
@@ -86,11 +220,7 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
             onClick={onInProgressClick}
             className="block w-full h-full rounded-2xl overflow-hidden"
           >
-            <img
-              src={image}
-              alt={name}
-              className="w-full h-full object-cover rounded-2xl"
-            />
+            <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
             <div className="absolute inset-0 rounded-2xl flex items-center justify-center bg-black/40">
               <span className="bg-yellow-500/90 text-black font-bold text-[13px] px-3 py-1 rounded-full tracking-wide">
                 IN PROGRESS
@@ -98,36 +228,35 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
             </div>
           </button>
         ) : (
-          <a
-            href={demo_link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full h-full"
-          >
-            <img
-              src={image}
-              alt={name}
-              className="w-full h-full object-cover rounded-2xl"
-            />
+          <a href={demo_link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+            <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
           </a>
         )}
 
-        {/* GitHub icon */}
+        {/* GitHub — top left */}
         <div className="absolute top-0 left-0 z-10">
           <button
             onClick={() => window.open(source_code_link, '_blank')}
             className="black-gradient w-10 h-10 rounded-full flex justify-center items-center"
           >
-            <img
-              src={github}
-              alt="github"
-              className="w-1/2 h-1/2 object-contain"
-            />
+            <img src={github} alt="github" className="w-1/2 h-1/2 object-contain" />
           </button>
         </div>
+
+        {/* Learn More — top right (commented out, not ready for prod)
+        <div className="absolute top-0 right-0 z-10">
+          <button
+            onClick={onLearnMore}
+            className="black-gradient px-3 h-10 rounded-full flex items-center justify-center
+                       text-white text-[12px] font-semibold hover:opacity-80 transition-opacity
+                       whitespace-nowrap"
+          >
+            Learn More
+          </button>
+        </div>
+        */}
       </div>
 
-      {/* Title & description */}
       <div className="mt-5">
         <h3
           className="text-white font-bold text-[24px] cursor-pointer"
@@ -138,7 +267,6 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
         <p className="mt-2 text-secondary text-[14px]">{description}</p>
       </div>
 
-      {/* Tags */}
       <div className="mt-4 flex flex-wrap gap-2">
         {tags.map((tag, tagIndex) => (
           <p key={`${tag.name}-${tagIndex}`} className={`text-[14px] ${tag.color}`}>
@@ -150,8 +278,10 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
   </motion.div>
 );
 
+// ── Section content ───────────────────────────────────────────────────────────
 const WorksContent = () => {
   const [activeInProgress, setActiveInProgress] = useState(null);
+  const [activeLearnMore, setActiveLearnMore]   = useState(null);
 
   return (
     <>
@@ -171,11 +301,11 @@ const WorksContent = () => {
             index={index}
             {...project}
             onInProgressClick={() => setActiveInProgress(project)}
+            onLearnMore={() => setActiveLearnMore(project)}
           />
         ))}
       </div>
 
-      {/* AnimatePresence lives here in the parent so exit animations fire */}
       <AnimatePresence>
         {activeInProgress && (
           <InProgressModal
@@ -184,12 +314,17 @@ const WorksContent = () => {
             onClose={() => setActiveInProgress(null)}
           />
         )}
+        {activeLearnMore && (
+          <LearnMoreModal
+            key={`learn-${activeLearnMore.name}`}
+            project={activeLearnMore}
+            onClose={() => setActiveLearnMore(null)}
+          />
+        )}
       </AnimatePresence>
     </>
   );
 };
 
-// SectionWrapper adds the motion.section + scroll anchor
 const Works = SectionWrapper(WorksContent, 'projects');
-
 export default Works;

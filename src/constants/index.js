@@ -424,277 +424,307 @@ import {
     {
       name: "Mobile Food Waste Tracking App",
       description:
-      "In Progress! A smart and easy way to keep track of your food that's going bad. Scan a barcode, store your item, and even make an AI-generated recipe with your ingredients!",
+        "In Progress! A smart and easy way to keep track of your food that's going bad. Scan a barcode, store your item, and even make an AI-generated recipe with your ingredients!",
       tags: [
-        {
-          name: "react native",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "typescript",
-          color: "green-text-gradient",
-        },
-        {
-          name: "firebase",
-          color: "pink-text-gradient",
-        },
-        {
-          name: "springboot",
-          color: "orange-text-gradient",
-        },
-        {
-          name: "postgresql",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "docker",
-          color: "green-text-gradient",
-        }
+        { name: "react native", color: "blue-text-gradient" },
+        { name: "typescript",   color: "green-text-gradient" },
+        { name: "firebase",     color: "pink-text-gradient" },
+        { name: "springboot",   color: "orange-text-gradient" },
+        { name: "postgresql",   color: "blue-text-gradient" },
+        { name: "docker",       color: "green-text-gradient" },
       ],
       image: foodWasteHome,
       source_code_link: "https://github.com/pmorganelli",
-      demo_link: "https://elm-ide-105.vercel.app/index.html",
+      demo_link: "https://github.com/pmorganelli",
       inProgress: true,
+      details: {
+        overview: "A cross-platform mobile app designed to reduce household food waste by giving users a dead-simple way to log what's in their fridge, track expiration dates, and get AI-generated recipe suggestions based on ingredients that are about to go bad.",
+        role: "Solo developer — responsible for the full stack from the React Native UI down to the Spring Boot API and PostgreSQL schema design.",
+        built: [
+          "React Native + TypeScript frontend with Expo for rapid cross-platform development on iOS and Android",
+          "Barcode scanning via the device camera to auto-populate food item metadata from a public nutrition database API",
+          "Firebase Authentication for secure sign-in and per-user data isolation",
+          "Spring Boot REST API handling business logic, expiration calculations, and AI recipe generation requests",
+          "PostgreSQL database for persistent storage of food items, user profiles, and recipe history",
+          "Docker Compose for consistent local development across the frontend, backend, and database services",
+        ],
+        highlights: [
+          "Integrated an LLM API to generate personalized recipes from the user's specific expiring ingredients",
+          "Designed an expiration tracking system with push-notification reminders as items approach their use-by date",
+          "Containerized the full stack so any developer can spin up a working environment with a single command",
+        ],
+      },
     },
     {
       name: "CS105 Programming Languages Interpreter",
       description:
-      "An educational, in-browser, no setup, IDE for interpreting seven CS105 languages like Impcore, μScheme, nano-ML, etc. Source code not available due to class confidentiality but open-source version coming soon!",
+        "An educational, in-browser, no setup, IDE for interpreting seven CS105 languages like Impcore, μScheme, nano-ML, etc. Source code not available due to class confidentiality but open-source version coming soon!",
       tags: [
-        {
-          name: "elm",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "javascript",
-          color: "green-text-gradient",
-        },
-        {
-          name: "html",
-          color: "pink-text-gradient",
-        },
-        {
-          name: "css",
-          color: "orange-text-gradient",
-        },
+        { name: "elm",        color: "blue-text-gradient" },
+        { name: "javascript", color: "green-text-gradient" },
+        { name: "html",       color: "pink-text-gradient" },
+        { name: "css",        color: "orange-text-gradient" },
       ],
       image: interpHomePage,
       source_code_link: "https://github.com/pmorganelli",
-      demo_link: "https://elm-ide-105.vercel.app/index.html", 
+      demo_link: "https://elm-ide-105.vercel.app/index.html",
+      details: {
+        overview: "A fully in-browser IDE built for Tufts' CS105 Programming Languages course. Students can write and run code in seven different languages — ranging from Impcore to nano-ML — without installing anything. The interpreter runs entirely client-side, making it accessible from any device.",
+        role: "Led the frontend architecture and the Elm-based interpreter integration, working within the constraints of a course confidentiality agreement.",
+        built: [
+          "Elm for the core application logic and UI — chosen for its strong type system and built-in functional guarantees that match the course's language theory content",
+          "JavaScript interop (Elm ports) to bridge the interpreter engine with the browser environment",
+          "Custom syntax highlighting and error display tuned to each of the seven supported languages",
+          "Deployed on Vercel with zero-config CI/CD — every push to main ships a new version instantly",
+        ],
+        highlights: [
+          "Supports seven distinct language grammars in a single cohesive interface: Impcore, μScheme, μSML, nano-ML, μHaskell, Molecule, and more",
+          "Zero-setup experience — students open a URL and start coding, no local install required",
+          "An open-source version is in progress to make the tool available to the broader PL education community",
+        ],
+      },
     },
     {
       name: "Somerville Museum Database",
       description:
-      "A full-stack inventory project made for the Somerville Museum to keep track of borrowed items and props. Made for Tufts JumboCode. Click to demo!",
+        "A full-stack inventory project made for the Somerville Museum to keep track of borrowed items and props. Made for Tufts JumboCode. Click to demo!",
       tags: [
-        {
-          name: "react",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "javascript",
-          color: "orange-text-gradient",
-        },
-        {
-          name: "nextjs",
-          color: "pink-text-gradient",
-        },
-        {
-          name: "nodejs",
-          color: "green-text-gradient",
-        },
-        {
-          name: "css",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "sql",
-          color: "orange-text-gradient",
-        },
-        {
-          name: "neon",
-          color: "pink-text-gradient",
-        },
+        { name: "react",      color: "blue-text-gradient" },
+        { name: "javascript", color: "orange-text-gradient" },
+        { name: "nextjs",     color: "pink-text-gradient" },
+        { name: "nodejs",     color: "green-text-gradient" },
+        { name: "sql",        color: "blue-text-gradient" },
+        { name: "neon",       color: "orange-text-gradient" },
       ],
       image: smCapture,
       source_code_link: "https://github.com/JumboCode/somerville-museum",
-      demo_link: "https://somervillemuseum.vercel.app/", 
+      demo_link: "https://somervillemuseum.vercel.app/",
+      details: {
+        overview: "A production full-stack inventory management system built for the Somerville Museum through Tufts JumboCode. The museum staff use it to catalog artifacts, track loans, and manage their collection — replacing a fragile spreadsheet workflow with a searchable, role-protected database.",
+        role: "Full-stack developer on a team of 10, completing weekly feature tickets assigned by tech leads Holden Kittelberger and Zack White.",
+        built: [
+          "Next.js App Router for server-side rendering and API routes in a single unified codebase",
+          "React frontend with a component library built from scratch to match the museum's brand guidelines",
+          "PostgreSQL database hosted on Neon (serverless Postgres) — chosen for its branch-based development workflow",
+          "Node.js API layer handling CRUD operations, search indexing, and item loan tracking",
+          "Role-based access control distinguishing admin staff from read-only volunteers",
+        ],
+        highlights: [
+          "Shipped a live production app actively used by Somerville Museum staff",
+          "Collaborated asynchronously across a 10-person team using GitHub Projects, weekly standups, and Slack",
+          "Implemented full-text search across the artifact catalog so staff can find items by name, category, or condition",
+        ],
+      },
     },
     {
       name: "Slingshot Squires",
       description:
-      "Buy crops. Defend your land at all costs. Click to demo!",
+        "Buy crops. Defend your land at all costs. Click to demo!",
       tags: [
-        {
-          name: "c#",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "unity",
-          color: "green-text-gradient",
-        },
+        { name: "c#",   color: "blue-text-gradient" },
+        { name: "unity", color: "green-text-gradient" },
       ],
       image: slingshotSquire,
       source_code_link: "https://github.com/pmorganelli/slingshot-squires",
-      demo_link: "https://slingshotsquires.itch.io/slingshot-squires", 
+      demo_link: "https://slingshotsquires.itch.io/slingshot-squires",
+      details: {
+        overview: "A medieval tower-defense / resource-management game where you purchase crops, build defenses, and fend off waves of enemies trying to overrun your land. Built for a Tufts game design course and published on itch.io.",
+        role: "Lead programmer responsible for the core gameplay loop, enemy AI, and resource economy systems.",
+        built: [
+          "Unity game engine with C# scripts driving all gameplay systems",
+          "Component-based architecture using MonoBehaviour for modular enemy, turret, and resource entities",
+          "Wave spawning system with escalating difficulty curves tuned through Unity's Inspector for rapid playtesting",
+          "Economy system balancing crop income against defensive spending — iterated heavily based on playtesting feedback",
+          "Published and hosted on itch.io with WebGL build for instant in-browser play",
+        ],
+        highlights: [
+          "Designed and balanced the entire resource economy from scratch — finding the fun through iteration",
+          "Implemented pathfinding for enemy units navigating around dynamically placed defenses",
+          "Shipped a complete, playable game within a single semester under tight deadlines",
+        ],
+      },
     },
     {
       name: "Snowplow Race",
       description:
         "You're a snowplow driver on a busy night shift. Clear all the snow before time runs out! Click to demo.",
       tags: [
-        {
-          name: "c#",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "unity",
-          color: "green-text-gradient",
-        },
+        { name: "c#",    color: "blue-text-gradient" },
+        { name: "unity", color: "green-text-gradient" },
       ],
       image: snowplowdriver,
       source_code_link: "https://github.com/pmorganelli/snowplow-race",
-      demo_link: "https://gamedesignb11.itch.io/snowplow-race", 
+      demo_link: "https://gamedesignb11.itch.io/snowplow-race",
+      details: {
+        overview: "A top-down arcade game where you pilot a snowplow through increasingly chaotic city streets, racing against the clock to clear snow before morning traffic arrives. Built as a collaborative game design project at Tufts.",
+        role: "Programmer and co-designer — implemented vehicle physics, the snow accumulation system, and the scoring pipeline.",
+        built: [
+          "Unity with C# for all game logic and physics interactions",
+          "Custom top-down vehicle controller with momentum and steering feel tuned for arcadey handling",
+          "Procedural snow tile system that tracks cleared vs. uncleared areas as a percentage for the win condition",
+          "Time-pressure scoring system with combo multipliers for consecutive clears",
+          "WebGL build deployed to itch.io for immediate browser play with no download required",
+        ],
+        highlights: [
+          "Designed the snow-clearing mechanic from scratch — turning a mundane premise into a surprisingly satisfying gameplay loop",
+          "Collaborated with a small team, dividing art, design, and programming responsibilities under a course deadline",
+          "The game remains publicly playable on itch.io and has accumulated organic plays from the game jam community",
+        ],
+      },
     },
     {
       name: "CodeClock",
       description:
         "Are you a Tufts CS student? Are you sick and tired of keeping track of how long you spend on CS40, CS15, or any other courses? Meet CodeClock, a quick and seamless way to achieve this goal!",
       tags: [
-        {
-          name: "react.js",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "node.js",
-          color: "green-text-gradient",
-        },
-        {
-          name: "aws",
-          color: "pink-text-gradient",
-        },
-        {
-          name: "tailwindcss",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "vscode api",
-          color: "orange-text-gradient",
-        },
-        {
-          name: "mongodb",
-          color: "green-text-gradient",
-        },
+        { name: "react.js",  color: "blue-text-gradient" },
+        { name: "node.js",   color: "green-text-gradient" },
+        { name: "aws",       color: "pink-text-gradient" },
+        { name: "tailwindcss", color: "blue-text-gradient" },
+        { name: "vscode api",  color: "orange-text-gradient" },
+        { name: "mongodb",     color: "green-text-gradient" },
       ],
       image: codeclock,
       source_code_link: "https://github.com/pmorganelli/vscode-timer/tree/main",
-      demo_link: "https://devpost.com/software/codeclock", 
+      demo_link: "https://devpost.com/software/codeclock",
+      details: {
+        overview: "A VS Code extension + web dashboard built at JumboHack that lets Tufts CS students automatically track time spent on each course's assignments — without any manual input. The extension detects which project folder is active and silently logs coding sessions in the background.",
+        role: "Full-stack developer and sole architect — built the VS Code extension, REST API, and React dashboard end-to-end over a 24-hour hackathon.",
+        built: [
+          "VS Code Extension API to detect active workspace, start/stop session timers, and push session data to the backend",
+          "Node.js + Express REST API deployed on AWS EC2 for handling session ingestion and aggregation",
+          "MongoDB Atlas for storing time-series session records per user and per course",
+          "React + Tailwind CSS dashboard for visualizing weekly coding hours broken down by course",
+          "AWS infrastructure (EC2 + security groups) configured and deployed within the hackathon window",
+        ],
+        highlights: [
+          "Built the entire product — extension, API, database, and frontend — solo within 24 hours at JumboHack",
+          "Zero user friction: once installed, the extension runs silently with no manual start/stop required",
+          "Presented to a panel of judges and received recognition for technical depth and practical usefulness for the Tufts CS community",
+        ],
+      },
     },
     {
       name: "Image Compressor/Decompressor",
       description:
         "Utilizes a lossy compression algorithm to compress and decompress a given image. Written in C. Source code hidden for this project.",
       tags: [
-        {
-          name: "c",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "makefile",
-          color: "green-text-gradient",
-        },
+        { name: "c",        color: "blue-text-gradient" },
+        { name: "makefile", color: "green-text-gradient" },
       ],
       image: flow,
       source_code_link: "https://github.com/pmorganelli/image-compressor",
-      demo_link: "https://github.com/pmorganelli/image-compressor", 
+      demo_link: "https://github.com/pmorganelli/image-compressor",
+      details: {
+        overview: "A lossy image compression and decompression pipeline written entirely in C for Tufts' CS40 (Machine Structure and Assembly Language). The program converts raster images into a compact binary format and reconstructs them with controlled quality loss, similar in spirit to how JPEG compression works.",
+        role: "Co-author alongside a lab partner — responsible for the color space conversion pipeline and the DCT-based quantization stages.",
+        built: [
+          "Implemented in C with manual memory management — no garbage collection, no abstractions beyond what we wrote",
+          "Color space conversion from RGB to a luminance/chroma representation to concentrate compression on less perceptible channels",
+          "Discrete Cosine Transform (DCT) applied to 2×2 pixel blocks to convert spatial data to frequency components",
+          "Quantization step to discard high-frequency coefficients — the core of the lossy compression trade-off",
+          "Bitpacking to encode compressed data into a custom binary file format with a minimal header",
+          "Full decompression pipeline reversing every step to reconstruct the image from the compressed binary",
+        ],
+        highlights: [
+          "Achieved meaningful file size reduction while keeping perceptual quality high enough to be visually indistinguishable at normal viewing distances",
+          "Built entirely without image-processing libraries — every algorithm implemented from first principles",
+          "One of the most technically demanding projects in the Tufts CS curriculum; deepened understanding of how real-world formats like JPEG actually work",
+        ],
+      },
     },
     {
       name: "Theatre@First",
       description:
         "Inventory application for a local Somerville theater. Contributed alongside a team of 10 developers.",
       tags: [
-        {
-          name: "react",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "typescript",
-          color: "green-text-gradient",
-        },
-        {
-          name: "next",
-          color: "pink-text-gradient",
-        },
-        {
-          name: "next",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "tailwind",
-          color: "green-text-gradient",
-        },
-        {
-          name: "drizzleorm",
-          color: "orange-text-gradient",
-        },
+        { name: "react",      color: "blue-text-gradient" },
+        { name: "typescript", color: "green-text-gradient" },
+        { name: "next.js",    color: "pink-text-gradient" },
+        { name: "tailwind",   color: "blue-text-gradient" },
+        { name: "drizzleorm", color: "orange-text-gradient" },
       ],
-
-      //React.js, Clerk, TypeScript, Next.js, TailwindCSS, DrizzleORM, GitHub, Slack, Figma 
+      // React.js, Clerk, TypeScript, Next.js, TailwindCSS, DrizzleORM, GitHub, Slack, Figma
       image: theatre,
       source_code_link: "https://github.com/JumboCode/theatre-at-first",
-      demo_link: "https://github.com/JumboCode/theatre-at-first", 
+      demo_link: "https://github.com/JumboCode/theatre-at-first",
+      details: {
+        overview: "A full-stack costume and prop inventory system built for Theatre@First, a community theater in Somerville, MA. The app allows staff to browse, check out, and track the status of hundreds of items across productions — replacing their previous paper-and-spreadsheet system.",
+        role: "Full-stack developer on a 10-person JumboCode team, working under tech leads Liam Strand and Amitav Nott. Completed weekly feature tickets across both the frontend and backend.",
+        built: [
+          "Next.js 14 with App Router for server components and type-safe API routes",
+          "TypeScript throughout — enforced strict types on all data models, API payloads, and component props",
+          "Clerk for authentication — handles user sessions, role management, and OAuth login with zero backend auth code",
+          "DrizzleORM with a PostgreSQL database for type-safe queries with full schema migration support",
+          "Tailwind CSS for a consistent, responsive UI across desktop and tablet (primary staff devices)",
+          "Figma designs reviewed and implemented collaboratively with the team's designers",
+        ],
+        highlights: [
+          "Shipped a production app used by real theater staff managing a real catalog of props and costumes",
+          "First project where I worked extensively with TypeScript in a team setting — improved code confidence significantly",
+          "Learned to navigate a large shared codebase with 10 contributors, resolving merge conflicts and reviewing PRs weekly",
+        ],
+      },
     },
     {
       name: "Basic Portfolio Website",
       description:
         "Developed a responsive portfolio website, demonstrating strong front-end web development skills and modern web design principles",
       tags: [
-        {
-          name: "react",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "javascript",
-          color: "green-text-gradient",
-        },
-        {
-          name: "html",
-          color: "pink-text-gradient",
-        },
-        {
-          name: "css",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "vite",
-          color: "green-text-gradient",
-        },
-
+        { name: "react",      color: "blue-text-gradient" },
+        { name: "javascript", color: "green-text-gradient" },
+        { name: "html",       color: "pink-text-gradient" },
+        { name: "css",        color: "blue-text-gradient" },
+        { name: "vite",       color: "green-text-gradient" },
       ],
       image: basic,
       source_code_link: "https://github.com/pmorganelli/portfolio-website",
       demo_link: "https://basicpetermorganelli.vercel.app/",
+      details: {
+        overview: "My first personal portfolio website — a clean, responsive single-page app built with React and Vite. This was the project that solidified my frontend fundamentals and got me comfortable with modern React patterns, component architecture, and deploying to production.",
+        role: "Solo project — designed, built, and deployed everything independently.",
+        built: [
+          "React 18 with functional components and hooks for all state and side-effect management",
+          "Vite as the build tool — dramatically faster HMR than Create React App, which introduced me to modern tooling",
+          "Vanilla CSS with custom properties for theming and responsive layouts without a utility framework",
+          "React Router for client-side navigation between sections",
+          "Deployed on Vercel with automatic preview deployments on every pull request",
+        ],
+        highlights: [
+          "First fully self-directed project from blank repo to live production URL",
+          "Led directly to this portfolio — the experience building it made me want to push much further with 3D and animation",
+          "Still live at the demo link as a reference point for how far the work has come",
+        ],
+      },
     },
     {
       name: "gerp",
       description:
-        "Replicated the Unix “grep” program using C++, Hash Tables, and Vectors. Made with a partner for a Data Structures class. Source and demo unavailable... ;)",
+        "Replicated the Unix \"grep\" program using C++, Hash Tables, and Vectors. Made with a partner for a Data Structures class. Source and demo unavailable... ;)",
       tags: [
-        {
-          name: "c++",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "data structures",
-          color: "green-text-gradient",
-        },
-
+        { name: "c++",            color: "blue-text-gradient" },
+        { name: "data structures", color: "green-text-gradient" },
       ],
       image: portfolio,
       source_code_link: "https://github.com/pmorganelli/grep-clone",
       demo_link: "https://github.com/pmorganelli/grep-clone",
-    }
-
+      details: {
+        overview: "A full reimplementation of the Unix grep command-line tool, built in C++ for Tufts' CS15 Data Structures course. Given a query string and a directory, gerp recursively indexes every file and returns all lines containing a match — case-sensitive or case-insensitive — in milliseconds.",
+        role: "Co-author with a lab partner. Responsible for the hash table implementation, the file traversal pipeline, and query normalization.",
+        built: [
+          "C++ with the STL — vectors, unordered_map, and file streams as the primary building blocks",
+          "Custom hash table implementation mapping normalized words to a list of (file, line number) pairs for O(1) average-case lookup",
+          "Recursive directory traversal using POSIX APIs to index all files under a given root path",
+          "Query normalization stripping leading/trailing punctuation so searches behave intuitively",
+          "Streamed output to stdout to handle result sets larger than available memory without buffering everything at once",
+        ],
+        highlights: [
+          "Indexed and queried multi-megabyte directory trees in under a second — performance validated against the reference implementation",
+          "One of the most complex data structures projects in the Tufts CS15 curriculum; required careful memory management with no leaks under Valgrind",
+          "The project deepened my understanding of how real search tools are built — hash-based indexing, normalization tradeoffs, and I/O efficiency",
+        ],
+      },
+    },
   ];
   
   export { services, technologies, experiences, projects };
