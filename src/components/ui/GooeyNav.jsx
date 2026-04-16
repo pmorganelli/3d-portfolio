@@ -98,9 +98,7 @@ const GooeyNav = ({
   const handleItemActivate = (liEl, index) => {
     if (activeIndex === index) return;
 
-    setActiveIndex(index);
-    updateEffectPosition(liEl);
-
+    // Clear existing particles before setActiveIndex triggers the useEffect reposition
     if (filterRef.current) {
       const particles = filterRef.current.querySelectorAll(".particle");
       particles.forEach((p) => filterRef.current.removeChild(p));
@@ -115,6 +113,11 @@ const GooeyNav = ({
     if (filterRef.current) {
       makeParticles(filterRef.current);
     }
+
+    // Position update is handled solely by the useEffect below to avoid a
+    // double-measurement race where the immediate call and the effect call
+    // land with different layout dimensions.
+    setActiveIndex(index);
   };
 
   const handleClick = (e, index) => {

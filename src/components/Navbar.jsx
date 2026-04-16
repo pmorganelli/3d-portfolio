@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { styles } from '../styles';
 import { navLinks } from '../constants';
 import { hero, menu, close } from '../assets';
@@ -67,38 +68,55 @@ const Navbar = () => {
         </div>
 
         <div className="md:hidden flex flex-1 justify-end items-center">
-          <img src={toggle ? close : menu} alt="menu" className="w-[28px] h-[28px] object-contain cursor-pointer"
-            onClick={() => setToggle(!toggle)} 
+          <motion.img
+            src={toggle ? close : menu}
+            alt="menu"
+            className="w-[28px] h-[28px] object-contain cursor-pointer"
+            onClick={() => setToggle(!toggle)}
+            animate={{ rotate: toggle ? 90 : 0 }}
+            transition={{ duration: 0.2 }}
           />
-          <div className={`${!toggle ? 'hidden' : 'flex'} p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}>
-              <ul className='list-none flex justify-end items-start flex-col gap-4'>
-              {navLinks.map((nav) => (
-                <li key={nav.id} className="text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px] transition-colors"
-                  onClick={() => {
-                    setActive(nav.title);
-                    setToggle(!toggle);
-                  }}
-                >
-                  <a
-                    href={nav.title === "Résumé" ? `/resume.pdf` : `#${nav.id}`}
-                    target={nav.title === "Résumé" ? "_blank" : undefined}
-                    rel={nav.title === "Résumé" ? "noopener noreferrer" : undefined}
-                  >
-                    {nav.title}
-                  </a>
-                </li>
-              ))}
-              <li className="ps-8 justify-self-center">
-                <a href="https://github.com/pmorganelli" aria-label="GitHub"><Github /></a>
-              </li>
-              <li className="ps-8 justify-self-center">
-                <a href="https://www.linkedin.com/in/peter-morganelli-102860258/" aria-label="LinkedIn"><Linkedin /></a>
-              </li>
-              {/* <h1 className="ps-8 justify-self-center">
-                <a href="https://www.instagram.com/petermorganelli"><Instagram /></a>
-              </h1> */}
-            </ul>
-          </div>
+          <AnimatePresence>
+            {toggle && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92, y: -8 }}
+                animate={{ opacity: 1, scale: 1,    y: 0  }}
+                exit={{    opacity: 0, scale: 0.92, y: -8  }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl flex"
+              >
+                <ul className='list-none flex justify-end items-start flex-col gap-4'>
+                  {navLinks.map((nav, i) => (
+                    <motion.li
+                      key={nav.id}
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.15 }}
+                      className="text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px] transition-colors"
+                      onClick={() => {
+                        setActive(nav.title);
+                        setToggle(false);
+                      }}
+                    >
+                      <a
+                        href={nav.title === "Résumé" ? `/resume.pdf` : `#${nav.id}`}
+                        target={nav.title === "Résumé" ? "_blank" : undefined}
+                        rel={nav.title === "Résumé" ? "noopener noreferrer" : undefined}
+                      >
+                        {nav.title}
+                      </a>
+                    </motion.li>
+                  ))}
+                  <li className="ps-8 justify-self-center">
+                    <a href="https://github.com/pmorganelli" aria-label="GitHub"><Github /></a>
+                  </li>
+                  <li className="ps-8 justify-self-center">
+                    <a href="https://www.linkedin.com/in/peter-morganelli-102860258/" aria-label="LinkedIn"><Linkedin /></a>
+                  </li>
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </nav>

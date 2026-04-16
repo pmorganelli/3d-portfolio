@@ -24,7 +24,7 @@ const Hero = () => {
                   </span>
                 </h1>
                 <p className={`${styles.heroSubText}`}>
-                  I'm a software developer and computer science student at
+                  I'm a software engineer and computer science student at
                   <br className="sm:block hidden" /> Tufts University. Please reach
                   out if you'd like to connect!
                 </p>
