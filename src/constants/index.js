@@ -44,6 +44,10 @@ import {
       title: "Experience",
     },
     {
+      id: "tech",
+      title: "Technologies",
+    },
+    {
       id: "projects",
       title: "Projects",
     },
