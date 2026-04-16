@@ -127,7 +127,7 @@ import {
         level: "Intermediate",
         orbits: "Low-Level Systems Language",
         description:
-          "Used in systems programming coursework at Tufts. Comfortable with manual memory management, pointers, bit manipulation, and low-level I/O.",
+          "Used in nearly every CS40: Machine Structure and Assembly Language Programming project at Tufts. Also used in Trinity College Dublin's CSU33014 Concurrent Systems class for parallelizing code with pthreads and OpenMP along with vectorization. Comfortable with manual memory management, pointers, bit manipulation, and low-level I/O.",
         projects: [
           { name: "Image Compressor", link: "https://github.com/pmorganelli/image-compressor" },
         ],
@@ -148,7 +148,7 @@ import {
         level: "Proficient",
         orbits: "Version Control System",
         description:
-          "Daily driver for version control. Comfortable with branching, merging, rebasing, and collaborative GitHub workflows across team projects.",
+          "Daily driver for version control. Comfortable with branching, merging, rebasing, and collaborative GitHub/GitLab workflows across team projects.",
         projects: [
           { name: "Somerville Museum DB", link: "https://github.com/JumboCode/somerville-museum" },
           { name: "Theatre@First", link: "https://github.com/JumboCode/theatre-at-first" },
@@ -328,7 +328,7 @@ import {
         level: "Learning",
         orbits: "3D Graphics Library",
         description:
-          "Currently using it to build this portfolio! Exploring R3F, Drei helpers, custom shaders, and GPU-rendered text via Cheng Lou's recently created Pretext library.",
+          "Currently using it to build this portfolio! Exploring React 3 Fiber, Drei helpers, custom shaders, and GPU-rendered text via Cheng Lou's recently created Pretext library.",
         projects: [
           { name: "This Portfolio", link: "#" },
         ],
@@ -438,8 +438,8 @@ import {
       demo_link: "https://github.com/pmorganelli",
       inProgress: true,
       details: {
-        overview: "A cross-platform mobile app designed to reduce household food waste by giving users a dead-simple way to log what's in their fridge, track expiration dates, and get AI-generated recipe suggestions based on ingredients that are about to go bad.",
-        role: "Solo developer — responsible for the full stack from the React Native UI down to the Spring Boot API and PostgreSQL schema design.",
+        overview: "A cross-platform mobile app designed to reduce household food waste by giving users a simple way to log what's in their fridge, track expiration dates, and get AI-generated recipe suggestions based on ingredients that are about to go bad.",
+        role: "Developed in a team of six for CSU44098 Group Design Project at Trinity College Dublin. Responsible for handling end-to-end authentication in Firebase, redesigning our React Native UI, and creating a Claude Vision powered expiration date predictor for expiration dates.",
         built: [
           "React Native + TypeScript frontend with Expo for rapid cross-platform development on iOS and Android",
           "Barcode scanning via the device camera to auto-populate food item metadata from a public nutrition database API",
@@ -449,9 +449,9 @@ import {
           "Docker Compose for consistent local development across the frontend, backend, and database services",
         ],
         highlights: [
-          "Integrated an LLM API to generate personalized recipes from the user's specific expiring ingredients",
-          "Designed an expiration tracking system with push-notification reminders as items approach their use-by date",
-          "Containerized the full stack so any developer can spin up a working environment with a single command",
+          "Integrated the Claude API to generate personalized recipes from the user's specific expiring ingredients",
+          "Helped design an expiration tracking system with push-notification reminders as items approach their use-by date",
+          "Worked with a containerized application in Docker and adopted a shell script in the root directory so any developer can spin up a working environment with a single command",
         ],
       },
     },
@@ -469,18 +469,18 @@ import {
       source_code_link: "https://github.com/pmorganelli",
       demo_link: "https://elm-ide-105.vercel.app/index.html",
       details: {
-        overview: "A fully in-browser IDE built for Tufts' CS105 Programming Languages course. Students can write and run code in seven different languages — ranging from Impcore to nano-ML — without installing anything. The interpreter runs entirely client-side, making it accessible from any device.",
-        role: "Led the frontend architecture and the Elm-based interpreter integration, working within the constraints of a course confidentiality agreement.",
+        overview: "A fully in-browser IDE built for Tufts' CS105 Programming Languages course. Students can write and run code in seven different languages — ranging from Impcore to nano-ML — without installing anything. The interpreter runs entirely client-side, making it accessible from any device, but it's designed to be used on a computer.",
+        role: "Led the entire fullstack architecture and the Elm-based interpreter integration, working within the constraints of a course confidentiality agreement by obfuscating source code.",
         built: [
-          "Elm for the core application logic and UI — chosen for its strong type system and built-in functional guarantees that match the course's language theory content",
-          "JavaScript interop (Elm ports) to bridge the interpreter engine with the browser environment",
+          "Elm for the core application logic and UI — chosen for its strong type system and built-in functional programming that match the course's language theory content",
+          "JavaScript (Elm ports) to bridge the interpreter engine with the browser environment",
           "Custom syntax highlighting and error display tuned to each of the seven supported languages",
-          "Deployed on Vercel with zero-config CI/CD — every push to main ships a new version instantly",
+          "Utilized the browser's localStorage to persist code sessions across browsers",
         ],
         highlights: [
-          "Supports seven distinct language grammars in a single cohesive interface: Impcore, μScheme, μSML, nano-ML, μHaskell, Molecule, and more",
-          "Zero-setup experience — students open a URL and start coding, no local install required",
-          "An open-source version is in progress to make the tool available to the broader PL education community",
+          "Supports seven distinct language grammars in a single cohesive interface: Impcore, μScheme, μSmalltalk, nano-ML, typed-Impcore, typed-μScheme, μML, and Molecule",
+          "Zero-setup installation — students open a URL and start coding, nothin else required",
+          "An open-source version is in progress",
         ],
       },
     },
@@ -503,10 +503,10 @@ import {
         overview: "A production full-stack inventory management system built for the Somerville Museum through Tufts JumboCode. The museum staff use it to catalog artifacts, track loans, and manage their collection — replacing a fragile spreadsheet workflow with a searchable, role-protected database.",
         role: "Full-stack developer on a team of 10, completing weekly feature tickets assigned by tech leads Holden Kittelberger and Zack White.",
         built: [
-          "Next.js App Router for server-side rendering and API routes in a single unified codebase",
+          "Next.js App Router for server-side rendering and API routes in a single codebase",
           "React frontend with a component library built from scratch to match the museum's brand guidelines",
           "PostgreSQL database hosted on Neon (serverless Postgres) — chosen for its branch-based development workflow",
-          "Node.js API layer handling CRUD operations, search indexing, and item loan tracking",
+          "Node.js API layer handling search indexing and item loan tracking",
           "Role-based access control distinguishing admin staff from read-only volunteers",
         ],
         highlights: [
@@ -532,8 +532,8 @@ import {
         role: "Lead programmer responsible for the core gameplay loop, enemy AI, and resource economy systems.",
         built: [
           "Unity game engine with C# scripts driving all gameplay systems",
-          "Component-based architecture using MonoBehaviour for modular enemy, turret, and resource entities",
-          "Wave spawning system with escalating difficulty curves tuned through Unity's Inspector for rapid playtesting",
+          "Implemented a physics-based slingshot inspired by Angry birds",
+          "Wave spawning system with escalating enemy difficulty curves tuned through Unity's Inspector for rapid playtesting",
           "Economy system balancing crop income against defensive spending — iterated heavily based on playtesting feedback",
           "Published and hosted on itch.io with WebGL build for instant in-browser play",
         ],
@@ -556,19 +556,18 @@ import {
       source_code_link: "https://github.com/pmorganelli/snowplow-race",
       demo_link: "https://gamedesignb11.itch.io/snowplow-race",
       details: {
-        overview: "A top-down arcade game where you pilot a snowplow through increasingly chaotic city streets, racing against the clock to clear snow before morning traffic arrives. Built as a collaborative game design project at Tufts.",
+        overview: "Midterm project for CS23: Game Design at Tufts University. You pilot a snowplow through increasingly chaotic city streets, racing against the clock to clear snow before morning traffic arrives.",
         role: "Programmer and co-designer — implemented vehicle physics, the snow accumulation system, and the scoring pipeline.",
         built: [
           "Unity with C# for all game logic and physics interactions",
-          "Custom top-down vehicle controller with momentum and steering feel tuned for arcadey handling",
+          "Custom vehicle controller fit for WASD or arrows with steering feel tuned for handling",
           "Procedural snow tile system that tracks cleared vs. uncleared areas as a percentage for the win condition",
-          "Time-pressure scoring system with combo multipliers for consecutive clears",
+          "Time-pressure scoring system with incentive for consecutive clears",
           "WebGL build deployed to itch.io for immediate browser play with no download required",
         ],
         highlights: [
-          "Designed the snow-clearing mechanic from scratch — turning a mundane premise into a surprisingly satisfying gameplay loop",
+          "The game remains publicly playable on itch.io and was made alongside Professor Emeritus Dr. Norman Ramsey",
           "Collaborated with a small team, dividing art, design, and programming responsibilities under a course deadline",
-          "The game remains publicly playable on itch.io and has accumulated organic plays from the game jam community",
         ],
       },
     },
@@ -588,8 +587,8 @@ import {
       source_code_link: "https://github.com/pmorganelli/vscode-timer/tree/main",
       demo_link: "https://devpost.com/software/codeclock",
       details: {
-        overview: "A VS Code extension + web dashboard built at JumboHack that lets Tufts CS students automatically track time spent on each course's assignments — without any manual input. The extension detects which project folder is active and silently logs coding sessions in the background.",
-        role: "Full-stack developer and sole architect — built the VS Code extension, REST API, and React dashboard end-to-end over a 24-hour hackathon.",
+        overview: "A VS Code extension and web dashboard built in a weekend at Tufts JumboHack that lets Tufts CS students automatically track time spent on each course's assignments — without any manual input. The extension detects which project folder is active and silently logs coding sessions in the background.",
+        role: "Built the VS Code extension, REST API, and React dashboard end-to-end over a weekend hackathon.",
         built: [
           "VS Code Extension API to detect active workspace, start/stop session timers, and push session data to the backend",
           "Node.js + Express REST API deployed on AWS EC2 for handling session ingestion and aggregation",
@@ -598,8 +597,8 @@ import {
           "AWS infrastructure (EC2 + security groups) configured and deployed within the hackathon window",
         ],
         highlights: [
-          "Built the entire product — extension, API, database, and frontend — solo within 24 hours at JumboHack",
-          "Zero user friction: once installed, the extension runs silently with no manual start/stop required",
+          "Built the entire product — extension, API, database, and frontend — with a small group of developers",
+          "Once installed and launched, the extension runs silently with no manual start/stop required",
           "Presented to a panel of judges and received recognition for technical depth and practical usefulness for the Tufts CS community",
         ],
       },
@@ -616,12 +615,12 @@ import {
       source_code_link: "https://github.com/pmorganelli/image-compressor",
       demo_link: "https://github.com/pmorganelli/image-compressor",
       details: {
-        overview: "A lossy image compression and decompression pipeline written entirely in C for Tufts' CS40 (Machine Structure and Assembly Language). The program converts raster images into a compact binary format and reconstructs them with controlled quality loss, similar in spirit to how JPEG compression works.",
-        role: "Co-author alongside a lab partner — responsible for the color space conversion pipeline and the DCT-based quantization stages.",
+        overview: "A lossy image compression and decompression pipeline written entirely in C for Tufts' CS40: Machine Structure and Assembly Language Programming. The program converts raster images into a compact binary format and reconstructs them with controlled quality loss, similar in spirit to how JPEG compression works.",
+        role: "Co-author alongside a lab partner — responsible for the color space conversion pipeline and the quantization stages.",
         built: [
           "Implemented in C with manual memory management — no garbage collection, no abstractions beyond what we wrote",
           "Color space conversion from RGB to a luminance/chroma representation to concentrate compression on less perceptible channels",
-          "Discrete Cosine Transform (DCT) applied to 2×2 pixel blocks to convert spatial data to frequency components",
+          "Discrete Cosine Transform (DCT) applied to 2x2 pixel blocks to convert spatial data to frequency components",
           "Quantization step to discard high-frequency coefficients — the core of the lossy compression trade-off",
           "Bitpacking to encode compressed data into a custom binary file format with a minimal header",
           "Full decompression pipeline reversing every step to reconstruct the image from the compressed binary",
@@ -662,7 +661,7 @@ import {
         highlights: [
           "Shipped a production app used by real theater staff managing a real catalog of props and costumes",
           "First project where I worked extensively with TypeScript in a team setting — improved code confidence significantly",
-          "Learned to navigate a large shared codebase with 10 contributors, resolving merge conflicts and reviewing PRs weekly",
+          "Learned to navigate a large shared codebase with 10 contributors, resolving merge conflicts and submitting PRs",
         ],
       },
     },
@@ -712,9 +711,8 @@ import {
         overview: "A full reimplementation of the Unix grep command-line tool, built in C++ for Tufts' CS15 Data Structures course. Given a query string and a directory, gerp recursively indexes every file and returns all lines containing a match — case-sensitive or case-insensitive — in milliseconds.",
         role: "Co-author with a lab partner. Responsible for the hash table implementation, the file traversal pipeline, and query normalization.",
         built: [
-          "C++ with the STL — vectors, unordered_map, and file streams as the primary building blocks",
+          "C++ with the standard library vectors, unordered_map, and file streams as the primary building blocks",
           "Custom hash table implementation mapping normalized words to a list of (file, line number) pairs for O(1) average-case lookup",
-          "Recursive directory traversal using POSIX APIs to index all files under a given root path",
           "Query normalization stripping leading/trailing punctuation so searches behave intuitively",
           "Streamed output to stdout to handle result sets larger than available memory without buffering everything at once",
         ],
