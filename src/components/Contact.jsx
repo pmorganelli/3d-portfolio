@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import emailjs from '@emailjs/browser'
 import { styles } from "../styles"
@@ -15,6 +15,7 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [status, setStatus]   = useState(null); // null | 'success' | 'error'
   const isFormValid =
     form.name.trim() !== "" &&
     form.email.trim() !== "" &&
@@ -46,19 +47,13 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Thank you! I will get back to you as soon as possible :). -Peter");
-
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
+          setStatus('success');
+          setForm({ name: "", email: "", message: "" });
         },
         (error) => {
           setLoading(false);
           console.error(error);
-
-          alert("Ahh, something went wrong. Please try again.");
+          setStatus('error');
         }
       );
   };
@@ -85,7 +80,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               placeholder="What's your name?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
+              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
             />
           </label>
           <label className="flex flex-col">
@@ -97,7 +92,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               placeholder="What's your email?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
+              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
             />
           </label>
           <label className='flex flex-col'>
@@ -120,6 +115,17 @@ const Contact = () => {
           >
             {loading ? 'Sending...' : 'Send'}
           </button>
+
+          {status === 'success' && (
+            <p className="text-green-400 text-[14px] font-medium">
+              Message sent! I'll get back to you soon. — Peter
+            </p>
+          )}
+          {status === 'error' && (
+            <p className="text-red-400 text-[14px] font-medium">
+              Something went wrong. Please try again.
+            </p>
+          )}
         </form>
       </motion.div>
 

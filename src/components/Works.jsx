@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Tilt } from 'react-tilt';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -216,7 +216,7 @@ const InProgressModal = ({ project, onClose }) =>
   );
 
 // ── Project card ──────────────────────────────────────────────────────────────
-const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, inProgress, privateRepo, onInProgressClick, onLearnMore }) => (
+const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, inProgress, privateRepo, noDemo, onInProgressClick, onLearnMore }) => (
   <motion.div
     variants={fadeIn('up', 'spring', index * 0.5, 0.75)}
     className="w-full sm:w-[360px]"
@@ -238,10 +238,14 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
               </span>
             </div>
           </button>
-        ) : (
+        ) : !noDemo && demo_link ? (
           <a href={demo_link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
             <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
           </a>
+        ) : (
+          <div className="block w-full h-full">
+            <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
+          </div>
         )}
 
         {/* GitHub — top left (hidden for private repos) */}
@@ -264,8 +268,14 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
 
       <div className="mt-5">
         <h3
-          className="text-white font-bold text-[24px] cursor-pointer"
-          onClick={inProgress ? onInProgressClick : () => window.open(demo_link, '_blank')}
+          className={`text-white font-bold text-[24px] ${(inProgress || (!noDemo && demo_link)) ? 'cursor-pointer' : ''}`}
+          onClick={
+            inProgress
+              ? onInProgressClick
+              : (!noDemo && demo_link)
+                ? () => window.open(demo_link, '_blank')
+                : undefined
+          }
         >
           {name}
         </h3>
@@ -287,6 +297,18 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
 const WorksContent = () => {
   const [activeInProgress, setActiveInProgress] = useState(null);
   const [activeLearnMore, setActiveLearnMore]   = useState(null);
+
+  useEffect(() => {
+    if (!activeInProgress && !activeLearnMore) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setActiveInProgress(null);
+        setActiveLearnMore(null);
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [activeInProgress, activeLearnMore]);
 
   return (
     <>

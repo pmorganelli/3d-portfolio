@@ -148,9 +148,6 @@ const Tech = () => {
               <BallCanvas
                 icon={tech.icon}
                 ballColor={tech.color}
-                name={tech.name}
-                tag={tech.tag}
-                noLabel
               />
               {/* Transparent overlay captures the tap without blocking WebGL render */}
               <div className="absolute inset-0" />

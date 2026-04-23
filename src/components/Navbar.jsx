@@ -54,16 +54,12 @@ const Navbar = () => {
             colors={[2, 3, 4, 3, 2]}
           />
           <div className='flex items-center gap-4 text-secondary'>
-            <h1>
-              <a href='https://github.com/pmorganelli' aria-label='GitHub' className='hover:text-white transition-colors'>
-                <Github />
-              </a>
-            </h1>
-            <h1>
-              <a href='https://www.linkedin.com/in/peter-morganelli-102860258/' aria-label='LinkedIn' className='hover:text-white transition-colors'>
-                <Linkedin />
-              </a>
-            </h1>
+            <a href='https://github.com/pmorganelli' aria-label='GitHub' className='hover:text-white transition-colors'>
+              <Github />
+            </a>
+            <a href='https://www.linkedin.com/in/peter-morganelli-102860258/' aria-label='LinkedIn' className='hover:text-white transition-colors'>
+              <Linkedin />
+            </a>
           </div>
         </div>
 

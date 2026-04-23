@@ -109,7 +109,7 @@ import {
         level: "Proficient",
         orbits: "Center of the System",
         description:
-          "Extensively used in Tufts Computer Science curriculum. Made every CS15: Data Structres assignment in C++ and then subsequently became a TA for three semesters and Grading TF for one semester.",
+          "Extensively used in Tufts Computer Science curriculum. Made every CS15: Data Structures assignment in C++ and then subsequently became a TA for three semesters and Grading TF for one semester.",
         projects: [
           { name: "gerp (grep clone)", link: "https://github.com/pmorganelli/grep-clone" },
         ],
@@ -394,8 +394,10 @@ import {
       iconBg: "#E6DEDD",
       date: "October 2023 - May 2025",
       points: [
-        "2024-2025: Developed a full-stack inventory management system to help the Somerville Museum catalog and organize its collection of artifacts. Built with a PostgreSQL database (managed via Neon) and a React/Next.js frontend. Collaborated with a team of 10 developers, completing weekly tickets assigned by lead developers. \n Mentors/Tech Leads: Holden Kittelberger and Zack White",
-        "2023-2024: Helped develop a full-stack inventory website for a local Somerville theatre, Theatre@First, with a group of 10 developers through weekly assigned tickets by lead developers. \n Mentors/Tech Leads: Liam Strand and Amitav Nott",
+        "2024-2025: Developed a full-stack inventory management system to help the Somerville Museum catalog and organize its collection of artifacts. Built with a PostgreSQL database (managed via Neon) and a React/Next.js frontend. Collaborated with a team of 10 developers, completing weekly tickets assigned by lead developers.",
+        "Mentors/Tech Leads (2024–2025): Holden Kittelberger and Zack White",
+        "2023-2024: Helped develop a full-stack inventory website for a local Somerville theatre, Theatre@First, with a group of 10 developers through weekly assigned tickets by lead developers.",
+        "Mentors/Tech Leads (2023–2024): Liam Strand and Amitav Nott",
         "JumboHack Hackathon x2",
       ],
     },
@@ -418,7 +420,7 @@ import {
       iconBg: "#383E56",
       date: "June - August 2022, 2023, and 2024",
       points: [
-        "Rescued eight drowing victims in the water",
+        "Rescued eight drowning victims in the water",
         "Responded to all emergencies and ensured proper cleanliness of the facility while enforcing pool rules and scanning zones according to Red Cross standards",
       ],
     }
@@ -484,7 +486,7 @@ import {
         ],
         highlights: [
           "Supports seven distinct language grammars in a single cohesive interface: Impcore, μScheme, μSmalltalk, nano-ML, typed-Impcore, typed-μScheme, μML, and Molecule",
-          "Zero-setup installation — students open a URL and start coding, nothin else required",
+          "Zero-setup installation — students open a URL and start coding, nothing else required",
           "An open-source version is in progress",
         ],
       },

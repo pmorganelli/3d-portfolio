@@ -12,7 +12,7 @@ Project context, architectural decisions, and implementation notes for Claude Co
 - **Tailwind CSS v3** — utility styling
 - **emailjs** — contact form
 - **react-tilt** — card hover tilt effects
-- **@chenglou/pretext** — fast DOM-free text layout (see section below)
+- **@chenglou/pretext** — fast DOM-free text layout (used by SolarSystem label sprites)
 
 ---
 
@@ -21,13 +21,15 @@ Project context, architectural decisions, and implementation notes for Claude Co
 | File | Purpose |
 |---|---|
 | `src/components/canvas/Computers.jsx` | Hero 3D scene: Rubik's cube only |
-| `src/components/canvas/Ball.jsx` | Tech stack spheres with Pretext-powered label sprites |
+| `src/components/canvas/Ball.jsx` | Tech stack spheres (mobile grid, no labels) |
+| `src/components/canvas/SolarSystem.jsx` | Solar system (desktop tech section, has Pretext labels) |
+| `src/components/canvas/labelTexture.js` | `makeLabelTexture()` using Pretext — used by SolarSystem only |
 | `src/components/canvas/Earth.jsx` | Contact section globe |
 | `src/components/canvas/Stars.jsx` | Background star field |
-| `src/components/Tech.jsx` | Technologies section — renders one BallCanvas per tech |
+| `src/components/Tech.jsx` | Technologies section — solar system on desktop, 3D ball grid on mobile |
 | `src/components/Hero.jsx` | Hero section layout |
 | `src/hoc/SectionWrapper.jsx` | Animation HOC wrapping most sections |
-| `src/constants/index.js` | All portfolio data — each technology now has `name`, `icon`, `color`, `tag` |
+| `src/constants/index.js` | All portfolio data — technologies have `name`, `icon`, `color`, `tag`, `info` |
 | `src/styles.js` | Shared Tailwind class strings |
 
 ---
@@ -36,17 +38,14 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 ### Canvas frameloop modes
 
-- `frameloop="always"` on Computers canvas — needed for `useFrame`-driven animations (cube auto-rotate)
+- `frameloop="always"` on Computers + SolarSystem canvases — needed for `useFrame`-driven animations
 - `frameloop="demand"` on Ball/Earth canvases — renders on interaction; OrbitControls `autoRotate` keeps invalidating
 
-### Ball canvas camera
+### Ball canvas (mobile)
 
-- `camera={{ position: [0, 0, 6.5], fov: 65 }}` — pulled back from R3F default (z=5, fov=75) so the label sprite below the ball is fully within the camera frustum
-
-### Ball label sprite placement
-
-- The `<sprite>` lives **outside** `<Float>` in the Ball component. This is critical — if placed inside Float, the rotational oscillation (`rotationIntensity`) would orbit the sprite's world position around the Float center, causing the label to fly around instead of staying below the ball.
-- Ball bottom ≈ y=-2.75 (scale 2.75, icosahedron radius 1). Sprite at y=-3.5 clears with ~0.4 unit gap.
+- `Ball` component takes `imgUrl` and `color` only — no label sprite, no Pretext
+- Default R3F camera (no explicit camera prop)
+- Mobile tech grid: 3-column grid of `h-28` cells; transparent overlay div captures taps without blocking WebGL
 
 ### Lights
 
@@ -54,21 +53,27 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 ### Works.jsx
 
-- Exports `Works` directly (no SectionWrapper)
-- Two internal branches: `WorksPlain` and `WorksAnimated`, each handling their own section wrapper/ID
+- `WorksContent` is the inner component; `Works = SectionWrapper(WorksContent, 'projects')`
+- `noDemo` prop guards the project title/image from opening an undefined `demo_link` as a demo link
 
 ### Tilt
 
 - `options` prop on `<Tilt>`, not on child divs
 
-### Social icons in mobile nav
+### Social icons
 
-- Use `<li>`, not `<h1>`
+- Mobile nav: use `<li>`, not `<h1>`
+- Desktop nav: use plain `<a>` tags, not wrapped in `<h1>`
 
 ### Bounds component (Computers.jsx)
 
 - `<Bounds fit clip observe margin={1.15}>` auto-fits camera to enclose the Rubik's cube
 - Place any non-cube 3D elements **outside** `<Bounds>` so they don't affect camera fitting
+
+### Contact form
+
+- Uses `status` state (`null | 'success' | 'error'`) for inline feedback — no `alert()` calls
+- Form inputs use `outline-none` (not `outlined-none`) to suppress browser focus rings
 
 ---
 
@@ -101,62 +106,25 @@ const { lines, lineCount, height } = layoutWithLines(prepared, maxWidth, lineHei
 - `layoutNextLine(prepared, cursor, maxWidth)` → `LayoutLine | null` — variable-width layout
 - `clearCache()` — clear internal measurement cache if needed
 
-**No `inline-flow` sub-export exists in v0.0.4** — simulate inline-flow with separate `prepareWithSegments` calls per font run (see Ball.jsx pattern).
+**No `inline-flow` sub-export exists in v0.0.4** — simulate inline-flow with separate `prepareWithSegments` calls per font run.
+
+**`lines[0].width` trick** — passing `maxWidth=4000` to `layoutWithLines` prevents wrapping, so `lines[0].width` is the exact natural (unwrapped) pixel width of the text — used for precise inline layout in `labelTexture.js`.
 
 ---
 
-## Feature: Tech Stack Ball Labels (Idea #5) ✅
+## SolarSystem Label Sprites
 
-### What it does
-Each tech ball in the Technologies section has a billboard label sprite floating below it. The label is a `THREE.CanvasTexture` (320×88px offscreen canvas) rendered using Pretext to achieve pixel-perfect mixed-font layout without any DOM involvement:
+`src/components/canvas/labelTexture.js` builds a `THREE.CanvasTexture` (320×88px) for each planet/sun using Pretext. Layout: colored dot → tech name (bold 15px) → version tag chip (11px). Used exclusively by `SolarSystem.jsx`.
 
-- **Colored dot** (tech accent color)
-- **Tech name** in `bold 15px system-ui`
-- **Tag chip** (version/category) in `11px system-ui`, colored border and fill
-
-### Files
-
-- `src/components/canvas/Ball.jsx` — `makeLabelTexture()` + updated `Ball` + `BallCanvas`
-- `src/components/Tech.jsx` — passes `name` and `tag` to `BallCanvas`; div is `w-28 h-36`
-- `src/constants/index.js` — `tag` field added to every technology entry
-
-### Inline-flow simulation with Pretext
-`@chenglou/pretext` has no `prepareInlineFlow` export (v0.0.4). The pattern used in `makeLabelTexture`:
-
-```js
-// Prepare each font run separately
-const namePrepared = prepareWithSegments(name, NAME_F);  // bold 15px
-const tagPrepared  = prepareWithSegments(tag,  TAG_F);   // 11px
-
-// layout() with huge maxWidth = no wrapping → lines[0].width = exact natural text width
-const nameW = layoutWithLines(namePrepared, 4000, TEXT_LH).lines[0].width;
-const tagW  = layoutWithLines(tagPrepared,  4000, TEXT_LH).lines[0].width;
-
-// Use exact widths to:
-// 1. Size the pill background = contentW + padding (no guessing)
-// 2. Center the tag text within its chip = chipX + (chipW - tagW) / 2
-// 3. Lay out dot → name → chip sequentially with exact x positions
-```
-
-### Key decisions
-
-1. **`useMemo([name, tag, color])`** — Pretext `prepare` runs once per ball at mount; Three.js texture is stable
-2. **Sprite outside `<Float>`** — prevents label from orbiting due to Float's `rotationIntensity`
-3. **`spriteMaterial depthWrite={false}`** — prevents label from z-fighting with the ball geometry
-4. **`lines[0].width` trick** — passing `maxWidth=4000` to `layoutWithLines` prevents wrapping, so `lines[0].width` is the natural (unwrapped) pixel width of the text — Pretext's exact measurement
-5. **`lighten(hex, ratio)` helper** — brightens the tech color for the tag chip text so it's legible against the dark chip background
-
-### Visual design
-
-- Pill background: `rgba(6, 8, 16, 0.90)` (near-black, slightly transparent)
-- Pill border: tech color at 31% opacity
-- Name text: `#f2f2f2` bold
-- Tag chip fill: tech color at 13% opacity; border at 33%
-- Tag text: tech color lightened 30%
+Key decisions:
+- **`useMemo([name, tag, color])`** — Pretext `prepare` runs once per planet at mount
+- **Sprite outside the mesh group** — no Float in SolarSystem planets, so no orbiting issue
+- **`spriteMaterial depthWrite={false}`** — prevents z-fighting with the planet geometry
+- **`lighten(hex, ratio)` helper** — brightens tech color for tag chip text legibility
 
 ---
 
 ## Planned Pretext Features (not yet implemented)
 
+- **Editorial flow:** Rubik's cube embedded in hero bio text; `layoutNextLine` with variable widths so text flows around the cube as the user drags it
 - **Idea 3:** Editorial text wrapping around Earth globe (`layoutNextLine` with variable widths that narrow around the globe's silhouette)
-- **Idea 4:** Reflow-free masonry in Works section (`layout()` for card heights before Framer Motion animates to exact target height)
