@@ -2,8 +2,7 @@
 
 An immersive, interactive 3D portfolio built with **React**, **Vite**, **Tailwind CSS**, and **Three.js** to showcase my projects, skills, and technical experience in a visually compelling way.
 
-<img width="2747" height="1564" alt="Capture-2025-08-20-185017" src="https://github.com/user-attachments/assets/c78dff21-7a65-404a-97e2-c8c31c978465" />
-
+<img width="2398" height="1596" alt="image" src="https://github.com/user-attachments/assets/3c0637dc-cfc3-4ed4-9dde-ecc09f66b8ae" />
 
 ---
 
@@ -78,6 +77,6 @@ This project is registered under the MIT license.
 📬 Contact
 💼 Peter Morganelli
 📧 peter.morganelli@tufts.edu
-🔗 [LinkedIn]([url](https://www.linkedin.com/in/peter-morganelli-102860258/)) | [GitHub]([url](https://github.com/pmorganelli))
+🔗 [LinkedIn]([url](https://www.linkedin.com/in/petermorganelli)) | [GitHub]([url](https://github.com/pmorganelli))
 
 
