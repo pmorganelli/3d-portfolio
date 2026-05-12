@@ -342,13 +342,13 @@ import {
   
   const experiences = [
     {
-      title: "Incoming Software Engineer Intern",
+      title: "Software Engineer Intern",
       company_name: "MITRE",
       icon: mitre,
       iconBg: "#ffffff",
-      date: "Starting May 2026",
+      date: "May 2026 - Present",
       points: [
-        "Incoming SWE Intern on the L537 team under Abby Chapman and Dave Hirst"
+        "Working on project RAAVEN to interpret model-related requirements and help users assess whether those requirements are fulfilled by delivered Cameo models using retrieval-augmented generation (RAG) techniques in a Django application with a Neo4j database."
       ],
     },
     {
