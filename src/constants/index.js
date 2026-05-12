@@ -430,7 +430,7 @@ import {
     {
       name: "Mobile Food Waste Tracking App",
       description:
-        "In Progress! A smart and easy way to keep track of your food that's going bad. Scan a barcode, store your item, and even make an AI-generated recipe with your ingredients!",
+        "A smart and easy way to keep track of your food that's going bad. Scan a barcode, store your item, and even make an AI-generated recipe with your ingredients!",
       tags: [
         { name: "react native", color: "blue-text-gradient" },
         { name: "typescript",   color: "green-text-gradient" },
@@ -440,8 +440,8 @@ import {
         { name: "docker",       color: "green-text-gradient" },
       ],
       image: foodWasteHome,
-      source_code_link: "https://github.com/pmorganelli",
-      demo_link: "https://github.com/pmorganelli",
+      privateRepo: true,
+      noDemo: true,
       inProgress: true,
       details: {
         overview: "A cross-platform mobile app designed to reduce household food waste by giving users a simple way to log what's in their fridge, track expiration dates, and get AI-generated recipe suggestions based on ingredients that are about to go bad.",
