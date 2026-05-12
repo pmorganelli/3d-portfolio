@@ -442,7 +442,7 @@ import {
       image: foodWasteHome,
       privateRepo: true,
       noDemo: true,
-      inProgress: true,
+      inProgress: false,
       details: {
         overview: "A cross-platform mobile app designed to reduce household food waste by giving users a simple way to log what's in their fridge, track expiration dates, and get AI-generated recipe suggestions based on ingredients that are about to go bad.",
         role: "Developed in a team of six for CSU44098 Group Design Project at Trinity College Dublin. Responsible for handling end-to-end authentication in Firebase, redesigning our React Native UI, and creating a Claude Vision powered expiration date predictor for expiration dates.",
