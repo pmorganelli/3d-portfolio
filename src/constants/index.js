@@ -348,7 +348,7 @@ import {
       iconBg: "#ffffff",
       date: "May 2026 - Present",
       points: [
-        "Working on project RAAVEN to interpret model-related requirements and help users assess whether those requirements are fulfilled by delivered Cameo models using retrieval-augmented generation (RAG) techniques in a Django application with a Neo4j database."
+        "Working on project L537."
       ],
     },
     {
