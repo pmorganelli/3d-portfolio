@@ -42,7 +42,7 @@ const Contact = () => {
           to_email: 'petercarlmorganelli@gmail.com',
           message: form.message,
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
       )
       .then(
         () => {
@@ -118,7 +118,7 @@ const Contact = () => {
 
           {status === 'success' && (
             <p className="text-green-400 text-[14px] font-medium">
-              Message sent! I'll get back to you soon. — Peter
+              Message sent to my inbox! I'll get back to you soon. —Peter
             </p>
           )}
           {status === 'error' && (

@@ -341,6 +341,16 @@ import {
   ];
   
   const experiences = [
+    // {
+    //   title: "Data Structures Grading Teaching Fellow",
+    //   company_name: "MITRE",
+    //   icon: tufts,
+    //   iconBg: "#ffffff",
+    //   date: "May 2026 - Present",
+    //   points: [
+    //     ""
+    //   ],
+    // },
     {
       title: "Software Engineer Intern",
       company_name: "MITRE",
