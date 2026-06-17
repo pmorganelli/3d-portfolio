@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Tilt } from "react-tilt";
 
@@ -25,12 +24,10 @@ const ServiceCard = ({ index, title, icon, desc }) => (
         borderRadius={20}
         style={{ borderRadius: 20 }}
       >
-        <div
-          className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
-        >
+        <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'>
           <img
             src={icon}
-            alt='web-development'
+            alt=''
             className='w-16 h-16 object-contain'
           />
 
@@ -58,10 +55,10 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-        I'm a skilled software developer with experience working in teams
-        rooted in strong communication and collaboration. I'm a quick learner 
-        who enjoys complicated problems and interesting conversations.
-        Let's connect!
+        I build software at the intersection of systems, teaching, and interactive web experiences.
+        My recent work spans Tufts course tools, WebGL portfolio experiments, and team projects
+        where clear communication matters as much as the implementation.
+        Let&apos;s connect!
       </motion.p>
       
 

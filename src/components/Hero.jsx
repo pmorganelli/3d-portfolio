@@ -18,15 +18,15 @@ const Hero = () => {
 
               <div>
                 <h1 className={`${styles.heroHeadText} text-white`}>
-                  Hi, I'm{" "}
+                  Hi, I&apos;m{" "}
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-blue-800">
                     Peter
                   </span>
                 </h1>
                 <p className={`${styles.heroSubText}`}>
-                  I'm a software engineer and computer science student at
+                  I&apos;m a software engineer and computer science student at
                   <br className="sm:block hidden" /> Tufts University. Please reach
-                  out if you'd like to connect!
+                  out if you&apos;d like to connect!
                 </p>
               </div>
             </div>

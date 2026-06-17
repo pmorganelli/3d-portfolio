@@ -1,10 +1,26 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { motion } from "framer-motion"
 import emailjs from '@emailjs/browser'
 import { styles } from "../styles"
 import { EarthCanvas } from "./canvas"
 import { SectionWrapper } from "../hoc"
 import { slideIn } from "../utils/motion"
+
+const emailJsConfig = {
+  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+};
+
+const requiredEmailJsVars = {
+  VITE_EMAILJS_SERVICE_ID: emailJsConfig.serviceId,
+  VITE_EMAILJS_TEMPLATE_ID: emailJsConfig.templateId,
+  VITE_EMAILJS_PUBLIC_KEY: emailJsConfig.publicKey,
+};
+
+const missingEmailJsVars = Object.entries(requiredEmailJsVars)
+  .filter(([, value]) => !value)
+  .map(([name]) => name);
 
 const Contact = () => {
   const formRef = useRef();
@@ -15,7 +31,7 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [status, setStatus]   = useState(null); // null | 'success' | 'error'
+  const [status, setStatus] = useState(null); // null | { type: 'success' | 'error', message: string }
   const isFormValid =
     form.name.trim() !== "" &&
     form.email.trim() !== "" &&
@@ -27,14 +43,25 @@ const Contact = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setStatus(null);
+
     if (!isFormValid) {
       return;
     }
+
+    if (missingEmailJsVars.length > 0) {
+      setStatus({
+        type: 'error',
+        message: 'Contact form is not configured. Please email me directly.',
+      });
+      return;
+    }
+
     setLoading(true);
 
     emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        emailJsConfig.serviceId,
+        emailJsConfig.templateId,
         {
           from_name: form.name,
           to_name: 'Peter',
@@ -42,26 +69,38 @@ const Contact = () => {
           to_email: 'petercarlmorganelli@gmail.com',
           message: form.message,
         },
-        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
+        { publicKey: emailJsConfig.publicKey },
       )
       .then(
         () => {
           setLoading(false);
-          setStatus('success');
+          setStatus({
+            type: 'success',
+            message: "Message sent to my inbox! I'll get back to you soon. —Peter",
+          });
           setForm({ name: "", email: "", message: "" });
         },
         (error) => {
           setLoading(false);
-          console.error(error);
-          setStatus('error');
+          setStatus({
+            type: 'error',
+            message: error?.text || 'Something went wrong. Please try again or email me directly.',
+          });
         }
       );
   };
 
   return (
-    <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden">
+    <div className="xl:mt-12 flex flex-col xl:flex-row-reverse items-center xl:items-stretch justify-center gap-8 xl:gap-12 overflow-visible">
+      <motion.div
+        variants={slideIn('right', "tween", 0.2, 1)}
+        className="w-full max-w-[520px] sm:max-w-[640px] xl:max-w-[560px] h-[300px] sm:h-[380px] lg:h-[460px] xl:h-auto xl:min-h-[560px] xl:flex-1"
+      >
+        <EarthCanvas />
+      </motion.div>
+
       <motion.div variants={slideIn('left', "tween", 0.2, 1)}
-      className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
+      className="w-full max-w-3xl xl:max-w-[620px] bg-black-100 p-5 sm:p-8 rounded-2xl"
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
@@ -80,7 +119,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               placeholder="What's your name?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+              className="bg-tertiary py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent focus-visible:border-[#3fe9ff] focus-visible:ring-2 focus-visible:ring-[#3fe9ff]/30 font-medium transition-colors"
             />
           </label>
           <label className="flex flex-col">
@@ -92,7 +131,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               placeholder="What's your email?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+              className="bg-tertiary py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent focus-visible:border-[#3fe9ff] focus-visible:ring-2 focus-visible:ring-[#3fe9ff]/30 font-medium transition-colors"
             />
           </label>
           <label className='flex flex-col'>
@@ -103,34 +142,30 @@ const Contact = () => {
               value={form.message}
               onChange={handleChange}
               required
-              placeholder='What you want to say?'
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              placeholder='What would you like to say?'
+              className='bg-tertiary py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent focus-visible:border-[#3fe9ff] focus-visible:ring-2 focus-visible:ring-[#3fe9ff]/30 font-medium transition-colors'
             />
           </label>
 
           <button
             type="submit"
             disabled={!isFormValid || loading}
-            className="bg-tertiary py-3 px-8 outline-none text-white font-bold shadow-md shadow-primary rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-tertiary py-3 px-8 outline-none text-white font-bold rounded-xl border border-white/10 hover:border-[#3fe9ff]/60 focus-visible:ring-2 focus-visible:ring-[#3fe9ff]/40 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {loading ? 'Sending...' : 'Send'}
           </button>
 
-          {status === 'success' && (
-            <p className="text-green-400 text-[14px] font-medium">
-              Message sent to my inbox! I'll get back to you soon. —Peter
+          {status?.type === 'success' && (
+            <p className="text-green-400 text-[14px] font-medium break-words">
+              {status.message}
             </p>
           )}
-          {status === 'error' && (
-            <p className="text-red-400 text-[14px] font-medium">
-              Something went wrong. Please try again.
+          {status?.type === 'error' && (
+            <p className="text-red-400 text-[14px] font-medium break-words" role="alert">
+              {status.message}
             </p>
           )}
         </form>
-      </motion.div>
-
-      <motion.div variants={slideIn('right', "tween", 0.2, 1)} className="xl:flex-1 xl:min-h-[550px] md:h-[550px] h-[350px]">
-        <EarthCanvas />
       </motion.div>
     </div>
   )

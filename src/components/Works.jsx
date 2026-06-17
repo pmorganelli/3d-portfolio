@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Tilt } from 'react-tilt';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,9 +6,8 @@ import { styles } from '../styles';
 import { github } from '../assets';
 import { SectionWrapper } from '../hoc';
 import { projects } from '../constants';
-import { fadeIn, textVariant } from '../utils/motion';
+import { fadeIn } from '../utils/motion';
 
-// ── Reusable UIverse-style glow button ───────────────────────────────────────
 const GlowButton = ({ children, onClick, href, target, rel }) => {
   const Tag = href ? 'a' : 'button';
   return (
@@ -20,7 +19,6 @@ const GlowButton = ({ children, onClick, href, target, rel }) => {
   );
 };
 
-// ── Learn More modal ──────────────────────────────────────────────────────────
 const LearnMoreModal = ({ project, onClose }) =>
   createPortal(
     <motion.div
@@ -42,7 +40,6 @@ const LearnMoreModal = ({ project, onClose }) =>
           transition={{ type: 'spring', stiffness: 280, damping: 26 }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Hero image — close button sits on top of it */}
           <div className="relative w-full aspect-video shrink-0 overflow-hidden rounded-t-2xl">
             <img
               src={project.image}
@@ -60,9 +57,7 @@ const LearnMoreModal = ({ project, onClose }) =>
             </button>
           </div>
 
-          {/* Content */}
           <div className="p-7 flex flex-col gap-6">
-            {/* Title + tags */}
             <div>
               <h2 className="text-white font-bold text-[22px] leading-snug">
                 {project.name}
@@ -114,7 +109,7 @@ const LearnMoreModal = ({ project, onClose }) =>
             </Section>
 
             <div className="flex gap-3 pt-1 items-center">
-              {!project.inProgress && !project.noDemo && (
+              {!project.noDemo && (
                 <GlowButton
                   href={project.demo_link}
                   target="_blank"
@@ -143,102 +138,26 @@ const LearnMoreModal = ({ project, onClose }) =>
     document.body
   );
 
-// Small reusable section block inside the modal
 const Section = ({ title, children }) => (
   <div>
-    <h4 className="text-white font-semibold text-[13px] uppercase tracking-widest mb-2.5
-                   text-white/40">
+    <h4 className="text-white/70 font-semibold text-[14px] uppercase tracking-wide mb-2.5">
       {title}
     </h4>
     {children}
   </div>
 );
 
-// ── In-progress modal ─────────────────────────────────────────────────────────
-const InProgressModal = ({ project, onClose }) =>
-  createPortal(
-    <motion.div
-      className="fixed inset-0 z-[9999] overflow-y-auto"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" />
-
-      <div className="flex min-h-full items-start justify-center px-4 py-8">
-        <motion.div
-          className="relative z-10 bg-tertiary rounded-2xl w-full max-w-md
-                     shadow-2xl border border-white/10 flex flex-col"
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 32 }}
-          transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Hero image — close button sits on top of it */}
-          <div className="relative w-full h-[180px] shrink-0 overflow-hidden rounded-t-2xl">
-            <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
-            <button
-              onClick={onClose}
-              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center
-                         justify-center bg-black/60 text-white/70 hover:text-white
-                         hover:bg-black/80 transition-colors text-xl leading-none"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div className="p-7 flex flex-col gap-4">
-            <h3 className="text-white font-bold text-[22px]">{project.name}</h3>
-
-            <div className="flex flex-col items-center gap-3 py-4">
-              <span className="text-4xl">🚧</span>
-              <p className="text-white font-semibold text-[18px] text-center">In progress!</p>
-              <p className="text-secondary text-[15px] text-center leading-relaxed">
-                Source code and demo available soon :)
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-2 justify-center">
-              {project.tags.map((tag, i) => (
-                <p key={`${tag.name}-${i}`} className={`text-[13px] ${tag.color}`}>
-                  {tag.name}
-                </p>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </motion.div>,
-    document.body
-  );
-
-// ── Project card ──────────────────────────────────────────────────────────────
-const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, inProgress, privateRepo, noDemo, onInProgressClick, onLearnMore }) => (
+const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, privateRepo, noDemo, onLearnMore }) => (
   <motion.div
     variants={fadeIn('up', 'spring', index * 0.5, 0.75)}
-    className="w-full sm:w-[360px]"
+    className="w-full max-w-[360px]"
   >
     <Tilt
       options={{ max: 45, scale: 1, speed: 450, gyroscope: false }}
       className="bg-tertiary p-5 rounded-2xl h-full"
     >
-      <div className="relative w-full h-[230px]">
-        {inProgress ? (
-          <button
-            onClick={onInProgressClick}
-            className="block w-full h-full rounded-2xl overflow-hidden"
-          >
-            <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
-            <div className="absolute inset-0 rounded-2xl flex items-center justify-center bg-black/40">
-              <span className="bg-yellow-500/90 text-black font-bold text-[13px] px-3 py-1 rounded-full tracking-wide">
-                IN PROGRESS
-              </span>
-            </div>
-          </button>
-        ) : !noDemo && demo_link ? (
+      <div className="relative w-full aspect-[16/10] overflow-hidden rounded-2xl">
+        {!noDemo && demo_link ? (
           <a href={demo_link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
             <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
           </a>
@@ -248,7 +167,6 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
           </div>
         )}
 
-        {/* GitHub — top left (hidden for private repos) */}
         {!privateRepo && (
           <div className="absolute top-0 left-0 z-10">
             <button
@@ -260,7 +178,6 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
           </div>
         )}
 
-        {/* Learn More — top right */}
         <div className="absolute top-0 right-0 z-10">
           <GlowButton onClick={onLearnMore}>Learn More</GlowButton>
         </div>
@@ -268,14 +185,8 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
 
       <div className="mt-5">
         <h3
-          className={`text-white font-bold text-[24px] ${(inProgress || (!noDemo && demo_link)) ? 'cursor-pointer' : ''}`}
-          onClick={
-            inProgress
-              ? onInProgressClick
-              : (!noDemo && demo_link)
-                ? () => window.open(demo_link, '_blank')
-                : undefined
-          }
+          className={`text-white font-bold text-[24px] ${(!noDemo && demo_link) ? 'cursor-pointer' : ''}`}
+          onClick={(!noDemo && demo_link) ? () => window.open(demo_link, '_blank') : undefined}
         >
           {name}
         </h3>
@@ -293,22 +204,19 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
   </motion.div>
 );
 
-// ── Section content ───────────────────────────────────────────────────────────
 const WorksContent = () => {
-  const [activeInProgress, setActiveInProgress] = useState(null);
-  const [activeLearnMore, setActiveLearnMore]   = useState(null);
+  const [activeLearnMore, setActiveLearnMore] = useState(null);
 
   useEffect(() => {
-    if (!activeInProgress && !activeLearnMore) return;
+    if (!activeLearnMore) return;
     const onKeyDown = (e) => {
       if (e.key === 'Escape') {
-        setActiveInProgress(null);
         setActiveLearnMore(null);
       }
     };
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [activeInProgress, activeLearnMore]);
+  }, [activeLearnMore]);
 
   return (
     <>
@@ -318,29 +226,21 @@ const WorksContent = () => {
       </div>
 
       <p className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]">
-        The following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories and live demos. These examples reflect my ability to solve complex problems, work with various technologies, and manage projects effectively. Please reach out to me using the contact form with any questions!
+        Selected projects from coursework, hackathons, teaching tools, and team builds. I highlight the implementation details, collaboration context, and tradeoffs behind each one so the work speaks beyond the screenshots.
       </p>
 
-      <div className="mt-20 flex flex-wrap gap-7">
+      <div className="mt-20 grid grid-cols-1 justify-items-center gap-7 sm:grid-cols-2 xl:grid-cols-3">
         {projects.map((project, index) => (
           <ProjectCard
             key={project.name}
             index={index}
             {...project}
-            onInProgressClick={() => setActiveInProgress(project)}
             onLearnMore={() => setActiveLearnMore(project)}
           />
         ))}
       </div>
 
       <AnimatePresence>
-        {activeInProgress && (
-          <InProgressModal
-            key={activeInProgress.name}
-            project={activeInProgress}
-            onClose={() => setActiveInProgress(null)}
-          />
-        )}
         {activeLearnMore && (
           <LearnMoreModal
             key={`learn-${activeLearnMore.name}`}

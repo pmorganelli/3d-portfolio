@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { styles } from '../styles';
 import { navLinks } from '../constants';
 import { hero, menu, close } from '../assets';
 import { Github } from './FeatherIcons/githubIcon';
@@ -9,11 +7,11 @@ import { Linkedin } from './FeatherIcons/linkedIn';
 import GooeyNav from './ui/GooeyNav';
 
 const Navbar = () => {
-  const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);
-  const desktopNavItems = navLinks.map((nav) => {
+  const navItems = navLinks.map((nav) => {
     const isResume = nav.title === 'Résumé';
     return {
+      ...nav,
       label: nav.title,
       href: isResume ? '/resume.pdf' : `#${nav.id}`,
       ...(isResume ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
@@ -23,29 +21,28 @@ const Navbar = () => {
   return (
     
     <nav
-      className='w-full flex items-center py-4 md:py-5 fixed top-0 z-20 bg-primary px-4 md:px-16'
+      className='w-full flex items-center py-4 md:py-5 fixed top-0 z-20 bg-primary px-4 sm:px-6 lg:px-10 xl:px-16'
     >
       {/* <img src={hero} alt='hero'/> */}
-      <div className="w-full text-secondary flex justify-between items-center max-w-7xl mx-auto">
-        <Link
-          to="/"
+      <div className="w-full text-secondary flex justify-between items-center gap-4 max-w-7xl mx-auto">
+        <a
+          href="#"
           className="flex items-center gap-2 shrink-0"
           onClick={() => {
-            setActive("");
             window.scrollTo(0, 0)
           }}
         >
           <img src={hero} alt='heroImage' className="w-9 h-9 object-contain" />
-          <p className="text-secondary hover:text-white text-[16px] md:text-[18px] font-bold cursor-pointer transition-colors whitespace-nowrap">
-            <span className='md:hidden'>Peter M.</span>
-            <span className='hidden md:inline'>Peter Morganelli</span>
+          <p className="text-secondary hover:text-white text-[16px] xl:text-[18px] font-bold cursor-pointer transition-colors whitespace-nowrap">
+            <span className='xl:hidden'>Peter M.</span>
+            <span className='hidden xl:inline'>Peter Morganelli</span>
           </p>
-        </Link>
+        </a>
 
-        <div className='hidden md:flex items-center gap-6'>
+        <div className='hidden xl:flex items-center gap-6 min-w-0'>
           <GooeyNav
-            items={desktopNavItems}
-            particleCount={10}
+            items={navItems}
+            particleCount={6}
             particleDistances={[48, 8]}
             particleR={48}
             initialActiveIndex={0}
@@ -63,7 +60,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="md:hidden flex flex-1 justify-end items-center">
+        <div className="xl:hidden flex flex-1 justify-end items-center">
           <motion.img
             src={toggle ? close : menu}
             alt="menu"
@@ -82,22 +79,19 @@ const Navbar = () => {
                 className="p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl flex"
               >
                 <ul className='list-none flex justify-end items-start flex-col gap-4'>
-                  {navLinks.map((nav, i) => (
+                  {navItems.map((nav, i) => (
                     <motion.li
                       key={nav.id}
                       initial={{ opacity: 0, x: 12 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.05, duration: 0.15 }}
                       className="text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px] transition-colors"
-                      onClick={() => {
-                        setActive(nav.title);
-                        setToggle(false);
-                      }}
+                      onClick={() => setToggle(false)}
                     >
                       <a
-                        href={nav.title === "Résumé" ? `/resume.pdf` : `#${nav.id}`}
-                        target={nav.title === "Résumé" ? "_blank" : undefined}
-                        rel={nav.title === "Résumé" ? "noopener noreferrer" : undefined}
+                        href={nav.href}
+                        target={nav.target}
+                        rel={nav.rel}
                       >
                         {nav.title}
                       </a>
