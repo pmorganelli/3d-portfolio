@@ -150,7 +150,7 @@ const Section = ({ title, children }) => (
 const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, privateRepo, noDemo, onLearnMore }) => (
   <motion.div
     variants={fadeIn('up', 'spring', index * 0.5, 0.75)}
-    className="w-full max-w-[360px]"
+    className="w-full"
   >
     <Tilt
       options={{ max: 45, scale: 1, speed: 450, gyroscope: false }}
@@ -229,7 +229,7 @@ const WorksContent = () => {
         Selected projects from coursework, hackathons, teaching tools, and team builds. I highlight the implementation details, collaboration context, and tradeoffs behind each one so the work speaks beyond the screenshots.
       </p>
 
-      <div className="mt-20 grid grid-cols-1 justify-items-center gap-7 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-7 mx-auto max-w-[360px] sm:max-w-[748px] xl:max-w-[1136px]">
         {projects.map((project, index) => (
           <ProjectCard
             key={project.name}

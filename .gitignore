@@ -28,11 +28,7 @@ dist-ssr
 *.sln
 *.sw?
 .omx/
-.codex/*
-!.codex/agents/
-!.codex/agents/**
-!.codex/skills/
-!.codex/skills/**
-.codex/skills/.system/**
-!.codex/prompts/
-!.codex/prompts/**
+
+# Local AI agent tooling — not part of the portfolio
+.codex/
+AGENTS.md
