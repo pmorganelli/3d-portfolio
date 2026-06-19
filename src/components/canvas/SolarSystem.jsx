@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState, useEffect, Suspense } from 'react'
+import { useRef, useMemo, useState, useEffect, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { CameraControls, Decal, Preload, useTexture } from '@react-three/drei'
 import { AnimatePresence, motion } from 'framer-motion'

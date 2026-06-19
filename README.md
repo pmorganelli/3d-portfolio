@@ -7,7 +7,7 @@ An immersive, interactive 3D portfolio built with **React**, **Vite**, **Tailwin
 ---
 
 ## Live Demo
- [petermorganelli.dev](https://www.petermorganelli.dev) <!-- Replace with deployed URL -->
+ [petermorganelli.dev](https://www.petermorganelli.dev)
 
 ---
 
@@ -44,8 +44,8 @@ An immersive, interactive 3D portfolio built with **React**, **Vite**, **Tailwin
 ├── src/
 │   ├── assets/            # Images, 3D models, textures
 │   ├── components/        # Reusable UI components
-│   ├── sections/          # Portfolio sections (About, Projects, Contact, etc.)
-│   ├── styles/            # Tailwind configurations and styles
+│   ├── components/        # Portfolio sections, canvas scenes, and UI components
+│   ├── constants/         # Portfolio content and project data
 │   ├── App.jsx            # Main app component
 │   └── main.jsx           # App entry point
 ├── package.json
@@ -70,6 +70,19 @@ npm run dev
 
 # 5. Open in browser
 # Visit http://localhost:5173
+
+
+## Contact Form Environment
+
+The contact form sends mail through EmailJS and requires these Vite client environment variables locally and in production hosting:
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+Create a local `.env` from `.env.example` for development. In production, add the same `VITE_EMAILJS_*` variables in the hosting provider's environment settings before building/deploying. If any are missing, the form shows a user-facing configuration error instead of failing silently.
 
 ## License
 This project is registered under the MIT license.

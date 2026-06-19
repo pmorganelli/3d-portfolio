@@ -16,7 +16,6 @@ import tailwind from "./tech/tailwind.png";
 import threejs from "./tech/threejs.svg";
 import dcr from "./company/dcr.png";
 import jumbocode from "./company/jumbocode.png";
-import jumbocodedark from "./company/jumbocodedark.svg"
 import tufts from "./company/tufts_transparent.png"
 import mit from "./mit.png";
 import flow from "./flow.jpeg";
@@ -60,7 +59,6 @@ export {
   dcr,
   jumbocode,
   mitre,
-  jumbocodedark,
   tufts,
   ltiLogo,
   portfolio,

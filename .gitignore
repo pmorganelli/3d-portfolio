@@ -27,3 +27,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.omx/
+
+# Local AI agent tooling — not part of the portfolio
+.codex/
+AGENTS.md

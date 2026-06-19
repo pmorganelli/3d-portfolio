@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -43,7 +43,6 @@ const ComputersCanvas = () => {
       frameloop="always"
       shadows
       dpr={[1, 2]}
-      // bigger = FOV subject looks smaller in frame
       camera={{ position: [0, 0, 6], fov: isMobile ? 52 : 46, near: 0.1, far: 100 }}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
       style={{ width: "100%", height: "100%", touchAction: "none" }}
@@ -62,7 +61,6 @@ const ComputersCanvas = () => {
       <hemisphereLight intensity={0.25} groundColor={"#222"} />
 
       <Suspense fallback={<CanvasLoader />}>
-        {/* Full 360° horizontal rotation restored; almost full vertical */}
         <OrbitControls
           makeDefault
           enableZoom={false}
@@ -72,14 +70,11 @@ const ComputersCanvas = () => {
           rotateSpeed={0.9}
           autoRotate
           autoRotateSpeed={0.6}
-          // allow full azimuth (no left/right constraint)
-          // keep polar nearly full range to avoid flipping through the poles
           minPolarAngle={0.05}
           maxPolarAngle={Math.PI - 0.05}
           target={[0, 0, 0]}
         />
 
-        {/* Auto-fit keeps size in check on all screens */}
         <Bounds fit clip observe margin={1.15}>
           <RubiksCube />
         </Bounds>
@@ -92,5 +87,4 @@ const ComputersCanvas = () => {
 
 export default ComputersCanvas;
 
-// Preload for snappier first paint
 useGLTF.preload("/rubiks_cube/scene.gltf");

@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { styles } from "../styles"
 import { textVariant } from "../utils/motion"
 
-// ── Mobile tech card (bottom sheet) ──────────────────────────────────────────
 const MobileTechCard = ({ tech, onClose }) => {
   const borderColor = `${tech.color}44`
   const accentBg    = `${tech.color}18`
@@ -26,7 +25,6 @@ const MobileTechCard = ({ tech, onClose }) => {
         border: `1px solid ${borderColor}`,
       }}
     >
-      {/* Header */}
       <div className="flex items-start justify-between mb-4 gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <img
@@ -38,7 +36,7 @@ const MobileTechCard = ({ tech, onClose }) => {
             <h3 className="text-white font-bold text-base leading-tight truncate">
               {tech.name}
             </h3>
-            <p className="text-xs mt-0.5 truncate" style={{ color: tech.color }}>
+            <p className="text-sm mt-0.5 truncate" style={{ color: tech.color }}>
               {tech.info.orbits}
             </p>
           </div>
@@ -46,32 +44,29 @@ const MobileTechCard = ({ tech, onClose }) => {
         <button
           onClick={onClose}
           className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center
-                     text-white/40 hover:text-white hover:bg-white/10 transition-colors text-lg leading-none"
+                     text-white/70 hover:text-white hover:bg-white/10 transition-colors text-lg leading-none"
           aria-label="Close"
         >
           ×
         </button>
       </div>
 
-      {/* Level badge */}
       <div className="mb-4">
         <span
-          className="text-xs px-2.5 py-1 rounded-full border font-medium"
+          className="text-sm px-2.5 py-1 rounded-full border font-medium"
           style={{ color: tech.color, borderColor, background: accentBg }}
         >
           {tech.info.level}
         </span>
       </div>
 
-      {/* Description */}
-      <p className="text-white/65 text-sm leading-relaxed mb-5">
+      <p className="text-white/75 text-sm leading-relaxed mb-5">
         {tech.info.description}
       </p>
 
-      {/* Projects */}
       {tech.info.projects.length > 0 && (
         <div>
-          <p className="text-white/40 text-xs uppercase tracking-widest mb-2.5">
+          <p className="text-white/70 text-sm uppercase tracking-wide mb-2.5">
             Projects
           </p>
           <div className="flex flex-col gap-2">
@@ -96,7 +91,6 @@ const MobileTechCard = ({ tech, onClose }) => {
   )
 }
 
-// ── Tech section ──────────────────────────────────────────────────────────────
 const Tech = () => {
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.innerWidth < 768
@@ -137,7 +131,6 @@ const Tech = () => {
       </motion.div>
 
       {isMobile ? (
-        /* ── Mobile: 3-column grid of 3D balls, tap to inspect ── */
         <div className="mt-8 grid grid-cols-3 gap-3">
           {technologies.map((tech) => (
             <div
@@ -149,20 +142,16 @@ const Tech = () => {
                 icon={tech.icon}
                 ballColor={tech.color}
               />
-              {/* Transparent overlay captures the tap without blocking WebGL render */}
               <div className="absolute inset-0" />
             </div>
           ))}
         </div>
       ) : (
-        /* ── Desktop: full solar system ── */
         <div className="w-full h-screen mt-6">
           <SolarSystemCanvas technologies={technologies} />
         </div>
       )}
 
-      {/* Mobile TechCard overlay — rendered via portal to escape Framer Motion's
-          CSS transform context, which otherwise breaks position:fixed */}
       {createPortal(
         <AnimatePresence>
           {selectedTech && isMobile && (

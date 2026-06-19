@@ -9,7 +9,6 @@ import {
     git,
     dcr,
     jumbocode,
-    jumbocodedark,
     tufts,
     ltiLogo,
     portfolio,
@@ -65,22 +64,22 @@ import {
     {
       title: "Web Developer",
       icon: web,
-      desc: "I've constructed multiple websites with modern frontend frameworks",
+      desc: "I build React and WebGL interfaces that make technical projects easier to explore",
     },
     {
       title: "UI + UX Skilled",
       icon: mobile,
-      desc: "I'm passionate about optimizing the user experience for every site that I work on",
+      desc: "I tune interaction details, accessibility, and visual hierarchy for portfolio and team tools",
     },
     {
       title: "Fullstack Developer",
       icon: backend,
-      desc: "I've contributed to large-scale projects with complex backend servers",
+      desc: "I have shipped API, database, and containerized systems across coursework and team projects",
     },
     {
       title: "College Student",
       icon: creator,
-      desc: "I'm a full-time student at Tufts University concentrating in computer science",
+      desc: "I study computer science at Tufts and bring teaching-team experience into my projects",
     },
   ];
   
@@ -341,16 +340,6 @@ import {
   ];
   
   const experiences = [
-    // {
-    //   title: "Data Structures Grading Teaching Fellow",
-    //   company_name: "MITRE",
-    //   icon: tufts,
-    //   iconBg: "#ffffff",
-    //   date: "May 2026 - Present",
-    //   points: [
-    //     ""
-    //   ],
-    // },
     {
       title: "Software Engineer Intern",
       company_name: "MITRE",
@@ -452,7 +441,6 @@ import {
       image: foodWasteHome,
       privateRepo: true,
       noDemo: true,
-      inProgress: false,
       details: {
         overview: "A cross-platform mobile app designed to reduce household food waste by giving users a simple way to log what's in their fridge, track expiration dates, and get AI-generated recipe suggestions based on ingredients that are about to go bad.",
         role: "Developed in a team of six for CSU44098 Group Design Project at Trinity College Dublin. Responsible for handling end-to-end authentication in Firebase, redesigning our React Native UI, and creating a Claude Vision powered expiration date predictor for expiration dates.",
@@ -706,7 +694,7 @@ import {
           "React 18 with functional components and hooks for all state and side-effect management",
           "Vite as the build tool — dramatically faster HMR than Create React App, which introduced me to modern tooling",
           "Vanilla CSS with custom properties for theming and responsive layouts without a utility framework",
-          "React Router for client-side navigation between sections",
+          "Hash anchors for single-page navigation between sections",
           "Deployed on Vercel with automatic preview deployments on every pull request",
         ],
         highlights: [
