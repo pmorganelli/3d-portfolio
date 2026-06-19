@@ -32,3 +32,4 @@ dist-ssr
 # Local AI agent tooling — not part of the portfolio
 .codex/
 AGENTS.md
+.vercel
