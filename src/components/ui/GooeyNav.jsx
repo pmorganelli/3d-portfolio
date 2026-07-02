@@ -115,6 +115,8 @@ const GooeyNav = ({
   };
 
   const handleClick = (e, index) => {
+    // Links that open in a new tab (e.g. Résumé) don't change the active section
+    if (items[index]?.target === "_blank") return;
     const liEl = e.currentTarget.closest("li");
     if (liEl) {
       handleItemActivate(liEl, index);

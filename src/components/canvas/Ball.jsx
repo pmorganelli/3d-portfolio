@@ -1,9 +1,8 @@
-import { Suspense } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { Decal, Float, OrbitControls, Preload, useTexture } from '@react-three/drei'
+import { Decal, Float, useTexture } from '@react-three/drei'
 
-import CanvasLoader from '../Loader'
-
+// Bare ball mesh — rendered inside a shared <Canvas> via drei <View> (see Tech.jsx).
+// Per-ball canvases were replaced with one context: 11 simultaneous WebGL
+// contexts put the page at the browser's context limit on mobile.
 const Ball = ({ imgUrl, color }) => {
   const [decal] = useTexture([imgUrl]);
 
@@ -28,23 +27,4 @@ const Ball = ({ imgUrl, color }) => {
   );
 };
 
-const BallCanvas = ({ icon, ballColor }) => {
-  return (
-    <Canvas
-      shadows
-      frameloop="demand"
-      dpr={[1, 2]}
-      gl={{ preserveDrawingBuffer: true }}
-    >
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[0, 0, 0.05]} />
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls autoRotate enableZoom={false} />
-        <Ball imgUrl={icon} color={ballColor} />
-      </Suspense>
-      <Preload all />
-    </Canvas>
-  );
-};
-
-export default BallCanvas
+export default Ball

@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from "react"
+import { Suspense, useState, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
-import { SolarSystemCanvas, BallCanvas } from "./canvas"
+import { Canvas } from "@react-three/fiber"
+import { View } from "@react-three/drei"
+import { SolarSystemCanvas, Ball } from "./canvas"
 import { SectionWrapper } from "../hoc"
 import { technologies } from "../constants"
 import { motion, AnimatePresence } from "framer-motion"
@@ -104,6 +106,9 @@ const Tech = () => {
       setIsMobile(e.matches)
       if (!e.matches) setSelectedTech(null)
     }
+    // Sync on mount — the innerWidth-based initial state can disagree with the
+    // media query at fractional viewport widths (e.g. browser zoom)
+    setIsMobile(mq.matches)
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
   }, [])
@@ -131,20 +136,33 @@ const Tech = () => {
       </motion.div>
 
       {isMobile ? (
-        <div className="mt-8 grid grid-cols-3 gap-3">
-          {technologies.map((tech) => (
-            <div
-              key={tech.name}
-              className="relative h-28 cursor-pointer"
-              onClick={() => setSelectedTech(tech)}
-            >
-              <BallCanvas
-                icon={tech.icon}
-                ballColor={tech.color}
-              />
-              <div className="absolute inset-0" />
-            </div>
-          ))}
+        /* One shared WebGL context for the whole grid — a canvas per ball put
+           the page at the browser's context limit and risked eviction */
+        <div className="relative mt-8">
+          <div className="grid grid-cols-3 gap-3">
+            {technologies.map((tech) => (
+              <div
+                key={tech.name}
+                className="relative h-28 cursor-pointer"
+                onClick={() => setSelectedTech(tech)}
+              >
+                <View className="pointer-events-none absolute inset-0">
+                  <ambientLight intensity={1.5} />
+                  <directionalLight position={[0, 0, 0.05]} />
+                  <Suspense fallback={null}>
+                    <Ball imgUrl={tech.icon} color={tech.color} />
+                  </Suspense>
+                </View>
+              </div>
+            ))}
+          </div>
+          <Canvas
+            frameloop="always"
+            dpr={[1, 2]}
+            style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+          >
+            <View.Port />
+          </Canvas>
         </div>
       ) : (
         <div className="w-full h-screen mt-6">

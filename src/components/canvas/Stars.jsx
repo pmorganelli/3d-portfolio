@@ -6,7 +6,8 @@ import * as random from "maath/random/dist/maath-random.esm"
 const StarLayer = ({ count, radius, size, color, speed = 1 }) => {
   const ref = useRef()
   const sphere = useMemo(
-    () => random.inSphere(new Float32Array(count), { radius }),
+    // inSphere fills 3 floats per point, so allocate count * 3
+    () => random.inSphere(new Float32Array(count * 3), { radius }),
     [count, radius]
   )
 
@@ -34,14 +35,14 @@ const StarLayer = ({ count, radius, size, color, speed = 1 }) => {
 const Stars = () => (
   <group>
     <StarLayer
-      count={3600}
+      count={1200}
       radius={2.1}
       size={0.0024}
       color="#f19dd9"
       speed={1}
     />
     <StarLayer
-      count={2400}
+      count={800}
       radius={2.6}
       size={0.0019}
       color="#ffd5ef"

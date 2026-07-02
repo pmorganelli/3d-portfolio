@@ -13,7 +13,7 @@ import git from "./tech/git.png";
 import javascript from "./tech/javascript.png";
 import reactjs from "./tech/reactjs.png";
 import tailwind from "./tech/tailwind.png";
-import threejs from "./tech/threejs.svg";
+import threejs from "./tech/threejs.png";
 import dcr from "./company/dcr.png";
 import jumbocode from "./company/jumbocode.png";
 import tufts from "./company/tufts_transparent.png"

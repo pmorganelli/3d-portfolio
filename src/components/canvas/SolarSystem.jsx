@@ -146,6 +146,14 @@ const Planet = ({ tech, planetPositions, onSelect, isSelected }) => {
 };
 
 // ─── Scene ────────────────────────────────────────────────────────────────────
+// Scratch vectors reused across frames — avoids per-frame allocation
+const _sunPos      = new THREE.Vector3(0, 0, 0);
+const _sunRadial   = new THREE.Vector3(1, 0, 1).normalize();
+const _radial      = new THREE.Vector3();
+const _camPos      = new THREE.Vector3();
+// Matches the intent of OrbitControls autoRotateSpeed=0.4 (2π/30s per speed unit)
+const IDLE_ROTATE_SPEED = 0.4 * ((2 * Math.PI) / 30) / 2; // rad/s ≈ 0.042
+
 const SolarSystemScene = ({ technologies, selectedTech, onSelectTech }) => {
   const cameraRef      = useRef();
   const planetPositions = useRef(new Map());
@@ -153,34 +161,42 @@ const SolarSystemScene = ({ technologies, selectedTech, onSelectTech }) => {
   const sun     = technologies.find(t => t.isSun);
   const planets = technologies.filter(t => !t.isSun);
 
-  // ── Camera animation when selection changes ─────────────────────────────────
+  // ── Return camera home when the selection is cleared ────────────────────────
   useEffect(() => {
     if (!cameraRef.current) return;
-    const cc = cameraRef.current;
-
-    if (selectedTech) {
-      const pos = selectedTech.isSun
-        ? new THREE.Vector3(0, 0, 0)
-        : (planetPositions.current.get(selectedTech.name) ?? new THREE.Vector3());
-
-      const d = selectedTech.size * 5 + 5;
-
-      // Place camera radially outward from sun + upward so it's behind+above planet
-      const radial = selectedTech.isSun
-        ? new THREE.Vector3(1, 0, 1).normalize()
-        : new THREE.Vector3(pos.x, 0, pos.z).normalize();
-
-      const camPos = pos.clone()
-        .add(radial.multiplyScalar(d * 0.7))
-        .add(new THREE.Vector3(0, d * 0.45, 0));
-
-      cc.setLookAt(camPos.x, camPos.y, camPos.z, pos.x, pos.y, pos.z, true);
-      cc.autoRotate = false;
-    } else {
-      cc.setLookAt(0, 11, 38, 0, 0, 0, true);
-      cc.autoRotate = true;
-    }
+    if (!selectedTech) cameraRef.current.setLookAt(0, 11, 38, 0, 0, 0, true);
   }, [selectedTech]);
+
+  // ── Idle auto-rotation + selected-planet tracking ────────────────────────────
+  // camera-controls has no autoRotate API, so drive the azimuth manually; while
+  // a planet is selected, re-target every frame so it can't orbit out of frame.
+  useFrame((_, delta) => {
+    const cc = cameraRef.current;
+    if (!cc) return;
+
+    if (!selectedTech) {
+      cc.rotate(IDLE_ROTATE_SPEED * delta, 0, false);
+      return;
+    }
+
+    const pos = selectedTech.isSun
+      ? _sunPos
+      : planetPositions.current.get(selectedTech.name);
+    if (!pos) return;
+
+    const d = selectedTech.size * 5 + 5;
+
+    // Place camera radially outward from sun + upward so it's behind+above planet
+    const radial = selectedTech.isSun
+      ? _sunRadial
+      : _radial.set(pos.x, 0, pos.z).normalize();
+
+    const camPos = _camPos.copy(pos).addScaledVector(radial, d * 0.7);
+    camPos.y += d * 0.45;
+
+    // enableTransition=true every frame gives a smooth damped follow
+    cc.setLookAt(camPos.x, camPos.y, camPos.z, pos.x, pos.y, pos.z, true);
+  });
 
   // ── Disable scroll zoom / right-click truck on mount ────────────────────────
   useEffect(() => {
@@ -191,8 +207,6 @@ const SolarSystemScene = ({ technologies, selectedTech, onSelectTech }) => {
     cc.mouseButtons.middle = 0;
     cc.touches.two         = 0; // disable pinch zoom
     cc.touches.three       = 0;
-    cc.autoRotate          = true;
-    cc.autoRotateSpeed     = 0.4;
   }, []);
 
   return (
