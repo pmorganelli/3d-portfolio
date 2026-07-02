@@ -8,6 +8,10 @@ import { SectionWrapper } from '../hoc';
 import { projects } from '../constants';
 import { fadeIn } from '../utils/motion';
 
+// Insert a zero-width space after "/" so names like "Compressor/Decompressor"
+// wrap cleanly at the slash instead of mid-word
+const breakAtSlash = (name) => name.replace(/\//g, '/\u200b');
+
 const GlowButton = ({ children, onClick, href, target, rel }) => {
   const Tag = href ? 'a' : 'button';
   return (
@@ -59,8 +63,8 @@ const LearnMoreModal = ({ project, onClose }) =>
 
           <div className="p-7 flex flex-col gap-6">
             <div>
-              <h2 className="text-white font-bold text-[22px] leading-snug">
-                {project.name}
+              <h2 className="text-white font-bold text-[22px] leading-snug break-words">
+                {breakAtSlash(project.name)}
               </h2>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {project.tags.map((tag, i) => (
@@ -185,10 +189,10 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
 
       <div className="mt-5">
         <h3
-          className={`text-white font-bold text-[24px] ${(!noDemo && demo_link) ? 'cursor-pointer' : ''}`}
+          className={`text-white font-bold text-[24px] break-words ${(!noDemo && demo_link) ? 'cursor-pointer' : ''}`}
           onClick={(!noDemo && demo_link) ? () => window.open(demo_link, '_blank', 'noopener,noreferrer') : undefined}
         >
-          {name}
+          {breakAtSlash(name)}
         </h3>
         <p className="mt-2 text-secondary text-[14px]">{description}</p>
       </div>

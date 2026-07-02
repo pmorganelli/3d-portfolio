@@ -21,7 +21,7 @@ Project context, architectural decisions, and implementation notes for Claude Co
 | File | Purpose |
 |---|---|
 | `src/components/canvas/Computers.jsx` | Hero 3D scene: Rubik's cube only |
-| `src/components/canvas/Ball.jsx` | Tech stack spheres (mobile grid, no labels) |
+| `src/components/canvas/Ball.jsx` | Bare tech ball mesh — rendered via drei `<View>` in Tech.jsx's shared canvas |
 | `src/components/canvas/SolarSystem.jsx` | Solar system (desktop tech section, has Pretext labels) |
 | `src/components/canvas/labelTexture.js` | `makeLabelTexture()` using Pretext — used by SolarSystem only |
 | `src/components/canvas/Earth.jsx` | Contact section globe |
@@ -38,14 +38,14 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 ### Canvas frameloop modes
 
-- `frameloop="always"` on Computers + SolarSystem canvases — needed for `useFrame`-driven animations
-- `frameloop="demand"` on Ball/Earth canvases — renders on interaction; OrbitControls `autoRotate` keeps invalidating
+- `frameloop="always"` on Computers + SolarSystem + mobile tech grid canvases — needed for `useFrame`-driven animations
+- `frameloop="demand"` on the Earth canvas — renders on interaction; drei OrbitControls `autoRotate` keeps invalidating (note: this only works for drei **OrbitControls**; yomotsu camera-controls has no `autoRotate` API)
 
-### Ball canvas (mobile)
+### Mobile tech grid (single shared canvas)
 
-- `Ball` component takes `imgUrl` and `color` only — no label sprite, no Pretext
-- Default R3F camera (no explicit camera prop)
-- Mobile tech grid: 3-column grid of `h-28` cells; transparent overlay div captures taps without blocking WebGL
+- `Ball` is a bare mesh component (`imgUrl`, `color`) — no Canvas, no label sprite, no Pretext
+- Tech.jsx renders ONE `<Canvas>` with `<View.Port />` and a drei `<View>` per grid cell — a canvas per ball previously put the page at the browser's WebGL context limit (evicted canvases on mobile)
+- Each `<View>` carries its own lights; cell `onClick` opens the bottom sheet; the Canvas overlay is `pointer-events: none`
 
 ### Lights
 
@@ -55,6 +55,16 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 - `WorksContent` is the inner component; `Works = SectionWrapper(WorksContent, 'projects')`
 - `noDemo` prop guards the project title/image from opening an undefined `demo_link` as a demo link
+- `breakAtSlash()` inserts `​` after `/` in project names so titles like "Image Compressor/Decompressor" wrap at the slash; titles also have `break-words`
+
+### SolarSystem camera (camera-controls, NOT OrbitControls)
+
+- yomotsu camera-controls has **no autoRotate** — idle rotation is driven manually via `useFrame` → `cc.rotate(IDLE_ROTATE_SPEED * delta, 0, false)`
+- While a planet is selected, `useFrame` re-targets `setLookAt(..., true)` every frame from the shared `planetPositions` map — smooth damped follow that keeps the orbiting planet in frame
+
+### SectionWrapper
+
+- `initial="hidden"` + `whileInView="show"` — sections must start hidden or none of the fadeIn/slideIn/stagger entrance animations play (a past `initial={false}` silently disabled all of them)
 
 ### Tilt
 
