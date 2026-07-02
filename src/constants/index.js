@@ -347,7 +347,7 @@ import {
       iconBg: "#ffffff",
       date: "May 2026 - Present",
       points: [
-        "Working on project L537."
+        "Actively working in department L592."
       ],
     },
     {
