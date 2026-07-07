@@ -16,6 +16,7 @@ const ElectricBorder = ({
   const animationRef = useRef(null);
   const timeRef = useRef(0);
   const lastFrameTimeRef = useRef(0);
+  const dprRef = useRef(1);
 
   const random = useCallback((x) => {
     return (Math.sin(x * 12.9898) * 43758.5453) % 1;
@@ -205,6 +206,7 @@ const ElectricBorder = ({
       const width = rect.width + borderOffset * 2;
       const height = rect.height + borderOffset * 2;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dprRef.current = dpr;
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
@@ -222,10 +224,9 @@ const ElectricBorder = ({
       timeRef.current += deltaTime * speed;
       lastFrameTimeRef.current = currentTime;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.scale(dpr, dpr);
+      ctx.scale(dprRef.current, dprRef.current);
 
       ctx.strokeStyle = color;
       ctx.lineWidth = thickness;
@@ -295,12 +296,15 @@ const ElectricBorder = ({
       animationRef.current = requestAnimationFrame(drawElectricBorder);
     };
 
-    const resizeObserver = new ResizeObserver(() => {
+    const handleResize = () => {
       const newSize = updateSize();
       width = newSize.width;
       height = newSize.height;
-    });
+    };
+
+    const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(container);
+    window.addEventListener("resize", handleResize);
 
     animationRef.current = requestAnimationFrame(drawElectricBorder);
 
@@ -309,6 +313,7 @@ const ElectricBorder = ({
         cancelAnimationFrame(animationRef.current);
       }
       resizeObserver.disconnect();
+      window.removeEventListener("resize", handleResize);
     };
   }, [color, speed, chaos, thickness, borderRadius, octavedNoise, getRoundedRectPoint]);
 
