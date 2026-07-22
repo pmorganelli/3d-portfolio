@@ -31,6 +31,7 @@ import {
     typeScriptIcon,
     dockerLogo,
     gitlabLogo,
+    pizzeriaHome
   } from "../assets";
   
   export const navLinks = [
@@ -426,6 +427,44 @@ import {
   ];
     
   const projects = [
+    {
+      name: "Saturday Slices Website",
+      description:
+        "A website for our student-run pizzeria with a live ordering system",
+      tags: [
+        { name: "react", color: "blue-text-gradient" },
+        { name: "vercel", color: "green-text-gradient" },
+        { name: "claude", color: "orange-text-gradient" },
+        { name: "upstash redis", color: "pink-text-gradient" },
+        { name: "vite", color: "blue-text-gradient" },
+        { name: "pretext", color: "green-text-gradient" },
+        { name: "gsap", color: "orange-text-gradient" },
+      ],
+      image: pizzeriaHome,
+      privateRepo: false,
+      noDemo: false,
+      source_code_link: "https://github.com/pmorganelli/peters-pizzeria-site",
+      demo_link: "https://saturdayslices.com",
+      details: {
+        overview:
+          "A single-page marketing site and live ordering system for a student-run pizzeria. Customers browse the menu, build a cart with per-slice add-ons, and place orders that staff manage in real time on an admin board.",
+        role:
+          "Built solo, end to end — the React frontend, the Vercel serverless API, and the ordering/admin workflow that runs the pizzeria's day-to-day operations.",
+        built: [
+          "React SPA with manual in-memory routing (no React Router), GSAP-driven scroll reveals and parallax, and a Tailwind + CSS custom property design system",
+          "Vercel serverless API (api/) handling orders, store hours, availability, and admin auth, with all pricing computed server-side from a shared catalog",
+          "Upstash Redis for order storage, rate limiting, and store settings, with an in-memory fallback for local dev",
+          "Customer ordering flow: cart with per-slice add-ons, live order status polling by pickup code, and a public order lookup page",
+          "Admin order board with password-protected HMAC-cookie auth, live-polling Kanban columns (New → In the oven → Ready), and an aggregated 'fire next' panel",
+          "Photo pipeline generating thumb/web derivatives and aspect-ratio metadata so the gallery masonry never reflows while images load",
+        ],
+        highlights: [
+          "Designed the per-slice add-on system end to end: cart shape, server-side validation and pricing, and nested storage/display in both the order and admin views",
+          "Built the storefront's open/closed/auto store-hours logic and an admin-toggleable 86 list (sold-out items) that's enforced server-side, not just in the UI",
+          "Used Claude throughout development for feature implementation, refactors, and bug fixes across the frontend and API",
+        ],
+      },
+    },
     {
       name: "Mobile Food Waste Tracking App",
       description:
