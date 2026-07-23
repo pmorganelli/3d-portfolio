@@ -159,7 +159,7 @@ const Tech = () => {
           <Canvas
             frameloop="always"
             dpr={[1, 2]}
-            style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+            style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none' }}
           >
             <View.Port />
           </Canvas>
