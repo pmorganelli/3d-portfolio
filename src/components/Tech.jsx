@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber"
 import { View } from "@react-three/drei"
 import { SolarSystemCanvas, Ball } from "./canvas"
 import { SectionWrapper } from "../hoc"
+import TechProjectLinks from "./TechProjectLinks"
 import { technologies } from "../constants"
 import { motion, AnimatePresence } from "framer-motion"
 import { styles } from "../styles"
@@ -71,22 +72,11 @@ const MobileTechCard = ({ tech, onClose }) => {
           <p className="text-white/70 text-sm uppercase tracking-wide mb-2.5">
             Projects
           </p>
-          <div className="flex flex-col gap-2">
-            {tech.info.projects.map(p => (
-              <a
-                key={p.name}
-                href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 group"
-              >
-                <span className="text-sm" style={{ color: tech.color }}>→</span>
-                <span className="text-sm text-white/70 group-hover:text-white transition-colors">
-                  {p.name}
-                </span>
-              </a>
-            ))}
-          </div>
+          <TechProjectLinks
+            projects={tech.info.projects}
+            color={tech.color}
+            onNavigate={onClose}
+          />
         </div>
       )}
     </motion.div>

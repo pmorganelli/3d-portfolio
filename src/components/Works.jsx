@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Tilt } from 'react-tilt';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,8 +23,52 @@ const GlowButton = ({ children, onClick, href, target, rel }) => {
   );
 };
 
-const LearnMoreModal = ({ project, onClose }) =>
-  createPortal(
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+const LearnMoreModal = ({ project, onClose }) => {
+  const panelRef = useRef(null);
+
+  // Keep Tab inside the dialog — without this, tabbing walks straight into the
+  // page content sitting behind the overlay. Focus is restored on close.
+  useEffect(() => {
+    const previouslyFocused = document.activeElement;
+    const panel = panelRef.current;
+    panel?.focus();
+
+    const onKeyDown = (e) => {
+      if (e.key !== 'Tab' || !panel) return;
+      const items = [...panel.querySelectorAll(FOCUSABLE)].filter(
+        (el) => el.offsetParent !== null
+      );
+      if (!items.length) {
+        e.preventDefault();
+        return;
+      }
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && (active === first || active === panel)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus();
+    };
+  }, []);
+
+  const hasDemo = !project.noDemo;
+  const hasSource = !project.privateRepo;
+
+  return createPortal(
     <motion.div
       className="fixed inset-0 z-[9999] overflow-y-auto"
       initial={{ opacity: 0 }}
@@ -36,8 +80,13 @@ const LearnMoreModal = ({ project, onClose }) =>
 
       <div className="flex min-h-full items-start justify-center px-4 py-8">
         <motion.div
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={project.name}
+          tabIndex={-1}
           className="relative z-10 bg-[#0d0b1f] rounded-2xl w-full max-w-2xl
-                     shadow-2xl border border-white/10 flex flex-col"
+                     shadow-2xl border border-white/10 flex flex-col outline-none"
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 32 }}
@@ -112,35 +161,40 @@ const LearnMoreModal = ({ project, onClose }) =>
               </ul>
             </Section>
 
-            <div className="flex gap-3 pt-1 items-center">
-              {!project.noDemo && (
-                <GlowButton
-                  href={project.demo_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Live Demo
-                </GlowButton>
-              )}
-              {!project.privateRepo && (
-                <a
-                  href={project.source_code_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="py-2.5 px-5 rounded-xl text-center text-[13px] font-semibold
-                             border border-white/15 text-white/70 hover:text-white
-                             hover:border-white/30 transition-colors"
-                >
-                  View Code
-                </a>
-              )}
-            </div>
+            {/* Projects that are both private and demo-less would otherwise
+                leave an empty padded row at the bottom of the modal */}
+            {(hasDemo || hasSource) && (
+              <div className="flex gap-3 pt-1 items-center">
+                {hasDemo && (
+                  <GlowButton
+                    href={project.demo_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Live Demo
+                  </GlowButton>
+                )}
+                {hasSource && (
+                  <a
+                    href={project.source_code_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2.5 px-5 rounded-xl text-center text-[13px] font-semibold
+                               border border-white/15 text-white/70 hover:text-white
+                               hover:border-white/30 transition-colors"
+                  >
+                    View Code
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </motion.div>
       </div>
     </motion.div>,
     document.body
   );
+};
 
 const Section = ({ title, children }) => (
   <div>
@@ -219,7 +273,28 @@ const WorksContent = () => {
       }
     };
     document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+
+    // Lock background scroll while the modal is open. index.css puts
+    // `overflow-x: hidden` on <html>, which makes <html> the scrolling element
+    // and stops body-overflow from propagating — so lock both. Compensate for
+    // the removed scrollbar so the page underneath doesn't shift sideways.
+    const root = document.documentElement;
+    const { body } = document;
+    const prevRootOverflow = root.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    const prevPaddingRight = body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - root.clientWidth;
+
+    root.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      root.style.overflow = prevRootOverflow;
+      body.style.overflow = prevBodyOverflow;
+      body.style.paddingRight = prevPaddingRight;
+    };
   }, [activeLearnMore]);
 
   return (

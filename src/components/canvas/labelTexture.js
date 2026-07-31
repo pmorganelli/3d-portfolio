@@ -8,6 +8,25 @@ const NAME_F  = 'bold 15px system-ui, -apple-system, sans-serif';
 const TAG_F   = '11px system-ui, -apple-system, sans-serif';
 const TEXT_LH = 22;
 
+/**
+ * ctx.roundRect is Safari 16.4+ / Chrome 99+. Without a fallback an older
+ * browser throws mid-draw, and because this runs inside a render-phase useMemo
+ * it takes the whole solar system down instead of degrading to square corners.
+ */
+function roundRectPath(ctx, x, y, w, h, r) {
+  if (typeof ctx.roundRect === 'function') {
+    ctx.roundRect(x, y, w, h, r);
+    return;
+  }
+  const rad = Math.min(r, w / 2, h / 2);
+  ctx.moveTo(x + rad, y);
+  ctx.arcTo(x + w, y,     x + w, y + h, rad);
+  ctx.arcTo(x + w, y + h, x,     y + h, rad);
+  ctx.arcTo(x,     y + h, x,     y,     rad);
+  ctx.arcTo(x,     y,     x + w, y,     rad);
+  ctx.closePath();
+}
+
 /** Lightens a 6-digit hex color toward white by `ratio` (0–1). */
 export function lighten(hex, ratio) {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -54,12 +73,12 @@ export function makeLabelTexture(name, tag, color) {
 
   // Pill background
   ctx.fillStyle = 'rgba(6, 8, 16, 0.90)';
-  ctx.beginPath(); ctx.roundRect(pillX, pillY, pillW, pillH, pillR); ctx.fill();
+  ctx.beginPath(); roundRectPath(ctx, pillX, pillY, pillW, pillH, pillR); ctx.fill();
 
   // Pill border
   ctx.strokeStyle = color ? `${color}50` : 'rgba(255,255,255,0.18)';
   ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.roundRect(pillX, pillY, pillW, pillH, pillR); ctx.stroke();
+  ctx.beginPath(); roundRectPath(ctx, pillX, pillY, pillW, pillH, pillR); ctx.stroke();
 
   // Colored dot
   ctx.beginPath();
@@ -77,10 +96,10 @@ export function makeLabelTexture(name, tag, color) {
     const chipX = curX;
     const chipY = pillY + (pillH - chipH) / 2;
     ctx.fillStyle = color ? `${color}22` : 'rgba(255,255,255,0.08)';
-    ctx.beginPath(); ctx.roundRect(chipX, chipY, chipW, chipH, chipH / 2); ctx.fill();
+    ctx.beginPath(); roundRectPath(ctx, chipX, chipY, chipW, chipH, chipH / 2); ctx.fill();
     ctx.strokeStyle = color ? `${color}55` : 'rgba(255,255,255,0.22)';
     ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.roundRect(chipX, chipY, chipW, chipH, chipH / 2); ctx.stroke();
+    ctx.beginPath(); roundRectPath(ctx, chipX, chipY, chipW, chipH, chipH / 2); ctx.stroke();
     ctx.font = TAG_F;
     ctx.fillStyle = color ? lighten(color, 0.3) : '#aaaaaa';
     ctx.fillText(tag, chipX + (chipW - tagW) / 2, chipY + chipH * 0.72);

@@ -123,6 +123,42 @@ const GooeyNav = ({
     }
   };
 
+  // Scroll spy — without this the pill stays wherever it was last clicked (or on
+  // the initial item) no matter which section you've actually scrolled to.
+  useEffect(() => {
+    const targets = items
+      .map((item, index) => {
+        if (!item.href?.startsWith("#") || item.href === "#") return null;
+        const anchor = document.getElementById(item.href.slice(1));
+        if (!anchor) return null;
+        return { el: anchor.closest("section") ?? anchor, index };
+      })
+      .filter(Boolean);
+
+    if (!targets.length) return;
+
+    const visible = new Map();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const match = targets.find((t) => t.el === entry.target);
+          if (!match) return;
+          if (entry.isIntersecting) visible.set(match.index, entry.intersectionRatio);
+          else visible.delete(match.index);
+        });
+        if (!visible.size) return;
+        // topmost section currently on screen wins
+        const next = Math.min(...visible.keys());
+        setActiveIndex((current) => (current === next ? current : next));
+      },
+      // offset by the fixed navbar so a section counts as active once it clears it
+      { rootMargin: "-80px 0px -55% 0px", threshold: [0, 0.25, 0.5] }
+    );
+
+    targets.forEach((t) => observer.observe(t.el));
+    return () => observer.disconnect();
+  }, [items]);
+
   useEffect(() => {
     if (!navRef.current || !containerRef.current) return;
     const activeLi = navRef.current.querySelectorAll("li")[activeIndex];

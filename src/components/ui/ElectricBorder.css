@@ -1,4 +1,8 @@
 .electric-border {
+  /* Relative color syntax is Chrome 119+ / Safari 16.4+ / Firefox 128+. Older
+     browsers drop the whole declaration, so seed a plain fallback first —
+     otherwise the glow layers resolve to an invalid color and vanish. */
+  --electric-light-color: var(--electric-border-color, #5227ff);
   --electric-light-color: oklch(from var(--electric-border-color) l c h);
   position: relative;
   border-radius: inherit;
@@ -44,8 +48,8 @@
 }
 
 .eb-glow-1 {
-  border: var(--electric-border-thickness, 2px) solid
-    oklch(from var(--electric-border-color) l c h / 0.6);
+  border: var(--electric-border-thickness, 2px) solid var(--electric-border-color, #5227ff);
+  border-color: oklch(from var(--electric-border-color) l c h / 0.6);
   filter: blur(1px);
 }
 

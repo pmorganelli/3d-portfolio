@@ -1,14 +1,29 @@
+import { useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
 import { Decal, Float, useTexture } from '@react-three/drei'
+
+// Radians per second. Matches the solar system planets (0.008/frame at 60fps),
+// so a ball completes a revolution in ~13s. Delta-scaled so the speed is the
+// same on 60Hz and 120Hz displays.
+const SPIN_SPEED = 0.5;
 
 // Bare ball mesh — rendered inside a shared <Canvas> via drei <View> (see Tech.jsx).
 // Per-ball canvases were replaced with one context: 11 simultaneous WebGL
 // contexts put the page at the browser's context limit on mobile.
 const Ball = ({ imgUrl, color }) => {
   const [decal] = useTexture([imgUrl]);
+  const meshRef = useRef();
+
+  // Float alone does NOT spin — it assigns rotation to a sine, so it's a bounded
+  // wobble of ±(rotationIntensity/8) rad ≈ ±7°, which reads as motionless on a
+  // sphere with six identical decals. The actual spin has to accumulate here.
+  useFrame((_, delta) => {
+    if (meshRef.current) meshRef.current.rotation.y += SPIN_SPEED * delta;
+  });
 
   return (
-    <Float speed={0.5} rotationIntensity={1} floatIntensity={2}>
-      <mesh castShadow receiveShadow scale={2.75}>
+    <Float speed={1.5} rotationIntensity={0.6} floatIntensity={2}>
+      <mesh ref={meshRef} castShadow receiveShadow scale={2.75}>
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
           color={color}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '../constants';
 import { hero, menu, close } from '../assets';
@@ -8,15 +8,20 @@ import GooeyNav from './ui/GooeyNav';
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
-  const navItems = navLinks.map((nav) => {
-    const isResume = nav.title === 'Résumé';
-    return {
-      ...nav,
-      label: nav.title,
-      href: isResume ? '/resume.pdf' : `#${nav.id}`,
-      ...(isResume ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
-    };
-  });
+  // Stable identity — GooeyNav's scroll spy rebuilds its observer when this changes
+  const navItems = useMemo(
+    () =>
+      navLinks.map((nav) => {
+        const isResume = nav.title === 'Résumé';
+        return {
+          ...nav,
+          label: nav.title,
+          href: isResume ? '/resume.pdf' : `#${nav.id}`,
+          ...(isResume ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
+        };
+      }),
+    []
+  );
 
   return (
     
@@ -27,9 +32,12 @@ const Navbar = () => {
       <div className="w-full text-secondary flex justify-between items-center gap-4 max-w-7xl mx-auto">
         <a
           href="#"
+          aria-label="Back to top"
           className="flex items-center gap-2 shrink-0"
-          onClick={() => {
-            window.scrollTo(0, 0)
+          onClick={(e) => {
+            // Default would append a bare "#" to the URL
+            e.preventDefault()
+            window.scrollTo({ top: 0, behavior: 'smooth' })
           }}
         >
           <img src={hero} alt='heroImage' className="w-9 h-9 object-contain" />

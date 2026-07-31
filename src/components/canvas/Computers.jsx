@@ -45,7 +45,8 @@ const ComputersCanvas = () => {
       dpr={[1, 2]}
       camera={{ position: [0, 0, 6], fov: isMobile ? 52 : 46, near: 0.1, far: 100 }}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
-      style={{ width: "100%", height: "100%", touchAction: "none" }}
+      className="scroll-safe"
+      style={{ width: "100%", height: "100%", touchAction: "pan-y" }}
     >
       <AdaptiveDpr />
       <AdaptiveEvents />

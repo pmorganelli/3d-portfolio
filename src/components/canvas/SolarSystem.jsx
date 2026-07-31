@@ -1,10 +1,11 @@
-import { useRef, useMemo, useState, useEffect, Suspense } from 'react'
+import { useRef, useMemo, useState, useEffect, useCallback, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { CameraControls, Decal, Preload, useTexture } from '@react-three/drei'
 import { AnimatePresence, motion } from 'framer-motion'
 import * as THREE from 'three'
 
 import CanvasLoader from '../Loader'
+import TechProjectLinks from '../TechProjectLinks'
 import { makeLabelTexture, LBL_W, LBL_H } from './labelTexture'
 
 // ─── Orbit ring ───────────────────────────────────────────────────────────────
@@ -19,6 +20,26 @@ const OrbitRing = ({ radius, color }) => (
     />
   </mesh>
 );
+
+// ─── Hover cursor ─────────────────────────────────────────────────────────────
+// Reset on unmount too: crossing the mobile breakpoint while a planet is hovered
+// unmounts the scene without ever firing onPointerOut, leaving the whole page
+// stuck with a pointer cursor.
+const useHoverCursor = () => {
+  useEffect(() => () => { document.body.style.cursor = 'auto'; }, []);
+  const onPointerOver = useCallback(() => { document.body.style.cursor = 'pointer'; }, []);
+  const onPointerOut  = useCallback(() => { document.body.style.cursor = 'auto'; }, []);
+  return { onPointerOver, onPointerOut };
+};
+
+// ─── Label texture ────────────────────────────────────────────────────────────
+// CanvasTextures hold GPU memory that useMemo alone never reclaims — dispose on
+// unmount so toggling the desktop/mobile breakpoint doesn't leak a set per pass.
+const useLabelTexture = (name, tag, color) => {
+  const labelTex = useMemo(() => makeLabelTexture(name, tag, color), [name, tag, color]);
+  useEffect(() => () => labelTex.dispose(), [labelTex]);
+  return labelTex;
+};
 
 // ─── Shared decal pattern ─────────────────────────────────────────────────────
 const SixDecals = ({ decal, decalScale = 1 }) => (
@@ -37,10 +58,8 @@ const Sun = ({ tech, onSelect, isSelected }) => {
   const [decal]  = useTexture([tech.icon]);
   const meshRef  = useRef();
 
-  const labelTex = useMemo(
-    () => makeLabelTexture(tech.name, tech.tag, tech.color),
-    [tech.name, tech.tag, tech.color]
-  );
+  const labelTex = useLabelTexture(tech.name, tech.tag, tech.color);
+  const hover    = useHoverCursor();
 
   useFrame(() => {
     if (meshRef.current) meshRef.current.rotation.y += 0.003;
@@ -61,8 +80,8 @@ const Sun = ({ tech, onSelect, isSelected }) => {
         castShadow
         receiveShadow
         onClick={(e) => { e.stopPropagation(); onSelect(tech); }}
-        onPointerOver={() => document.body.style.cursor = 'pointer'}
-        onPointerOut={() => document.body.style.cursor = 'auto'}
+        onPointerOver={hover.onPointerOver}
+        onPointerOut={hover.onPointerOut}
       >
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
@@ -91,10 +110,8 @@ const Planet = ({ tech, planetPositions, onSelect, isSelected }) => {
   const orbitRef  = useRef();
   const meshRef   = useRef();
 
-  const labelTex = useMemo(
-    () => makeLabelTexture(tech.name, tech.tag, tech.color),
-    [tech.name, tech.tag, tech.color]
-  );
+  const labelTex = useLabelTexture(tech.name, tech.tag, tech.color);
+  const hover    = useHoverCursor();
 
   useFrame(({ clock }) => {
     const t     = clock.getElapsedTime();
@@ -123,8 +140,8 @@ const Planet = ({ tech, planetPositions, onSelect, isSelected }) => {
         scale={s}
         castShadow
         onClick={(e) => { e.stopPropagation(); onSelect(tech); }}
-        onPointerOver={() => document.body.style.cursor = 'pointer'}
-        onPointerOut={() => document.body.style.cursor = 'auto'}
+        onPointerOver={hover.onPointerOver}
+        onPointerOut={hover.onPointerOut}
       >
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
@@ -309,22 +326,11 @@ const PlanetCard = ({ tech, onClose }) => {
           <p className="text-white/40 text-xs uppercase tracking-widest mb-2.5">
             Projects
           </p>
-          <div className="flex flex-col gap-2">
-            {tech.info.projects.map(p => (
-              <a
-                key={p.name}
-                href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 group"
-              >
-                <span className="text-sm" style={{ color: tech.color }}>→</span>
-                <span className="text-sm text-white/70 group-hover:text-white transition-colors">
-                  {p.name}
-                </span>
-              </a>
-            ))}
-          </div>
+          <TechProjectLinks
+            projects={tech.info.projects}
+            color={tech.color}
+            onNavigate={onClose}
+          />
         </div>
       )}
     </motion.div>
@@ -349,6 +355,7 @@ const SolarSystemCanvas = ({ technologies }) => {
   return (
     <div ref={containerRef} className="relative w-full h-full">
       <Canvas
+        className="scroll-safe"
         shadows
         frameloop="always"
         dpr={[1, 2]}

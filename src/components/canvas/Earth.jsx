@@ -20,6 +20,7 @@ const Earth = () => {
 const EarthCanvas = () => {
   return (
     <Canvas
+      className="scroll-safe"
       shadows
       frameloop="demand"
       onContextMenu={(event) => event.preventDefault()}

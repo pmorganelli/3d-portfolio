@@ -29,6 +29,15 @@ body {
   display: block;
 }
 
+/* Both three-stdlib OrbitControls and camera-controls set `touch-action: none`
+   directly on their canvas element when they connect, which swallows vertical
+   page scroll on touch devices — a full-height canvas becomes a scroll trap.
+   An !important author rule outranks their inline style, so `pan-y` wins:
+   vertical swipes scroll the page, horizontal swipes still drive the controls. */
+.scroll-safe canvas {
+  touch-action: pan-y !important;
+}
+
 .black-gradient {
   background: #000000;
   background: -webkit-linear-gradient(

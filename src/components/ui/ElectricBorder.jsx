@@ -18,8 +18,11 @@ const ElectricBorder = ({
   const lastFrameTimeRef = useRef(0);
   const dprRef = useRef(1);
 
+  // GLSL fract() — JS `%` keeps the sign, which would yield (-1, 1) and double
+  // the intended noise amplitude. Math.floor subtraction gives a true [0, 1).
   const random = useCallback((x) => {
-    return (Math.sin(x * 12.9898) * 43758.5453) % 1;
+    const v = Math.sin(x * 12.9898) * 43758.5453;
+    return v - Math.floor(v);
   }, []);
 
   const noise2D = useCallback(
@@ -293,7 +296,7 @@ const ElectricBorder = ({
 
       ctx.closePath();
       ctx.stroke();
-      animationRef.current = requestAnimationFrame(drawElectricBorder);
+      if (running) animationRef.current = requestAnimationFrame(drawElectricBorder);
     };
 
     const handleResize = () => {
@@ -302,18 +305,55 @@ const ElectricBorder = ({
       height = newSize.height;
     };
 
+    // The noise field costs ~12k trig calls per frame per card. Only animate
+    // while the card is actually on screen and the tab is foregrounded —
+    // otherwise several of these run forever behind an unscrolled page.
+    let running = false;
+    let inViewport = false;
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      // Seed from now, or the first delta would be the whole page uptime and
+      // jump the noise field forward by seconds.
+      lastFrameTimeRef.current = performance.now();
+      animationRef.current = requestAnimationFrame(drawElectricBorder);
+    };
+
+    const stop = () => {
+      running = false;
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+    };
+
+    const sync = () => {
+      if (inViewport && !document.hidden) start();
+      else stop();
+    };
+
     const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(container);
     window.addEventListener("resize", handleResize);
 
-    animationRef.current = requestAnimationFrame(drawElectricBorder);
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        inViewport = entry.isIntersecting;
+        sync();
+      },
+      // the stroke is drawn `borderOffset` px outside the container bounds
+      { rootMargin: `${borderOffset}px` }
+    );
+    intersectionObserver.observe(container);
+    document.addEventListener("visibilitychange", sync);
 
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      stop();
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", sync);
     };
   }, [color, speed, chaos, thickness, borderRadius, octavedNoise, getRoundedRectPoint]);
 

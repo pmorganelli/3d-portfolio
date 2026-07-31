@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import emailjs from '@emailjs/browser'
 import { styles } from "../styles"
@@ -24,6 +24,10 @@ const missingEmailJsVars = Object.entries(requiredEmailJsVars)
 
 const Contact = () => {
   const formRef = useRef();
+  // emailjs.send resolves after the user may have navigated away — don't set
+  // state on an unmounted component.
+  const mountedRef = useRef(true);
+  useEffect(() => () => { mountedRef.current = false; }, []);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -73,6 +77,7 @@ const Contact = () => {
       )
       .then(
         () => {
+          if (!mountedRef.current) return;
           setLoading(false);
           setStatus({
             type: 'success',
@@ -81,6 +86,7 @@ const Contact = () => {
           setForm({ name: "", email: "", message: "" });
         },
         (error) => {
+          if (!mountedRef.current) return;
           setLoading(false);
           setStatus({
             type: 'error',
