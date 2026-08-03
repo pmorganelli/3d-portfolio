@@ -40,12 +40,17 @@ const ElectricBorder = ({
       const ux = fx * fx * (3.0 - 2.0 * fx);
       const uy = fy * fy * (3.0 - 2.0 * fy);
 
-      return (
+      const value =
         a * (1 - ux) * (1 - uy) +
         b * ux * (1 - uy) +
         c * (1 - ux) * uy +
-        d * ux * uy
-      );
+        d * ux * uy;
+
+      // `random` is a true fract() in [0, 1), so this lerp is also [0, 1) —
+      // mean 0.5. The displacement math expects zero-mean noise, or every
+      // sample gets a constant push off the rounded-rect path. Remap to
+      // [-1, 1) to restore both the centering and the full amplitude.
+      return value * 2 - 1;
     },
     [random]
   );
