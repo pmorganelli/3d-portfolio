@@ -348,16 +348,20 @@ import {
       iconBg: "#ffffff",
       date: "May 2026 - Present",
       points: [
-        "Actively working in department L592."
+        "Parallelized bounded requirement verification for a GraphRAG application with a four-worker async request pool handling retries and rate limiting, cutting end-to-end runtime by 77% on large Excel imports",
+        "Shipped features on a Django requirements platform over a Neo4j graph database, maintaining traceability between source requirements, system-model data, and LLM-generated findings for Air Force CUI systems",
+        "Presented AI agent orchestration and model prompting workflows to 50+ senior engineers"
       ],
     },
     {
-      title: "Data Structures TA",
+      title: "Data Structures TA and TF",
       company_name: "Tufts University",
       icon: tufts,
       iconBg: "#383E56",
-      date: "September 2024 - December 2025",
+      date: "September 2024 - Present",
       points: [
+        "Own grading standards for a 200+ student course, setting the staff-wide call on ambiguous rubric criteria across 300+ submissions",
+        "Revise project specifications and lecture material with faculty; support students in office hours and on Piazza",
         "Held regular office hours to support students with homework assignments and course concepts",
         "Evaluated and graded student submissions, assessing code functionality, style, and organization",
         "Provided constructive feedback to students, facilitating their understanding and application of data structures principles",
@@ -428,9 +432,9 @@ import {
     
   const projects = [
     {
-      name: "Saturday Slices Website",
+      name: "Saturday Slices",
       description:
-        "A website for our student-run pizzeria with a live ordering system",
+        "A website and full ordering system for our student-run pizzeria. Check it out!",
       tags: [
         { name: "react", color: "blue-text-gradient" },
         { name: "vercel", color: "green-text-gradient" },
@@ -449,9 +453,9 @@ import {
         overview:
           "A single-page marketing site and live ordering system for a student-run pizzeria. Customers browse the menu, build a cart with per-slice add-ons, and place orders that staff manage in real time on an admin board.",
         role:
-          "Built solo, end to end — the React frontend, the Vercel serverless API, and the ordering/admin workflow that runs the pizzeria's day-to-day operations.",
+          "Built solo, end to end. Includes the React frontend, Vercel serverless functions, and the ordering/admin workflow that runs the weekly operations.",
         built: [
-          "React SPA with manual in-memory routing (no React Router), GSAP-driven scroll reveals and parallax, and a Tailwind + CSS custom property design system",
+          "React SPA with manual in-memory routing (no React Router), GSAP-driven scroll reveals and parallax, and a TailwindCSS custom property design system",
           "Vercel serverless API (api/) handling orders, store hours, availability, and admin auth, with all pricing computed server-side from a shared catalog",
           "Upstash Redis for order storage, rate limiting, and store settings, with an in-memory fallback for local dev",
           "Customer ordering flow: cart with per-slice add-ons, live order status polling by pickup code, and a public order lookup page",
@@ -513,10 +517,10 @@ import {
       demo_link: "https://elm-ide-105.vercel.app/index.html",
       privateRepo: true,
       details: {
-        overview: "A fully in-browser IDE built for Tufts' CS105 Programming Languages course. Students can write and run code in seven different languages — ranging from Impcore to nano-ML — without installing anything. The interpreter runs entirely client-side, making it accessible from any device, but it's designed to be used on a computer.",
+        overview: "A fully in-browser IDE built for Tufts' CS105 Programming Languages course. Students can write and run code in seven different languages ranging from Impcore to nano-ML without installing anything. The interpreter runs entirely client-side, making it accessible from any device, but it's designed to be used on a computer.",
         role: "Led the entire fullstack architecture and the Elm-based interpreter integration, working within the constraints of a course confidentiality agreement by obfuscating source code.",
         built: [
-          "Elm for the core application logic and UI — chosen for its strong type system and built-in functional programming that match the course's language theory content",
+          "Elm for the core application logic and UI, chosen for its strong type system and built-in functional programming that match the course's language theory content",
           "JavaScript (Elm ports) to bridge the interpreter engine with the browser environment",
           "Custom syntax highlighting and error display tuned to each of the seven supported languages",
           "Utilized the browser's localStorage to persist code sessions across browsers",
@@ -524,7 +528,7 @@ import {
         highlights: [
           "Supports seven distinct language grammars in a single cohesive interface: Impcore, μScheme, μSmalltalk, nano-ML, typed-Impcore, typed-μScheme, μML, and Molecule",
           "Zero-setup installation — students open a URL and start coding, nothing else required",
-          "An open-source version is in progress",
+          "Closed source due to course interpreter confidentiality",
         ],
       },
     },
@@ -549,7 +553,7 @@ import {
         built: [
           "Next.js App Router for server-side rendering and API routes in a single codebase",
           "React frontend with a component library built from scratch to match the museum's brand guidelines",
-          "PostgreSQL database hosted on Neon (serverless Postgres) — chosen for its branch-based development workflow",
+          "PostgreSQL database hosted on Neon (serverless Postgres) chosen for its branch-based development workflow",
           "Node.js API layer handling search indexing and item loan tracking",
           "Role-based access control distinguishing admin staff from read-only volunteers",
         ],
@@ -578,11 +582,11 @@ import {
           "Unity game engine with C# scripts driving all gameplay systems",
           "Implemented a physics-based slingshot inspired by Angry birds",
           "Wave spawning system with escalating enemy difficulty curves tuned through Unity's Inspector for rapid playtesting",
-          "Economy system balancing crop income against defensive spending — iterated heavily based on playtesting feedback",
+          "Economy system balancing crop income against defensive spending which iterated heavily based on playtesting feedback",
           "Published and hosted on itch.io with WebGL build for instant in-browser play",
         ],
         highlights: [
-          "Designed and balanced the entire resource economy from scratch — finding the fun through iteration",
+          "Designed and balanced the entire resource economy from scratch",
           "Implemented pathfinding for enemy units navigating around dynamically placed defenses",
           "Shipped a complete, playable game within a single semester under tight deadlines",
           "Styling and themes inspired by Stardew Valley"
@@ -602,7 +606,7 @@ import {
       demo_link: "https://gamedesignb11.itch.io/snowplow-race",
       details: {
         overview: "Midterm project for CS23: Game Design at Tufts University. You pilot a snowplow through increasingly chaotic city streets, racing against the clock to clear snow before morning traffic arrives.",
-        role: "Programmer and co-designer — implemented vehicle physics, the snow accumulation system, and the scoring pipeline.",
+        role: "Programmer and co-designer. Implemented vehicle physics, the snow accumulation system, and the scoring pipeline.",
         built: [
           "Unity with C# for all game logic and physics interactions",
           "Custom vehicle controller fit for WASD or arrows with steering feel tuned for handling",
@@ -632,7 +636,7 @@ import {
       source_code_link: "https://github.com/pmorganelli/vscode-timer/tree/main",
       demo_link: "https://devpost.com/software/codeclock",
       details: {
-        overview: "A VS Code extension and web dashboard built in a weekend at Tufts JumboHack that lets Tufts CS students automatically track time spent on each course's assignments — without any manual input. The extension detects which project folder is active and silently logs coding sessions in the background.",
+        overview: "A VSCode extension and web dashboard built in a weekend at Tufts JumboHack that lets Tufts CS students automatically track time spent on each course's assignments without any manual input. The extension detects which project folder is active and silently logs coding sessions in the background.",
         role: "Built the VS Code extension, REST API, and React dashboard end-to-end over a weekend hackathon.",
         built: [
           "VS Code Extension API to detect active workspace, start/stop session timers, and push session data to the backend",
@@ -642,7 +646,7 @@ import {
           "AWS infrastructure (EC2 + security groups) configured and deployed within the hackathon window",
         ],
         highlights: [
-          "Built the entire product — extension, API, database, and frontend — with a small group of developers",
+          "Built the entire product: extension, API, database, and frontend with a small group of developers in one weekend",
           "Once installed and launched, the extension runs silently with no manual start/stop required",
           "Presented to a panel of judges and received recognition for technical depth and practical usefulness for the Tufts CS community",
         ],
@@ -665,17 +669,17 @@ import {
         overview: "A lossy image compression and decompression pipeline written entirely in C for Tufts' CS40: Machine Structure and Assembly Language Programming. The program converts raster images into a compact binary format and reconstructs them with controlled quality loss, similar in spirit to how JPEG compression works.",
         role: "Co-author alongside a lab partner — responsible for the color space conversion pipeline and the quantization stages.",
         built: [
-          "Implemented in C with manual memory management — no garbage collection, no abstractions beyond what we wrote",
+          "Implemented in C with manual memory management. No garbage collection and no abstractions beyond what we wrote",
           "Color space conversion from RGB to a luminance/chroma representation to concentrate compression on less perceptible channels",
           "Discrete Cosine Transform (DCT) applied to 2x2 pixel blocks to convert spatial data to frequency components",
-          "Quantization step to discard high-frequency coefficients — the core of the lossy compression trade-off",
+          "Quantization step to discard high-frequency coefficient, the main lossy compression trade-off",
           "Bitpacking to encode compressed data into a custom binary file format with a minimal header",
           "Full decompression pipeline reversing every step to reconstruct the image from the compressed binary",
         ],
         highlights: [
           "Achieved meaningful file size reduction while keeping perceptual quality high enough to be visually indistinguishable at normal viewing distances",
-          "Built entirely without image-processing libraries — every algorithm implemented from first principles",
-          "One of the most technically demanding projects in the Tufts CS curriculum; deepened understanding of how real-world formats like JPEG actually work",
+          "Built entirely without image-processing libraries. Every algorithm implemented from scractch with assignment specification",
+          "One of the most technically demanding projects in the Tufts CS curriculum. This project deepened my understanding of how formats like JPEG actually work",
         ],
       },
     },
@@ -699,15 +703,15 @@ import {
         role: "Full-stack developer on a 10-person JumboCode team, working under tech leads Liam Strand and Amitav Nott. Completed weekly feature tickets across both the frontend and backend.",
         built: [
           "Next.js 14 with App Router for server components and type-safe API routes",
-          "TypeScript throughout — enforced strict types on all data models, API payloads, and component props",
-          "Clerk for authentication — handles user sessions, role management, and OAuth login with zero backend auth code",
+          "TypeScript used to enforce strict types on all data models, API payloads, and component props",
+          "Clerk for authentication which handles user sessions, role management, and OAuth login with zero backend auth code",
           "DrizzleORM with a PostgreSQL database for type-safe queries with full schema migration support",
-          "Tailwind CSS for a consistent, responsive UI across desktop and tablet (primary staff devices)",
+          "TailwindCSS for a consistent, responsive UI across desktop and tablet (primary staff devices)",
           "Figma designs reviewed and implemented collaboratively with the team's designers",
         ],
         highlights: [
           "Shipped a production app used by real theater staff managing a real catalog of props and costumes",
-          "First project where I worked extensively with TypeScript in a team setting — improved code confidence significantly",
+          "First project where I worked extensively with TypeScript in a team setting, improved code confidence and pair programming skills",
           "Learned to navigate a large shared codebase with 10 contributors, resolving merge conflicts and submitting PRs",
         ],
       },
@@ -731,15 +735,14 @@ import {
         role: "Solo project — designed, built, and deployed everything independently.",
         built: [
           "React 18 with functional components and hooks for all state and side-effect management",
-          "Vite as the build tool — dramatically faster HMR than Create React App, which introduced me to modern tooling",
-          "Vanilla CSS with custom properties for theming and responsive layouts without a utility framework",
+          "Vite as the build tool",
+          "Vanilla basic CSS with custom properties for theming and responsive layouts without a utility framework",
           "Hash anchors for single-page navigation between sections",
-          "Deployed on Vercel with automatic preview deployments on every pull request",
+          "Deployed on Vercel",
         ],
         highlights: [
           "First fully self-directed project from blank repo to live production URL",
-          "Led directly to this portfolio — the experience building it made me want to push much further with 3D and animation",
-          "Still live at the demo link as a reference point for how far the work has come",
+          "Led directly to building this portfolio. The experience building it made me want to experiment with Three.js and animation",
         ],
       },
     },
@@ -757,7 +760,7 @@ import {
       privateRepo: true,
       noDemo: true,
       details: {
-        overview: "A full reimplementation of the Unix grep command-line tool, built in C++ for Tufts' CS15 Data Structures course. Given a query string and a directory, gerp recursively indexes every file and returns all lines containing a match — case-sensitive or case-insensitive — in milliseconds.",
+        overview: "A full reimplementation of the Unix grep command-line tool, built in C++ for Tufts' CS15 Data Structures course. Given a query string and a directory, gerp recursively indexes every file and returns all lines containing a match for case-sensitive or case-insensitive queries in milliseconds.",
         role: "Co-author with a lab partner. Responsible for the hash table implementation, the file traversal pipeline, and query normalization.",
         built: [
           "C++ with the standard library vectors, unordered_map, and file streams as the primary building blocks",
@@ -766,9 +769,9 @@ import {
           "Streamed output to stdout to handle result sets larger than available memory without buffering everything at once",
         ],
         highlights: [
-          "Indexed and queried multi-megabyte directory trees in under a second — performance validated against the reference implementation",
+          "Indexed and queried multi-megabyte directory trees in under a second. This performance was validated against the reference implementation",
           "One of the most complex data structures projects in the Tufts CS15 curriculum; required careful memory management with no leaks under Valgrind",
-          "The project deepened my understanding of how real search tools are built — hash-based indexing, normalization tradeoffs, and I/O efficiency",
+          "The project deepened my understanding of how search tools like Unix grep are built. Learned hash-based indexing, normalization, and I/O efficiency",
         ],
       },
     },
