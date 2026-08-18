@@ -542,7 +542,7 @@ import {
       ],
       image: smCapture,
       source_code_link: "https://github.com/JumboCode/somerville-museum",
-      demo_link: "https://somervillemuseum.vercel.app/",
+      demo_link: "https://jumbocode.org/projects/somerville-museum",
       details: {
         overview: "A production full-stack inventory management system built for the Somerville Museum through Tufts JumboCode. The museum staff use it to catalog artifacts, track loans, and manage their collection — replacing a fragile spreadsheet workflow with a searchable, role-protected database.",
         role: "Full-stack developer on a team of 10, completing weekly feature tickets assigned by tech leads Holden Kittelberger and Zack White.",
