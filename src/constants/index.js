@@ -346,7 +346,7 @@ import {
       company_name: "MITRE",
       icon: mitre,
       iconBg: "#ffffff",
-      date: "May 2026 - Present",
+      date: "May 2026 - August 2026",
       points: [
         "Parallelized bounded requirement verification for a GraphRAG application with a four-worker async request pool handling retries and rate limiting, cutting end-to-end runtime by 77% on large Excel imports",
         "Shipped features on a Django requirements platform over a Neo4j graph database, maintaining traceability between source requirements, system-model data, and LLM-generated findings for Air Force CUI systems",
