@@ -1,4 +1,4 @@
-import { About, Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } from './components';
+import { Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } from './components';
 
 const App = () => {
   return (
@@ -7,7 +7,6 @@ const App = () => {
       <div className="relative z-10">
         <Navbar />
         <Hero />
-        <About />
         <Experience />
         <Tech />
         <Works />

@@ -4,16 +4,18 @@ import { ComputersCanvas } from "./canvas";
 
 const Hero = () => {
   return (
-    <section className="relative w-full min-h-screen mx-auto">
+    <section className="relative w-full min-h-screen mx-auto flex flex-col">
       <div className={`${styles.paddingX} mx-auto max-w-7xl pt-[120px]`}>
         {/* Responsive 2-col layout on large screens; stack on small */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Text column */}
           <div className="relative z-10">
-            <div className="flex items-start gap-5">
+            {/* items-stretch + flex-1 so the accent line grows with the text
+                instead of stopping short when the copy wraps on narrow phones */}
+            <div className="flex items-stretch gap-5">
               <div className="flex flex-col items-center mt-2">
-                <div className="w-5 h-5 rounded-full bg-gradient-to-t from-blue-300 to-blue-800" />
-                <div className="w-1 sm:h-80 h-40 bg-gradient-to-b from-blue-300 to-blue-800" />
+                <div className="w-5 h-5 shrink-0 rounded-full bg-gradient-to-t from-blue-300 to-blue-800" />
+                <div className="w-1 flex-1 sm:min-h-80 min-h-40 bg-gradient-to-b from-blue-300 to-blue-800" />
               </div>
 
               <div>
@@ -39,9 +41,10 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <div className="absolute xs:bottom-5 bottom-32 w-full flex justify-center items-center">
-        <a href="#about">
+      {/* Scroll cue — in normal flow (pushed down by mt-auto) so on short
+          phones it lands below the cube instead of being drawn on top of it */}
+      <div className="mt-auto pt-6 xs:pb-5 pb-24 w-full flex justify-center items-center">
+        <a href="#work" aria-label="Scroll to experience">
           <div className="w-[35px] h-[60px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
             <motion.div
               animate={{ y: [0, 24, 0] }}

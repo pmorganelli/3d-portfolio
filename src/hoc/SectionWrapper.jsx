@@ -10,7 +10,10 @@ const StarWrapper = (Component, idName) =>
           variants={staggerContainer()}
           initial="hidden"         // start hidden so whileInView has something to animate from
           whileInView="show"       // animate to “show” once the section scrolls into view
-          viewport={{ once: true, amount: 0.1 }}
+          // No `amount` threshold: a fraction of the section's own height can
+          // exceed a phone's viewport (the stacked Projects grid is ~10 screens
+          // tall), and then the section would never reveal at all.
+          viewport={{ once: true, margin: "0px 0px -80px 0px" }}
           className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
         >
 

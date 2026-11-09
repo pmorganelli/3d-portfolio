@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '../constants';
 import { hero, menu, close } from '../assets';
@@ -8,6 +8,25 @@ import GooeyNav from './ui/GooeyNav';
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
+  const menuRef = useRef(null);
+
+  // Close the mobile menu on a tap outside it or on Escape — otherwise it
+  // stays open over the page until the hamburger is tapped again.
+  useEffect(() => {
+    if (!toggle) return;
+    const onPointerDown = (e) => {
+      if (!menuRef.current?.contains(e.target)) setToggle(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setToggle(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [toggle]);
   // Stable identity — GooeyNav's scroll spy rebuilds its observer when this changes
   const navItems = useMemo(
     () =>
@@ -40,7 +59,7 @@ const Navbar = () => {
             window.scrollTo({ top: 0, behavior: 'smooth' })
           }}
         >
-          <img src={hero} alt='heroImage' className="w-9 h-9 object-contain" />
+          <img src={hero} alt='' className="w-9 h-9 object-contain" />
           <p className="text-secondary hover:text-white text-[16px] xl:text-[18px] font-bold cursor-pointer transition-colors whitespace-nowrap">
             <span className='xl:hidden'>Peter M.</span>
             <span className='hidden xl:inline'>Peter Morganelli</span>
@@ -68,15 +87,22 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="xl:hidden flex flex-1 justify-end items-center">
-          <motion.img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="w-[28px] h-[28px] object-contain cursor-pointer"
+        <div ref={menuRef} className="xl:hidden flex flex-1 justify-end items-center">
+          <button
+            type="button"
+            aria-label={toggle ? 'Close menu' : 'Open menu'}
+            aria-expanded={toggle}
+            className="p-2 -mr-2"
             onClick={() => setToggle(!toggle)}
-            animate={{ rotate: toggle ? 90 : 0 }}
-            transition={{ duration: 0.2 }}
-          />
+          >
+            <motion.img
+              src={toggle ? close : menu}
+              alt=""
+              className="w-[28px] h-[28px] object-contain"
+              animate={{ rotate: toggle ? 90 : 0 }}
+              transition={{ duration: 0.2 }}
+            />
+          </button>
           <AnimatePresence>
             {toggle && (
               <motion.div

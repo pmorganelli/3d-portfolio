@@ -55,6 +55,9 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 - `WorksContent` is the inner component; `Works = SectionWrapper(WorksContent, 'projects')`
 - `noDemo` prop guards the project title/image from opening an undefined `demo_link` as a demo link
+- Each `ProjectCard` has its own `whileInView` (stagger by column) — inheriting the section's variants made late cards wait `index * 0.5s`
+- Tilt is only mounted when `useCanHover()` is true; touch devices get a plain div (tap left cards stuck tilted)
+- Optional `gallery: [{ src, alt }]` on a project renders extra images in the Learn More modal
 - `breakAtSlash()` inserts `​` after `/` in project names so titles like "Image Compressor/Decompressor" wrap at the slash; titles also have `break-words`
 
 ### SolarSystem camera (camera-controls, NOT OrbitControls)
@@ -65,6 +68,7 @@ Project context, architectural decisions, and implementation notes for Claude Co
 ### SectionWrapper
 
 - `initial="hidden"` + `whileInView="show"` — sections must start hidden or none of the fadeIn/slideIn/stagger entrance animations play (a past `initial={false}` silently disabled all of them)
+- `viewport` uses a bottom `margin`, **not** `amount` — a fraction of the section's height can exceed a phone's viewport (stacked Projects grid), and the section then never reveals
 
 ### Tilt
 

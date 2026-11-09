@@ -28,7 +28,11 @@ const RubiksCube = () => {
 };
 
 const ComputersCanvas = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  // Read the breakpoint up front: R3F applies the `camera` prop only when the
+  // canvas is created, so a value corrected after mount never reaches the fov.
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  );
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -44,7 +48,7 @@ const ComputersCanvas = () => {
       shadows
       dpr={[1, 2]}
       camera={{ position: [0, 0, 6], fov: isMobile ? 52 : 46, near: 0.1, far: 100 }}
-      gl={{ antialias: true, preserveDrawingBuffer: true }}
+      gl={{ antialias: true }}
       className="scroll-safe"
       style={{ width: "100%", height: "100%", touchAction: "pan-y" }}
     >

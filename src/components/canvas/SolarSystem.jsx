@@ -61,8 +61,9 @@ const Sun = ({ tech, onSelect, isSelected }) => {
   const labelTex = useLabelTexture(tech.name, tech.tag, tech.color);
   const hover    = useHoverCursor();
 
-  useFrame(() => {
-    if (meshRef.current) meshRef.current.rotation.y += 0.003;
+  // Delta-scaled so the spin is the same speed on 60Hz and 120Hz displays
+  useFrame((_, delta) => {
+    if (meshRef.current) meshRef.current.rotation.y += 0.18 * delta;
   });
 
   const s = tech.size;
@@ -113,7 +114,7 @@ const Planet = ({ tech, planetPositions, onSelect, isSelected }) => {
   const labelTex = useLabelTexture(tech.name, tech.tag, tech.color);
   const hover    = useHoverCursor();
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     const t     = clock.getElapsedTime();
     const angle = t * tech.orbitSpeed + tech.angleOffset;
     const x     = Math.cos(angle) * tech.orbitRadius;
@@ -126,7 +127,7 @@ const Planet = ({ tech, planetPositions, onSelect, isSelected }) => {
     if (!v) { v = new THREE.Vector3(); planetPositions.current.set(tech.name, v); }
     v.set(x, 0, z);
 
-    if (meshRef.current) meshRef.current.rotation.y += 0.008;
+    if (meshRef.current) meshRef.current.rotation.y += 0.48 * delta;
   });
 
   const s = tech.size;
@@ -359,7 +360,6 @@ const SolarSystemCanvas = ({ technologies }) => {
         shadows
         frameloop="always"
         dpr={[1, 2]}
-        gl={{ preserveDrawingBuffer: true }}
         camera={{ position: [0, 11, 38], fov: 72 }}
       >
         <Suspense fallback={<CanvasLoader />}>

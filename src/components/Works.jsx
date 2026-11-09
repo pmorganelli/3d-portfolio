@@ -7,6 +7,7 @@ import { github } from '../assets';
 import { SectionWrapper } from '../hoc';
 import { projects } from '../constants';
 import { fadeIn } from '../utils/motion';
+import useCanHover from '../utils/useCanHover';
 
 // Insert a zero-width space after "/" so names like "Compressor/Decompressor"
 // wrap cleanly at the slash instead of mid-word
@@ -70,7 +71,7 @@ const LearnMoreModal = ({ project, onClose }) => {
 
   return createPortal(
     <motion.div
-      className="fixed inset-0 z-[9999] overflow-y-auto"
+      className="fixed inset-0 z-[9999] overflow-y-auto overscroll-contain"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -101,7 +102,7 @@ const LearnMoreModal = ({ project, onClose }) => {
             />
             <button
               onClick={onClose}
-              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center
+              className="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center
                          justify-center bg-black/60 text-white/70 hover:text-white
                          hover:bg-black/80 transition-colors text-xl leading-none"
               aria-label="Close"
@@ -110,7 +111,7 @@ const LearnMoreModal = ({ project, onClose }) => {
             </button>
           </div>
 
-          <div className="p-7 flex flex-col gap-6">
+          <div className="p-5 sm:p-7 flex flex-col gap-6">
             <div>
               <h2 className="text-white font-bold text-[22px] leading-snug break-words">
                 {breakAtSlash(project.name)}
@@ -132,6 +133,16 @@ const LearnMoreModal = ({ project, onClose }) => {
                 {project.details.overview}
               </p>
             </Section>
+
+            {project.gallery?.map((shot) => (
+              <img
+                key={shot.src}
+                src={shot.src}
+                alt={shot.alt}
+                loading="lazy"
+                className="w-full rounded-xl border border-white/10"
+              />
+            ))}
 
             <Section title="My Role">
               <p className="text-secondary text-[15px] leading-relaxed">
@@ -164,7 +175,7 @@ const LearnMoreModal = ({ project, onClose }) => {
             {/* Projects that are both private and demo-less would otherwise
                 leave an empty padded row at the bottom of the modal */}
             {(hasDemo || hasSource) && (
-              <div className="flex gap-3 pt-1 items-center">
+              <div className="flex flex-wrap gap-3 pt-1 items-center">
                 {hasDemo && (
                   <GlowButton
                     href={project.demo_link}
@@ -205,23 +216,36 @@ const Section = ({ title, children }) => (
   </div>
 );
 
-const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, privateRepo, noDemo, onLearnMore }) => (
+const CARD_CLASS = 'bg-tertiary p-5 rounded-2xl h-full';
+
+const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_link, privateRepo, noDemo, onLearnMore }) => {
+  const canHover = useCanHover();
+  // Tilt only where there is a real pointer; a plain div keeps the same layout
+  const Card = canHover ? Tilt : 'div';
+  const cardProps = canHover
+    ? { options: { max: 45, scale: 1, speed: 450, gyroscope: false } }
+    : {};
+
+  return (
+  // Each card reveals when it scrolls into view. Inheriting the section's
+  // variants instead would start every card's timer at once, so with a dozen
+  // projects the last ones sat invisible for seconds after you reached them.
   <motion.div
-    variants={fadeIn('up', 'spring', index * 0.5, 0.75)}
+    variants={fadeIn('up', 'spring', (index % 3) * 0.12, 0.75)}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true, margin: '0px 0px -60px 0px' }}
     className="w-full"
   >
-    <Tilt
-      options={{ max: 45, scale: 1, speed: 450, gyroscope: false }}
-      className="bg-tertiary p-5 rounded-2xl h-full"
-    >
+    <Card {...cardProps} className={CARD_CLASS}>
       <div className="relative w-full aspect-[16/10] overflow-hidden rounded-2xl">
         {!noDemo && demo_link ? (
           <a href={demo_link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
-            <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
+            <img src={image} alt={name} loading="lazy" className="w-full h-full object-cover rounded-2xl" />
           </a>
         ) : (
           <div className="block w-full h-full">
-            <img src={image} alt={name} className="w-full h-full object-cover rounded-2xl" />
+            <img src={image} alt={name} loading="lazy" className="w-full h-full object-cover rounded-2xl" />
           </div>
         )}
 
@@ -229,9 +253,10 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
           <div className="absolute top-0 left-0 z-10">
             <button
               onClick={() => window.open(source_code_link, '_blank', 'noopener,noreferrer')}
+              aria-label={`${name} source code on GitHub`}
               className="black-gradient w-10 h-10 rounded-full flex justify-center items-center"
             >
-              <img src={github} alt="github" className="w-1/2 h-1/2 object-contain" />
+              <img src={github} alt="" className="w-1/2 h-1/2 object-contain" />
             </button>
           </div>
         )}
@@ -258,9 +283,10 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
           </p>
         ))}
       </div>
-    </Tilt>
+    </Card>
   </motion.div>
-);
+  );
+};
 
 const WorksContent = () => {
   const [activeLearnMore, setActiveLearnMore] = useState(null);

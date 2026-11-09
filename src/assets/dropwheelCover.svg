@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1026"/>
+      <stop offset="0.55" stop-color="#151030"/>
+      <stop offset="1" stop-color="#0a2a3d"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3fe9ff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#3fe9ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hot" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3fe9ff"/>
+      <stop offset="1" stop-color="#2f80ed"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="800" fill="url(#bg)"/>
+  <circle cx="640" cy="400" r="380" fill="url(#halo)"/>
+
+  <!-- Wheel: eight petals drawn as thick dashed arcs on one circle -->
+  <g transform="translate(640 400)">
+    <circle r="200" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="150"
+            stroke-dasharray="141.08 16" transform="rotate(-112.5)"/>
+    <!-- highlighted petal (top-right) -->
+    <circle r="200" fill="none" stroke="url(#hot)" stroke-width="150"
+            stroke-dasharray="141.08 1115.56" transform="rotate(-67.5)"/>
+    <circle r="275" fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="2"/>
+    <circle r="125" fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="2"/>
+
+    <g font-size="30" font-weight="700" text-anchor="middle" fill="#e8f6ff">
+      <text x="0" y="-190">JPG</text>
+      <text x="141" y="-131" fill="#06121f">WEBP</text>
+      <text x="200" y="10">HEIC</text>
+      <text x="141" y="152">TIFF</text>
+      <text x="0" y="210">PDF</text>
+      <text x="-141" y="152">GIF</text>
+      <text x="-200" y="10">PNG</text>
+      <text x="-141" y="-131">BMP</text>
+    </g>
+
+    <!-- centre: the dragged file -->
+    <circle r="96" fill="#0b1026" stroke="#3fe9ff" stroke-opacity="0.45" stroke-width="2"/>
+    <text y="-8" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">photo.png</text>
+    <text y="26" font-size="20" text-anchor="middle" fill="#aaa6c3">2.2 MB</text>
+  </g>
+</svg>

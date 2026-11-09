@@ -1,8 +1,4 @@
 import {
-    mobile,
-    backend,
-    creator,
-    web,
     javascript,
     reactjs,
     tailwind,
@@ -31,14 +27,13 @@ import {
     typeScriptIcon,
     dockerLogo,
     gitlabLogo,
-    pizzeriaHome
+    pizzeriaHome,
+    brickedFront,
+    brickedNfc,
+    dropwheelCover,
   } from "../assets";
   
   export const navLinks = [
-    {
-      id: "about",
-      title: "About",
-    },
     {
       id: "work",
       title: "Experience",
@@ -59,29 +54,6 @@ import {
       id: "public/resume.pdf",
       title: "Résumé",
     }
-  ];
-  
-  const services = [
-    {
-      title: "Web Developer",
-      icon: web,
-      desc: "I build React and WebGL interfaces that make technical projects easier to explore",
-    },
-    {
-      title: "UI + UX Skilled",
-      icon: mobile,
-      desc: "I tune interaction details, accessibility, and visual hierarchy for portfolio and team tools",
-    },
-    {
-      title: "Fullstack Developer",
-      icon: backend,
-      desc: "I have shipped API, database, and containerized systems across coursework and team projects",
-    },
-    {
-      title: "College Student",
-      icon: creator,
-      desc: "I study computer science at Tufts and bring teaching-team experience into my projects",
-    },
   ];
   
   // Solar system hierarchy:
@@ -224,7 +196,7 @@ import {
           "Increasingly using TypeScript in React projects for type safety. Applied it in Theatre@First and the Food Waste Tracking App.",
         projects: [
           { name: "Theatre@First", link: "https://github.com/JumboCode/theatre-at-first" },
-          { name: "Food Waste App", link: "https://github.com/pmorganelli" },
+          { name: "Food Waste App", link: "#projects" },
         ],
       },
     },
@@ -291,7 +263,7 @@ import {
         description:
           "Currently using Docker to containerize services in my Food Waste Tracking App. Comfortable with Dockerfiles, docker-compose, and multi-service setups.",
         projects: [
-          { name: "Food Waste App", link: "https://github.com/pmorganelli" },
+          { name: "Food Waste App", link: "#projects" },
         ],
       },
     },
@@ -334,7 +306,7 @@ import {
         description:
           "Currently using it to build this portfolio! Exploring React 3 Fiber, Drei helpers, custom shaders, and GPU-rendered text via Cheng Lou's recently created Pretext library.",
         projects: [
-          { name: "This Portfolio", link: "#" },
+          { name: "This Portfolio", link: "https://github.com/pmorganelli/3d-portfolio" },
         ],
       },
     },
@@ -451,21 +423,55 @@ import {
       demo_link: "https://saturdayslices.com",
       details: {
         overview:
-          "A single-page marketing site and live ordering system for a student-run pizzeria. Customers browse the menu, build a cart with per-slice add-ons, and place orders that staff manage in real time on an admin board.",
+          "Marketing site and ordering system for a student-run pizzeria. Staff enter orders at the window and run the night from a live admin board, and customers follow their slices on a public status page.",
         role:
-          "Built solo, end to end. Includes the React frontend, Vercel serverless functions, and the ordering/admin workflow that runs the weekly operations.",
+          "Built solo: the React front end, the Vercel serverless API, and the order workflow we use on pizza nights.",
         built: [
-          "React SPA with manual in-memory routing (no React Router), GSAP-driven scroll reveals and parallax, and a TailwindCSS custom property design system",
-          "Vercel serverless API (api/) handling orders, store hours, availability, and admin auth, with all pricing computed server-side from a shared catalog",
-          "Upstash Redis for order storage, rate limiting, and store settings, with an in-memory fallback for local dev",
-          "Customer ordering flow: cart with per-slice add-ons, live order status polling by pickup code, and a public order lookup page",
-          "Admin order board with password-protected HMAC-cookie auth, live-polling Kanban columns (New → In the oven → Ready), and an aggregated 'fire next' panel",
-          "Photo pipeline generating thumb/web derivatives and aspect-ratio metadata so the gallery masonry never reflows while images load",
+          "React 19 single-page app with hand-rolled History API routing (no React Router), GSAP scroll reveals, and Tailwind",
+          "Vercel serverless API for orders, store hours, and admin auth, with all pricing computed server-side from a shared catalog",
+          "Upstash Redis for orders, store settings, and rate limiting, with an in-memory fallback for local development",
+          "Admin board behind an HMAC-signed HttpOnly cookie, polling for live orders",
+          "Vitest suite and production build run in CI on every pull request",
         ],
         highlights: [
-          "Designed the per-slice add-on system end to end: cart shape, server-side validation and pricing, and nested storage/display in both the order and admin views",
-          "Built the storefront's open/closed/auto store-hours logic and an admin-toggleable 86 list (sold-out items) that's enforced server-side, not just in the UI",
-          "Used Claude throughout development for feature implementation, refactors, and bug fixes across the frontend and API",
+          "Dough stock is checked and committed in one Redis Lua script, so two staff devices can't both sell the last slice",
+          "Per-slice add-ons carried through the cart, server-side validation and pricing, and the admin view",
+          "Open/closed/auto store hours and a sold-out (86) list, both enforced on the server",
+          "Used Claude throughout development for features, refactors, and bug fixes",
+        ],
+      },
+    },
+    {
+      name: "Dropwheel",
+      description:
+        "A macOS menu-bar app that converts files mid-drag: hold Shift, drop on a format, done. My from-scratch clone of Tangerine, built with Claude.",
+      tags: [
+        { name: "swift", color: "orange-text-gradient" },
+        { name: "swiftui", color: "blue-text-gradient" },
+        { name: "appkit", color: "green-text-gradient" },
+        { name: "ffmpeg", color: "pink-text-gradient" },
+        { name: "claude", color: "orange-text-gradient" },
+      ],
+      image: dropwheelCover,
+      privateRepo: true,
+      noDemo: true,
+      details: {
+        overview:
+          "A macOS menu-bar app for converting files while you drag them. Hold Shift during a Finder drag and a wheel of output formats opens around the pointer; drop on one and the converted copy is saved next to the original. Everything runs locally.",
+        role:
+          "A personal reimplementation of the idea behind Tangerine, built with Claude Code. It shares no code or assets with the original.",
+        built: [
+          "Swift with AppKit and SwiftUI: about 7,500 lines across 32 files, built with Swift Package Manager and no Xcode project",
+          "A global event monitor plus the drag pasteboard's change count detects file drags that start in other apps",
+          "The wheel is a floating panel whose petals are drop targets",
+          "Conversion runs through ImageIO, PDFKit, AVFoundation, and Homebrew's ffmpeg, cwebp, and exiftool",
+          "A headless command-line mode and scripted UI tests that perform real Finder drags",
+        ],
+        highlights: [
+          "Three wheels: convert (Shift), tools (Option-Shift), and actions (Control-Option)",
+          "Converts images, video, audio, PDFs, documents, subtitles, and archives",
+          "Tools include compress to a target size, strip metadata, loudness normalization, PDF merge and split, and QR reading",
+          "The release app is about 1.5 MB",
         ],
       },
     },
@@ -485,27 +491,54 @@ import {
       privateRepo: true,
       noDemo: true,
       details: {
-        overview: "A cross-platform mobile app designed to reduce household food waste by giving users a simple way to log what's in their fridge, track expiration dates, and get AI-generated recipe suggestions based on ingredients that are about to go bad.",
-        role: "Developed in a team of six for CSU44098 Group Design Project at Trinity College Dublin. Responsible for handling end-to-end authentication in Firebase, redesigning our React Native UI, and creating a Claude Vision powered expiration date predictor for expiration dates.",
+        overview: "A cross-platform mobile app for cutting household food waste. Log what's in your fridge, track expiration dates, and get AI-generated recipes for ingredients that are about to go bad.",
+        role: "Built by a team of six for CSU44098 Group Design Project at Trinity College Dublin. I handled Firebase authentication, redesigned the React Native UI, and built the Claude Vision expiration-date scanner.",
         built: [
-          "React Native + TypeScript frontend with Expo for rapid cross-platform development on iOS and Android",
-          "Barcode scanning via the device camera to auto-populate food item metadata from a public nutrition database API",
-          "Firebase Authentication for secure sign-in and per-user data isolation",
-          "Spring Boot REST API handling business logic, expiration calculations, and AI recipe generation requests",
-          "PostgreSQL database for persistent storage of food items, user profiles, and recipe history",
-          "Docker Compose for consistent local development across the frontend, backend, and database services",
+          "React Native and TypeScript with Expo, running on iOS and Android",
+          "Camera barcode scanning that fills in item details from Open Food Facts",
+          "Firebase Authentication with a separate inventory per user",
+          "Spring Boot REST API for inventory, expiration logic, and recipe requests",
+          "PostgreSQL for storage, with Docker Compose for local development",
         ],
         highlights: [
-          "Integrated the Claude API to generate personalized recipes from the user's specific expiring ingredients",
-          "Helped design an expiration tracking system with push-notification reminders as items approach their use-by date",
-          "Worked with a containerized application in Docker and adopted a shell script in the root directory so any developer can spin up a working environment with a single command",
+          "Photograph a label and Claude Vision reads the expiration date",
+          "Recipes generated by the Claude API from the user's expiring ingredients",
+          "Push-notification reminders as items approach their use-by date",
+          "Wrote the start script that brings up the whole stack with one command",
+        ],
+      },
+    },
+    {
+      name: "Bricked",
+      description:
+        "A 3D-printed block with an NFC tag that blocks distracting apps when I tap my phone on it. A homemade take on Brick.",
+      tags: [
+        { name: "3d printing", color: "blue-text-gradient" },
+        { name: "nfc",         color: "green-text-gradient" },
+        { name: "prusaslicer", color: "orange-text-gradient" },
+      ],
+      image: brickedFront,
+      gallery: [{ src: brickedNfc, alt: "Back of the Bricked case with its NFC tag" }],
+      privateRepo: true,
+      noDemo: true,
+      details: {
+        overview: "A homemade version of Brick, the gadget you tap your phone against to block distracting apps. A 3D-printed case carries an NFC tag, and tapping my phone on it blocks the apps I've chosen.",
+        role: "Solo project, from the print to the NFC setup.",
+        built: [
+          "56 mm rounded-square case, 8 mm thick, with debossed BRICKED lettering",
+          "Sliced in PrusaSlicer and printed in PLA on a Prusa MK4 at 0.2 mm layers and 15% infill",
+          "NFC sticker tag mounted on the back of the case",
+        ],
+        highlights: [
+          "A plate of four cases prints in about an hour and a half",
+          "Each case uses roughly 12 g of filament",
         ],
       },
     },
     {
       name: "CS105 Programming Languages Interpreter",
       description:
-        "An educational, in-browser, no setup, IDE for interpreting seven CS105 languages like Impcore, μScheme, nano-ML, etc. Source code not available due to class confidentiality but open-source version coming soon!",
+        "An educational, in-browser, no setup, IDE for interpreting nine CS105 languages like Impcore, μScheme, nano-ML, etc. Source code not available due to class confidentiality but open-source version coming soon!",
       tags: [
         { name: "elm",        color: "blue-text-gradient" },
         { name: "javascript", color: "green-text-gradient" },
@@ -517,18 +550,19 @@ import {
       demo_link: "https://elm-ide-105.vercel.app/index.html",
       privateRepo: true,
       details: {
-        overview: "A fully in-browser IDE built for Tufts' CS105 Programming Languages course. Students can write and run code in seven different languages ranging from Impcore to nano-ML without installing anything. The interpreter runs entirely client-side, making it accessible from any device, but it's designed to be used on a computer.",
-        role: "Led the entire fullstack architecture and the Elm-based interpreter integration, working within the constraints of a course confidentiality agreement by obfuscating source code.",
+        overview: "An in-browser IDE for Tufts' CS105 Programming Languages course. Students write and run code in the course's nine languages without installing anything. The interpreters run entirely client-side; the layout is designed for a laptop or desktop.",
+        role: "Designed and built the app myself. The course interpreters are confidential, so their source is obfuscated at build time.",
         built: [
-          "Elm for the core application logic and UI, chosen for its strong type system and built-in functional programming that match the course's language theory content",
-          "JavaScript (Elm ports) to bridge the interpreter engine with the browser environment",
-          "Custom syntax highlighting and error display tuned to each of the seven supported languages",
-          "Utilized the browser's localStorage to persist code sessions across browsers",
+          "Elm for the UI and application state",
+          "JavaScript, connected through Elm ports, to run the compiled interpreters",
+          "Editor and interactive terminal in resizable panels",
+          "localStorage to keep code between sessions",
+          "esbuild script that bundles and obfuscates the interpreters before deploy",
         ],
         highlights: [
-          "Supports seven distinct language grammars in a single cohesive interface: Impcore, μScheme, μSmalltalk, nano-ML, typed-Impcore, typed-μScheme, μML, and Molecule",
-          "Zero-setup installation — students open a URL and start coding, nothing else required",
-          "Closed source due to course interpreter confidentiality",
+          "Nine languages in one interface: Impcore, μScheme, μScheme+, Typed Impcore, Typed μScheme, nano-ML, μML, Molecule, and μSmalltalk",
+          "No setup: open the URL and start coding",
+          "Closed source because the course interpreters are confidential",
         ],
       },
     },
@@ -548,19 +582,16 @@ import {
       source_code_link: "https://github.com/JumboCode/somerville-museum",
       demo_link: "https://jumbocode.org/projects/somerville-museum",
       details: {
-        overview: "A production full-stack inventory management system built for the Somerville Museum through Tufts JumboCode. The museum staff use it to catalog artifacts, track loans, and manage their collection — replacing a fragile spreadsheet workflow with a searchable, role-protected database.",
-        role: "Full-stack developer on a team of 10, completing weekly feature tickets assigned by tech leads Holden Kittelberger and Zack White.",
+        overview: "A full-stack inventory system built for the Somerville Museum through Tufts JumboCode. Staff use it to catalog items and track what has been borrowed, replacing a spreadsheet workflow.",
+        role: "Full-stack developer on a team of 10, completing weekly tickets assigned by tech leads Holden Kittelberger and Zack White.",
         built: [
-          "Next.js App Router for server-side rendering and API routes in a single codebase",
-          "React frontend with a component library built from scratch to match the museum's brand guidelines",
-          "PostgreSQL database hosted on Neon (serverless Postgres) chosen for its branch-based development workflow",
-          "Node.js API layer handling search indexing and item loan tracking",
-          "Role-based access control distinguishing admin staff from read-only volunteers",
+          "Next.js with a React front end and API routes in one codebase",
+          "PostgreSQL hosted on Neon",
+          "Node.js API layer for inventory search and loan tracking",
         ],
         highlights: [
-          "Shipped a live production app actively used by Somerville Museum staff",
-          "Collaborated asynchronously across a 10-person team using GitHub Projects, weekly standups, and Slack",
-          "Implemented full-text search across the artifact catalog so staff can find items by name, category, or condition",
+          "Shipped to production for the museum's staff",
+          "Worked across a 10-person team with weekly tickets and standups",
         ],
       },
     },
@@ -576,20 +607,19 @@ import {
       source_code_link: "https://github.com/pmorganelli/slingshot-squires",
       demo_link: "https://slingshotsquires.itch.io/slingshot-squires",
       details: {
-        overview: "A medieval crop defense and resource-management game where you purchase crops, sell them for currency, and fend off waves of enemies trying to overrun your land. Built for a Tufts game design course and published on itch.io.",
-        role: "Programmer in a group of six responsible for the core slingshot mechanics, enemy pathfinding, and occasionally the resource economy systems.",
+        overview: "A medieval crop-defense game: buy crops, sell them for coin, and fend off waves of enemies trying to overrun your land. Built for a Tufts game design course and published on itch.io.",
+        role: "Programmer in a group of six. I worked on the slingshot mechanics and enemy pathfinding, and helped with the resource economy.",
         built: [
-          "Unity game engine with C# scripts driving all gameplay systems",
-          "Implemented a physics-based slingshot inspired by Angry birds",
-          "Wave spawning system with escalating enemy difficulty curves tuned through Unity's Inspector for rapid playtesting",
-          "Economy system balancing crop income against defensive spending which iterated heavily based on playtesting feedback",
-          "Published and hosted on itch.io with WebGL build for instant in-browser play",
+          "Unity, with C# scripts for all gameplay systems",
+          "Physics-based slingshot inspired by Angry Birds",
+          "Wave spawner with escalating difficulty, tuned in the Unity Inspector during playtests",
+          "Economy balancing crop income against defensive spending",
+          "WebGL build hosted on itch.io, playable in the browser",
         ],
         highlights: [
-          "Designed and balanced the entire resource economy from scratch",
-          "Implemented pathfinding for enemy units navigating around dynamically placed defenses",
-          "Shipped a complete, playable game within a single semester under tight deadlines",
-          "Styling and themes inspired by Stardew Valley"
+          "Enemies path around defenses the player places mid-game",
+          "A complete, playable game shipped in one semester",
+          "Art direction inspired by Stardew Valley",
         ],
       },
     },
@@ -605,18 +635,17 @@ import {
       source_code_link: "https://github.com/pmorganelli/snowplow-race",
       demo_link: "https://gamedesignb11.itch.io/snowplow-race",
       details: {
-        overview: "Midterm project for CS23: Game Design at Tufts University. You pilot a snowplow through increasingly chaotic city streets, racing against the clock to clear snow before morning traffic arrives.",
-        role: "Programmer and co-designer. Implemented vehicle physics, the snow accumulation system, and the scoring pipeline.",
+        overview: "Midterm project for CS23: Game Design at Tufts. You drive a snowplow through city streets, racing the clock to clear the snow before time runs out.",
+        role: "Programmer and co-designer on a small team.",
         built: [
-          "Unity with C# for all game logic and physics interactions",
-          "Custom vehicle controller fit for WASD or arrows with steering feel tuned for handling",
-          "Procedural snow tile system that tracks cleared vs. uncleared areas as a percentage for the win condition",
-          "Time-pressure scoring system with incentive for consecutive clears",
-          "WebGL build deployed to itch.io for immediate browser play with no download required",
+          "Unity, with C# for all game logic",
+          "Physics-based plow steering on WASD, with colliders tuned so the plow doesn't snag on road edges",
+          "Snow stored as a tilemap: a trigger collider on the plow clears nearby tiles and adds to the score",
+          "WebGL build on itch.io, playable in the browser",
         ],
         highlights: [
-          "The game remains publicly playable on itch.io and was made alongside Professor Emeritus Dr. Norman Ramsey",
-          "Collaborated with a small team, dividing art, design, and programming responsibilities under a course deadline",
+          "Made alongside Professor Emeritus Dr. Norman Ramsey",
+          "Still publicly playable on itch.io",
         ],
       },
     },
@@ -636,19 +665,16 @@ import {
       source_code_link: "https://github.com/pmorganelli/vscode-timer/tree/main",
       demo_link: "https://devpost.com/software/codeclock",
       details: {
-        overview: "A VSCode extension and web dashboard built in a weekend at Tufts JumboHack that lets Tufts CS students automatically track time spent on each course's assignments without any manual input. The extension detects which project folder is active and silently logs coding sessions in the background.",
-        role: "Built the VS Code extension, REST API, and React dashboard end-to-end over a weekend hackathon.",
+        overview: "A VS Code extension and web dashboard that track how long Tufts CS students spend on each assignment. Start the timer when you begin a project and stop it when you submit; your sessions feed a leaderboard you can compare with friends. Built in a weekend at JumboHack 2025.",
+        role: "One of six on the team. I wrote most of the VS Code extension and handled its testing.",
         built: [
-          "VS Code Extension API to detect active workspace, start/stop session timers, and push session data to the backend",
-          "Node.js + Express REST API deployed on AWS EC2 for handling session ingestion and aggregation",
-          "MongoDB Atlas for storing time-series session records per user and per course",
-          "React + Tailwind CSS dashboard for visualizing weekly coding hours broken down by course",
-          "AWS infrastructure (EC2 + security groups) configured and deployed within the hackathon window",
+          "VS Code Extension API: commands to start, stop, and check the timer, with editor activity used to separate active time from idle time",
+          "Next.js and React dashboard with leaderboard, profile, and session-log pages, styled with Tailwind",
+          "MongoDB for user and session records",
         ],
         highlights: [
-          "Built the entire product: extension, API, database, and frontend with a small group of developers in one weekend",
-          "Once installed and launched, the extension runs silently with no manual start/stop required",
-          "Presented to a panel of judges and received recognition for technical depth and practical usefulness for the Tufts CS community",
+          "Extension, database, and dashboard all built in one weekend",
+          "Presented to the judges in JumboHack's Education track",
         ],
       },
     },
@@ -666,20 +692,19 @@ import {
       privateRepo: true,
       noDemo: true,
       details: {
-        overview: "A lossy image compression and decompression pipeline written entirely in C for Tufts' CS40: Machine Structure and Assembly Language Programming. The program converts raster images into a compact binary format and reconstructs them with controlled quality loss, similar in spirit to how JPEG compression works.",
-        role: "Co-author alongside a lab partner — responsible for the color space conversion pipeline and the quantization stages.",
+        overview: "A lossy image compressor and decompressor written in C for Tufts' CS40: Machine Structure and Assembly Language Programming. It packs a raster image into a compact binary format and reconstructs it with a small, controlled loss in quality, using the same ideas as JPEG.",
+        role: "Co-written with a lab partner. I was responsible for the color space conversion and quantization stages.",
         built: [
-          "Implemented in C with manual memory management. No garbage collection and no abstractions beyond what we wrote",
-          "Color space conversion from RGB to a luminance/chroma representation to concentrate compression on less perceptible channels",
-          "Discrete Cosine Transform (DCT) applied to 2x2 pixel blocks to convert spatial data to frequency components",
-          "Quantization step to discard high-frequency coefficient, the main lossy compression trade-off",
-          "Bitpacking to encode compressed data into a custom binary file format with a minimal header",
-          "Full decompression pipeline reversing every step to reconstruct the image from the compressed binary",
+          "C with manual memory management",
+          "RGB converted to a luminance/chroma representation, so compression falls on the channels the eye notices least",
+          "Discrete cosine transform over 2x2 pixel blocks",
+          "Quantization of the transform coefficients, which is where the loss happens",
+          "Bitpacking into fixed-size codewords behind a minimal header",
+          "A decompressor that reverses each step",
         ],
         highlights: [
-          "Achieved meaningful file size reduction while keeping perceptual quality high enough to be visually indistinguishable at normal viewing distances",
-          "Built entirely without image-processing libraries. Every algorithm implemented from scractch with assignment specification",
-          "One of the most technically demanding projects in the Tufts CS curriculum. This project deepened my understanding of how formats like JPEG actually work",
+          "No image-processing libraries: every stage is implemented from the assignment specification",
+          "Taught me how formats like JPEG work underneath",
         ],
       },
     },
@@ -694,25 +719,23 @@ import {
         { name: "tailwind",   color: "blue-text-gradient" },
         { name: "drizzleorm", color: "orange-text-gradient" },
       ],
-      // React.js, Clerk, TypeScript, Next.js, TailwindCSS, DrizzleORM, GitHub, Slack, Figma
       image: theatre,
       source_code_link: "https://github.com/JumboCode/theatre-at-first",
       noDemo: true,
       details: {
-        overview: "A full-stack costume and prop inventory system built for Theatre@First, a community theater in Somerville, MA. The app allows staff to browse, check out, and track the status of hundreds of items across productions — replacing their previous paper-and-spreadsheet system.",
-        role: "Full-stack developer on a 10-person JumboCode team, working under tech leads Liam Strand and Amitav Nott. Completed weekly feature tickets across both the frontend and backend.",
+        overview: "A costume and prop inventory system for Theatre@First, a community theater in Somerville, MA. Staff browse, check out, and track items across productions instead of relying on paper and spreadsheets.",
+        role: "Full-stack developer on a 10-person JumboCode team under tech leads Liam Strand and Amitav Nott, completing weekly tickets across the front end and back end.",
         built: [
-          "Next.js 14 with App Router for server components and type-safe API routes",
-          "TypeScript used to enforce strict types on all data models, API payloads, and component props",
-          "Clerk for authentication which handles user sessions, role management, and OAuth login with zero backend auth code",
-          "DrizzleORM with a PostgreSQL database for type-safe queries with full schema migration support",
-          "TailwindCSS for a consistent, responsive UI across desktop and tablet (primary staff devices)",
-          "Figma designs reviewed and implemented collaboratively with the team's designers",
+          "Next.js 13 App Router with TypeScript",
+          "Clerk for authentication",
+          "Drizzle ORM over a PostgreSQL database on Neon",
+          "Tailwind CSS for a responsive UI",
+          "Screens implemented from the team designers' Figma files",
         ],
         highlights: [
-          "Shipped a production app used by real theater staff managing a real catalog of props and costumes",
-          "First project where I worked extensively with TypeScript in a team setting, improved code confidence and pair programming skills",
-          "Learned to navigate a large shared codebase with 10 contributors, resolving merge conflicts and submitting PRs",
+          "Built for a real theater and its catalog of props and costumes",
+          "My first team project in TypeScript",
+          "Learned to work in a shared codebase with 10 contributors: pull requests, reviews, and merge conflicts",
         ],
       },
     },
@@ -731,18 +754,18 @@ import {
       source_code_link: "https://github.com/pmorganelli/portfolio-website",
       demo_link: "https://basicpetermorganelli.vercel.app/",
       details: {
-        overview: "My first personal portfolio website — a clean, responsive single-page app built with React and Vite. This was the project that solidified my frontend fundamentals and got me comfortable with modern React patterns, component architecture, and deploying to production.",
-        role: "Solo project — designed, built, and deployed everything independently.",
+        overview: "My first portfolio: a responsive single-page site built with React and Vite. It is where I learned component structure, hooks, and how to deploy.",
+        role: "Solo project. I designed, built, and deployed it.",
         built: [
-          "React 18 with functional components and hooks for all state and side-effect management",
-          "Vite as the build tool",
-          "Vanilla basic CSS with custom properties for theming and responsive layouts without a utility framework",
-          "Hash anchors for single-page navigation between sections",
+          "React 18 with function components and hooks",
+          "Vite for the build",
+          "Plain CSS, with no utility framework",
+          "Hash anchors for navigation between sections",
           "Deployed on Vercel",
         ],
         highlights: [
-          "First fully self-directed project from blank repo to live production URL",
-          "Led directly to building this portfolio. The experience building it made me want to experiment with Three.js and animation",
+          "My first project taken from an empty repo to a live URL",
+          "Led directly to this portfolio and to experimenting with Three.js",
         ],
       },
     },
@@ -760,21 +783,22 @@ import {
       privateRepo: true,
       noDemo: true,
       details: {
-        overview: "A full reimplementation of the Unix grep command-line tool, built in C++ for Tufts' CS15 Data Structures course. Given a query string and a directory, gerp recursively indexes every file and returns all lines containing a match for case-sensitive or case-insensitive queries in milliseconds.",
-        role: "Co-author with a lab partner. Responsible for the hash table implementation, the file traversal pipeline, and query normalization.",
+        overview: "A word-search tool modeled on Unix grep, written in C++ for Tufts' CS15 Data Structures course. gerp indexes every file under a directory, then answers case-sensitive or case-insensitive queries with each matching line.",
+        role: "Co-written with a partner. I was responsible for the hash table, the directory traversal, and query normalization.",
         built: [
-          "C++ with the standard library vectors, unordered_map, and file streams as the primary building blocks",
-          "Custom hash table implementation mapping normalized words to a list of (file, line number) pairs for O(1) average-case lookup",
-          "Query normalization stripping leading/trailing punctuation so searches behave intuitively",
-          "Streamed output to stdout to handle result sets larger than available memory without buffering everything at once",
+          "C++ with std::vector, std::list, and file streams",
+          "Our own chained hash table mapping each word to the files and lines where it appears, for average constant-time lookup",
+          "Recursive traversal of the directory tree to build the index",
+          "Queries stripped of leading and trailing non-alphanumeric characters before lookup",
+          "Results written to an output file that can be switched mid-session",
         ],
         highlights: [
-          "Indexed and queried multi-megabyte directory trees in under a second. This performance was validated against the reference implementation",
-          "One of the most complex data structures projects in the Tufts CS15 curriculum; required careful memory management with no leaks under Valgrind",
-          "The project deepened my understanding of how search tools like Unix grep are built. Learned hash-based indexing, normalization, and I/O efficiency",
+          "No std::unordered_map: the hash table is our own",
+          "Memory managed by hand and checked for leaks with Valgrind",
+          "Taught me how search tools index text",
         ],
       },
     },
   ];
-  
-  export { services, technologies, experiences, projects };
+
+  export { technologies, experiences, projects };

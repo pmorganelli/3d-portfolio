@@ -131,8 +131,10 @@ const Tech = () => {
         <div className="relative mt-8">
           <div className="grid grid-cols-3 gap-3">
             {technologies.map((tech) => (
-              <div
+              <button
+                type="button"
                 key={tech.name}
+                aria-label={`${tech.name} details`}
                 className="relative h-28 cursor-pointer"
                 onClick={() => setSelectedTech(tech)}
               >
@@ -143,7 +145,7 @@ const Tech = () => {
                     <Ball imgUrl={tech.icon} color={tech.color} />
                   </Suspense>
                 </View>
-              </div>
+              </button>
             ))}
           </div>
           <Canvas

@@ -24,7 +24,6 @@ const EarthCanvas = () => {
       shadows
       frameloop="demand"
       onContextMenu={(event) => event.preventDefault()}
-      gl={{ preserveDrawingBuffer: true }}
       camera={{
         fov: 55,
         near: 0.1,

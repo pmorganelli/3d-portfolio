@@ -1,47 +1,8 @@
 import { motion } from "framer-motion";
-import { Tilt } from "react-tilt";
 
 import { styles } from "../styles";
-import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
-import ElectricBorder from "./ui/ElectricBorder";
-
-const ServiceCard = ({ index, title, icon, desc }) => (
-  <Tilt
-    className='xs:w-[250px] w-full'
-    options={{ max: 45, scale: 1, speed: 450 }}
-  >
-    <motion.div
-      variants={fadeIn("right", "spring", index * 0.5, 0.75)}
-      className='w-full rounded-[20px] shadow-card'
-    >
-      <ElectricBorder
-        color='#9b80ff'
-        speed={1}
-        chaos={0.12}
-        thickness={2}
-        borderRadius={20}
-        style={{ borderRadius: 20 }}
-      >
-        <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'>
-          <img
-            src={icon}
-            alt=''
-            className='w-16 h-16 object-contain'
-          />
-
-          <h3 className='text-[20px] font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-white via-red-400 to-violet-400'>
-            {title}
-          </h3>
-          <p className='text-[13px] text-white text-center'>
-            {desc}
-          </p>
-        </div>
-      </ElectricBorder>
-    </motion.div>
-  </Tilt>
-);
 
 const About = () => {
   return (
@@ -52,21 +13,15 @@ const About = () => {
       </motion.div>
 
       <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
-        className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
+        variants={fadeIn("", "tween", 0.1, 1)}
+        className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
       >
-        I build software at the intersection of systems, teaching, and interactive web experiences.
-        My recent work spans Tufts course tools, WebGL portfolio experiments, and team projects
-        where clear communication matters as much as the implementation.
-        Let&apos;s connect!
+        I&apos;m a computer science student at Tufts and a software engineer
+        who likes systems work, teaching, and building things people actually
+        use. Most recently I interned at MITRE on a GraphRAG platform. At Tufts
+        I&apos;m on the Data Structures course staff and help run a student
+        pizzeria whose ordering system I built.
       </motion.p>
-      
-
-      <div className='mt-20 flex flex-wrap gap-10 justify-center max-w-[560px] mx-auto'>
-        {services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
-        ))}
-      </div>
     </>
   );
 };

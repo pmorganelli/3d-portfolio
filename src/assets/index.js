@@ -1,11 +1,7 @@
-import backend from "./backend.png";
-import creator from "./creator.png";
-import mobile from "./mobile.png";
-import web from "./web.png";
 import github from "./github.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
-import pizzeriaHome from "./petersPizzeriaHome.png";
+import pizzeriaHome from "./petersPizzeriaHome.jpg";
 import ltiLogo from "./ltiLogoPortfolio.png";
 import mitre from "./mitreLogo.png";
 import cplusplus from "./tech/cPng.png";
@@ -22,28 +18,27 @@ import flow from "./flow.jpeg";
 import c from "./c.png"
 import portfolio from "./portfolio.png";
 import theatre from "./logo.png";
-import basic from "./basicportfolio.png"
-import hero from "./pfppeter.png";
+import basic from "./basicportfolio.jpg"
+import hero from "./avatar.png";
 import launch from "./launchLogo.jpg";
 import codeclock from "./codeclockv1.png";
-import snowplowdriver from "./snowplowDriver.png";
+import snowplowdriver from "./snowplowDriver.jpg";
 import csharp from "./cSharp.png"
-import slingshotSquire from "./slingshotSquiresTitle.png"
+import slingshotSquire from "./slingshotSquiresTitle.jpg"
 import smCapture from "./smCapture.png"
 import interpHomePage from "./interpHomePage.png"
 import foodWasteHome from "./foodWasteTrackerHomePage.png"
 import typeScriptIcon from "./typeScript.png"
 import dockerLogo from "./dockerLogo.png"
 import gitlabLogo from "./gitlabLogo.png"
+import brickedFront from "./brickedFront.jpg"
+import brickedNfc from "./brickedNfc.jpg"
+import dropwheelCover from "./dropwheelCover.svg"
 
 export {
-  backend,
   foodWasteHome,
-  creator,
   snowplowdriver,
-  mobile,
   csharp,
-  web,
   smCapture,
   github,
   slingshotSquire,
@@ -74,4 +69,7 @@ export {
   typeScriptIcon,
   dockerLogo,
   gitlabLogo,
+  brickedFront,
+  brickedNfc,
+  dropwheelCover,
 };
