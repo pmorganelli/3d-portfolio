@@ -1,14 +1,14 @@
-import { Suspense, useState, useEffect, useRef } from "react"
+import { Suspense, lazy, useState, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
-import { Canvas } from "@react-three/fiber"
-import { View } from "@react-three/drei"
-import { SolarSystemCanvas, Ball } from "./canvas"
 import { SectionWrapper } from "../hoc"
 import TechProjectLinks from "./TechProjectLinks"
 import { technologies } from "../constants"
 import { motion, AnimatePresence } from "framer-motion"
 import { styles } from "../styles"
 import { textVariant } from "../utils/motion"
+
+const SolarSystemCanvas = lazy(() => import("./canvas/SolarSystem"))
+const TechBallGrid = lazy(() => import("./canvas/TechBallGrid"))
 
 const MobileTechCard = ({ tech, onClose }) => {
   const borderColor = `${tech.color}44`
@@ -125,40 +125,18 @@ const Tech = () => {
         <h2 className={styles.sectionHeadText}>Technologies.</h2>
       </motion.div>
 
+      {/* Both scenes are separate chunks: three.js stays out of the entry
+          bundle, and each device only downloads the scene it shows */}
       {isMobile ? (
-        /* One shared WebGL context for the whole grid — a canvas per ball put
-           the page at the browser's context limit and risked eviction */
-        <div className="relative mt-8">
-          <div className="grid grid-cols-3 gap-3">
-            {technologies.map((tech) => (
-              <button
-                type="button"
-                key={tech.name}
-                aria-label={`${tech.name} details`}
-                className="relative h-28 cursor-pointer"
-                onClick={() => setSelectedTech(tech)}
-              >
-                <View className="pointer-events-none absolute inset-0">
-                  <ambientLight intensity={1.5} />
-                  <directionalLight position={[0, 0, 0.05]} />
-                  <Suspense fallback={null}>
-                    <Ball imgUrl={tech.icon} color={tech.color} />
-                  </Suspense>
-                </View>
-              </button>
-            ))}
-          </div>
-          <Canvas
-            frameloop="always"
-            dpr={[1, 2]}
-            style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none' }}
-          >
-            <View.Port />
-          </Canvas>
-        </div>
+        // min-height matches the 4-row grid so nothing jumps when it loads
+        <Suspense fallback={<div className="mt-8 h-[484px]" />}>
+          <TechBallGrid technologies={technologies} onSelect={setSelectedTech} />
+        </Suspense>
       ) : (
         <div className="w-full h-screen mt-6">
-          <SolarSystemCanvas technologies={technologies} />
+          <Suspense fallback={null}>
+            <SolarSystemCanvas technologies={technologies} />
+          </Suspense>
         </div>
       )}
 

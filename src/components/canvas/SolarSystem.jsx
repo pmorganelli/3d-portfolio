@@ -1,7 +1,7 @@
 import { useRef, useMemo, useState, useEffect, useCallback, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { CameraControls, Decal, Preload, useTexture } from '@react-three/drei'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useInView } from 'framer-motion'
 import * as THREE from 'three'
 
 import CanvasLoader from '../Loader'
@@ -342,6 +342,8 @@ const PlanetCard = ({ tech, onClose }) => {
 const SolarSystemCanvas = ({ technologies }) => {
   const [selectedTech, setSelectedTech] = useState(null);
   const containerRef = useRef(null);
+  // Stop rendering while the section is off screen
+  const inView = useInView(containerRef, { margin: '200px 0px' });
 
   // When a planet is selected, ensure the card (top-right of the canvas) is in view
   useEffect(() => {
@@ -357,8 +359,7 @@ const SolarSystemCanvas = ({ technologies }) => {
     <div ref={containerRef} className="relative w-full h-full">
       <Canvas
         className="scroll-safe"
-        shadows
-        frameloop="always"
+        frameloop={inView ? 'always' : 'never'}
         dpr={[1, 2]}
         camera={{ position: [0, 11, 38], fov: 72 }}
       >

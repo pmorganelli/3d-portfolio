@@ -17,11 +17,12 @@ const Earth = () => {
   )
 }
 
-const EarthCanvas = () => {
+// `active` is false while the globe is off screen. autoRotate is what keeps a
+// demand-driven canvas rendering, so switching it off idles the GPU.
+const EarthCanvas = ({ active = true }) => {
   return (
     <Canvas
       className="scroll-safe"
-      shadows
       frameloop="demand"
       onContextMenu={(event) => event.preventDefault()}
       camera={{
@@ -33,7 +34,7 @@ const EarthCanvas = () => {
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
-          autoRotate
+          autoRotate={active}
           enablePan={false}
           enableZoom={false}
           mouseButtons={{

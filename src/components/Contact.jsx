@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react"
-import { motion } from "framer-motion"
+import { Suspense, lazy, useState, useRef, useEffect } from "react"
+import { motion, useInView } from "framer-motion"
 import emailjs from '@emailjs/browser'
 import { styles } from "../styles"
-import { EarthCanvas } from "./canvas"
 import { SectionWrapper } from "../hoc"
 import { slideIn } from "../utils/motion"
+
+const EarthCanvas = lazy(() => import("./canvas/Earth"))
 
 const emailJsConfig = {
   serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -24,6 +25,8 @@ const missingEmailJsVars = Object.entries(requiredEmailJsVars)
 
 const Contact = () => {
   const formRef = useRef();
+  const globeRef = useRef(null);
+  const globeInView = useInView(globeRef, { margin: "200px 0px" });
   // emailjs.send resolves after the user may have navigated away — don't set
   // state on an unmounted component.
   const mountedRef = useRef(true);
@@ -97,12 +100,18 @@ const Contact = () => {
   };
 
   return (
-    <div className="xl:mt-12 flex flex-col xl:flex-row-reverse items-center xl:items-stretch justify-center gap-8 xl:gap-12 overflow-visible">
+    <div className="xl:mt-12 flex flex-col xl:flex-row-reverse items-center justify-center gap-8 xl:gap-12 overflow-visible">
+      {/* Fixed height at every breakpoint. This used to stretch to match the
+          form, so dragging the textarea's resize handle resized the canvas
+          and the globe rescaled with it. */}
       <motion.div
+        ref={globeRef}
         variants={slideIn('right', "tween", 0.2, 1)}
-        className="w-full max-w-[520px] sm:max-w-[640px] xl:max-w-[560px] h-[300px] sm:h-[380px] lg:h-[460px] xl:h-auto xl:min-h-[560px] xl:flex-1"
+        className="w-full max-w-[520px] sm:max-w-[640px] xl:max-w-[560px] h-[300px] sm:h-[380px] lg:h-[460px] xl:h-[600px] xl:flex-1"
       >
-        <EarthCanvas />
+        <Suspense fallback={null}>
+          <EarthCanvas active={globeInView} />
+        </Suspense>
       </motion.div>
 
       <motion.div variants={slideIn('left', "tween", 0.2, 1)}
@@ -149,7 +158,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               placeholder='What would you like to say?'
-              className='bg-tertiary py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent focus-visible:border-[#3fe9ff] focus-visible:ring-2 focus-visible:ring-[#3fe9ff]/30 font-medium transition-colors'
+              className='resize-y min-h-[120px] max-h-[60vh] bg-tertiary py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent focus-visible:border-[#3fe9ff] focus-visible:ring-2 focus-visible:ring-[#3fe9ff]/30 font-medium transition-colors'
             />
           </label>
 

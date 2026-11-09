@@ -1,4 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useInView } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -20,8 +21,6 @@ const RubiksCube = () => {
       <primitive
         object={scene}
         rotation={[-0.1, -0.3, -0.05]}
-        castShadow
-        receiveShadow
       />
     </Center>
   );
@@ -42,10 +41,14 @@ const ComputersCanvas = () => {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
+  // Stop rendering once the hero has scrolled away
+  const wrapRef = useRef(null);
+  const inView = useInView(wrapRef, { margin: "200px 0px" });
+
   return (
+    <div ref={wrapRef} className="w-full h-full">
     <Canvas
-      frameloop="always"
-      shadows
+      frameloop={inView ? "always" : "never"}
       dpr={[1, 2]}
       camera={{ position: [0, 0, 6], fov: isMobile ? 52 : 46, near: 0.1, far: 100 }}
       gl={{ antialias: true }}
@@ -59,9 +62,6 @@ const ComputersCanvas = () => {
       <directionalLight
         position={[6, 8, 5]}
         intensity={1.2}
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
       />
       <hemisphereLight intensity={0.25} groundColor={"#222"} />
 
@@ -87,6 +87,7 @@ const ComputersCanvas = () => {
         <Preload all />
       </Suspense>
     </Canvas>
+    </div>
   );
 };
 

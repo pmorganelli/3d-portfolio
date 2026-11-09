@@ -1,6 +1,9 @@
+import { Suspense, lazy } from "react";
 import { motion } from "framer-motion";
 import { styles } from "../styles";
-import { ComputersCanvas } from "./canvas";
+
+// Separate chunk so the headline paints before three.js has downloaded
+const ComputersCanvas = lazy(() => import("./canvas/Computers"));
 
 const Hero = () => {
   return (
@@ -36,7 +39,9 @@ const Hero = () => {
 
           {/* 3D column */}
           <div className="relative w-full h-[300px] sm:h-[360px] md:h-[420px] lg:h-[500px] xl:h-[560px]">
-            <ComputersCanvas />
+            <Suspense fallback={null}>
+              <ComputersCanvas />
+            </Suspense>
           </div>
         </div>
       </div>

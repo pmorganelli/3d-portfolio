@@ -21,11 +21,11 @@ import theatre from "./logo.png";
 import basic from "./basicportfolio.jpg"
 import hero from "./avatar.png";
 import launch from "./launchLogo.jpg";
-import codeclock from "./codeclockv1.png";
+import codeclock from "./codeclockv1.jpg";
 import snowplowdriver from "./snowplowDriver.jpg";
 import csharp from "./cSharp.png"
 import slingshotSquire from "./slingshotSquiresTitle.jpg"
-import smCapture from "./smCapture.png"
+import smCapture from "./smCapture.jpg"
 import interpHomePage from "./interpHomePage.png"
 import foodWasteHome from "./foodWasteTrackerHomePage.png"
 import typeScriptIcon from "./typeScript.png"

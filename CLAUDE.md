@@ -21,7 +21,8 @@ Project context, architectural decisions, and implementation notes for Claude Co
 | File | Purpose |
 |---|---|
 | `src/components/canvas/Computers.jsx` | Hero 3D scene: Rubik's cube only |
-| `src/components/canvas/Ball.jsx` | Bare tech ball mesh — rendered via drei `<View>` in Tech.jsx's shared canvas |
+| `src/components/canvas/Ball.jsx` | Bare tech ball mesh — rendered via drei `<View>` in TechBallGrid's shared canvas |
+| `src/components/canvas/TechBallGrid.jsx` | Mobile tech grid: one shared `<Canvas>` + a `<View>` per cell |
 | `src/components/canvas/SolarSystem.jsx` | Solar system (desktop tech section, has Pretext labels) |
 | `src/components/canvas/labelTexture.js` | `makeLabelTexture()` using Pretext — used by SolarSystem only |
 | `src/components/canvas/Earth.jsx` | Contact section globe |
@@ -36,15 +37,22 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 ## Architecture Notes
 
+### Lazy-loaded 3D
+
+- Every canvas component is imported with `React.lazy` from its own file (`./canvas/Stars`, `./canvas/Computers`, …) so three.js stays out of the entry bundle (~360 kB instead of ~1.4 MB). There is no `canvas/index.js` barrel — a barrel import would pull three.js back into the entry chunk
+- Sections themselves are **not** lazy: GooeyNav's scroll spy looks up section anchors once on mount
+
 ### Canvas frameloop modes
 
-- `frameloop="always"` on Computers + SolarSystem + mobile tech grid canvases — needed for `useFrame`-driven animations
+- Computers, SolarSystem and TechBallGrid switch `frameloop` between `always` and `never` with framer's `useInView`, so nothing renders while scrolled off screen; Earth gets `active` → `autoRotate` for the same reason
+
+- `always` (while in view) on Computers + SolarSystem + mobile tech grid canvases — needed for `useFrame`-driven animations
 - `frameloop="demand"` on the Earth canvas — renders on interaction; drei OrbitControls `autoRotate` keeps invalidating (note: this only works for drei **OrbitControls**; yomotsu camera-controls has no `autoRotate` API)
 
 ### Mobile tech grid (single shared canvas)
 
 - `Ball` is a bare mesh component (`imgUrl`, `color`) — no Canvas, no label sprite, no Pretext
-- Tech.jsx renders ONE `<Canvas>` with `<View.Port />` and a drei `<View>` per grid cell — a canvas per ball previously put the page at the browser's WebGL context limit (evicted canvases on mobile)
+- TechBallGrid.jsx renders ONE `<Canvas>` with `<View.Port />` and a drei `<View>` per grid cell — a canvas per ball previously put the page at the browser's WebGL context limit (evicted canvases on mobile)
 - Each `<View>` carries its own lights; cell `onClick` opens the bottom sheet; the Canvas overlay is `pointer-events: none`
 
 ### Lights
@@ -85,6 +93,8 @@ Project context, architectural decisions, and implementation notes for Claude Co
 - Place any non-cube 3D elements **outside** `<Bounds>` so they don't affect camera fitting
 
 ### Contact form
+
+- The globe container has a fixed height at every breakpoint — if it stretches to the form's height, resizing the textarea resizes the canvas
 
 - Uses `status` state (`null | 'success' | 'error'`) for inline feedback — no `alert()` calls
 - Form inputs use `outline-none` (not `outlined-none`) to suppress browser focus rings
