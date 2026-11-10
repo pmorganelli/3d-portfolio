@@ -20,7 +20,8 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 | File | Purpose |
 |---|---|
-| `src/components/canvas/Computers.jsx` | Hero 3D scene: Rubik's cube only |
+| `src/components/canvas/Computers.jsx` | Hero canvas + DOM HUD (moves, timer, Scramble/Undo/Reset/Done) for the playable Rubik's cube |
+| `src/components/canvas/RubiksCube.jsx` | Procedural, fully turnable 3×3×3 cube: drag-to-turn, scramble, undo, solved detection |
 | `src/components/canvas/Ball.jsx` | Bare tech ball mesh — rendered via drei `<View>` in TechBallGrid's shared canvas |
 | `src/components/canvas/TechBallGrid.jsx` | Mobile tech grid: one shared `<Canvas>` + a `<View>` per cell |
 | `src/components/canvas/SolarSystem.jsx` | Solar system (desktop tech section, has Pretext labels) |
@@ -87,10 +88,17 @@ Project context, architectural decisions, and implementation notes for Claude Co
 - Mobile nav: use `<li>`, not `<h1>`
 - Desktop nav: use plain `<a>` tags, not wrapped in `<h1>`
 
-### Bounds component (Computers.jsx)
+### Playable Rubik's cube (RubiksCube.jsx + Computers.jsx)
 
-- `<Bounds fit clip observe margin={1.15}>` auto-fits camera to enclose the Rubik's cube
-- Place any non-cube 3D elements **outside** `<Bounds>` so they don't affect camera fitting
+- The cube is built in code (26 cubies sharing one body geometry + sticker materials) — the old `public/rubiks_cube` GLTF was a single fused mesh and is no longer loaded
+- Two modes: idle (auto-rotate, a click on the cube enters play mode and scrambles a solved cube) and play (`interactive`): dragging on the cube turns a layer, dragging empty space orbits, Escape / Done exits
+- Game state (cubie `pos`/`quat`, current turn, move queue, history) lives in refs and is applied imperatively in `useFrame` — cubie groups take **no** position props, so React re-renders can't snap a half-dragged layer back
+- One invisible 3×3×3 box receives all pointer hits; the hit point gives the face (largest |coord|) and the layer. The drag direction is matched against the face's two tangent axes projected to screen space
+- The cube group must stay un-rotated at the origin — the turn maths assumes local == world. Change the starting view with the camera position instead
+- R3F's pointerdown runs before OrbitControls' listener, so setting `controls.enabled = false` there suppresses orbiting for that gesture
+- Solved = every direction shows one colour (orientation-agnostic, since slice turns move centres); only announced after a scramble
+- `FitCamera` sets camera distance from the cube's bounding sphere and the canvas aspect. drei `<Bounds>` is not used here
+- In play mode the canvas drops `scroll-safe` and uses `touch-action: none` so touch drags can turn layers vertically
 
 ### Contact form
 

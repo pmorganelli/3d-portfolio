@@ -404,40 +404,29 @@ import {
     
   const projects = [
     {
-      name: "Saturday Slices",
+      name: "Bricked",
       description:
-        "A website and full ordering system for our student-run pizzeria. Check it out!",
+        "A 3D-printed block with an NFC tag that blocks distracting apps when I tap my phone on it (Instagram, Tiktok) using the Foqos app.",
       tags: [
-        { name: "react", color: "blue-text-gradient" },
-        { name: "vercel", color: "green-text-gradient" },
-        { name: "claude", color: "orange-text-gradient" },
-        { name: "upstash redis", color: "pink-text-gradient" },
-        { name: "vite", color: "blue-text-gradient" },
-        { name: "pretext", color: "green-text-gradient" },
-        { name: "gsap", color: "orange-text-gradient" },
+        { name: "3d printing", color: "blue-text-gradient" },
+        { name: "nfc",         color: "green-text-gradient" },
+        { name: "prusaslicer", color: "orange-text-gradient" },
       ],
-      image: pizzeriaHome,
-      privateRepo: false,
-      noDemo: false,
-      source_code_link: "https://github.com/pmorganelli/peters-pizzeria-site",
-      demo_link: "https://saturdayslices.com",
+      image: brickedFront,
+      gallery: [{ src: brickedNfc, alt: "Back of the Bricked case with its NFC tag" }],
+      privateRepo: true,
+      noDemo: true,
       details: {
-        overview:
-          "Marketing site and ordering system for a student-run pizzeria. Staff enter orders at the window and run the night from a live admin board, and customers follow their slices on a public status page.",
-        role:
-          "Built solo: the React front end, the Vercel serverless API, and the order workflow we use on pizza nights.",
+        overview: "A homemade version of Brick, the gadget you tap your phone against to block distracting apps. A 3D-printed case carries an NFC tag, and tapping my phone on it blocks the apps I've chosen.",
+        role: "Solo project, from the print to the NFC setup.",
         built: [
-          "React 19 single-page app with hand-rolled History API routing (no React Router), GSAP scroll reveals, and Tailwind",
-          "Vercel serverless API for orders, store hours, and admin auth, with all pricing computed server-side from a shared catalog",
-          "Upstash Redis for orders, store settings, and rate limiting, with an in-memory fallback for local development",
-          "Admin board behind an HMAC-signed HttpOnly cookie, polling for live orders",
-          "Vitest suite and production build run in CI on every pull request",
+          "56 mm rounded-square case, 8 mm thick, with debossed BRICKED lettering",
+          "Sliced in PrusaSlicer and printed in PLA on a Prusa MK4 at 0.2 mm layers and 15% infill",
+          "NFC sticker tag mounted on the back of the case",
         ],
         highlights: [
-          "Dough stock is checked and committed in one Redis Lua script, so two staff devices can't both sell the last slice",
-          "Per-slice add-ons carried through the cart, server-side validation and pricing, and the admin view",
-          "Open/closed/auto store hours and a sold-out (86) list, both enforced on the server",
-          "Used Claude throughout development for features, refactors, and bug fixes",
+          "A plate of four cases prints in about an hour and a half",
+          "Each case uses roughly 12 g of filament",
         ],
       },
     },
@@ -457,7 +446,7 @@ import {
       noDemo: true,
       details: {
         overview:
-          "A macOS menu-bar app for converting files while you drag them. Hold Shift during a Finder drag and a wheel of output formats opens around the pointer; drop on one and the converted copy is saved next to the original. Everything runs locally.",
+          "A macOS menu-bar app for converting files while you drag them. Hold Shift during a Finder drag and a wheel of output formats opens around the pointer, drop on one and the converted copy is saved next to the original. Everything runs locally.",
         role:
           "A personal reimplementation of the idea behind Tangerine, built with Claude Code. It shares no code or assets with the original.",
         built: [
@@ -472,6 +461,44 @@ import {
           "Converts images, video, audio, PDFs, documents, subtitles, and archives",
           "Tools include compress to a target size, strip metadata, loudness normalization, PDF merge and split, and QR reading",
           "The release app is about 1.5 MB",
+        ],
+      },
+    },
+    {
+      name: "Saturday Slices",
+      description:
+        "A website and full ordering system for our student-run pizzeria. Check it out!",
+      tags: [
+        { name: "react", color: "blue-text-gradient" },
+        { name: "vercel", color: "green-text-gradient" },
+        { name: "claude", color: "orange-text-gradient" },
+        { name: "upstash redis", color: "pink-text-gradient" },
+        { name: "vite", color: "blue-text-gradient" },
+        { name: "pretext", color: "green-text-gradient" },
+        { name: "gsap", color: "orange-text-gradient" },
+      ],
+      image: pizzeriaHome,
+      privateRepo: false,
+      noDemo: false,
+      source_code_link: "https://github.com/pmorganelli/peters-pizzeria-site",
+      demo_link: "https://saturdayslices.com",
+      details: {
+        overview:
+          "Marketing site and ordering system for my student-run pizzeria. Staff enter orders at the window and run the night from a live admin board, and customers follow their slices on a public status page.",
+        role:
+          "Built the React front end, the Vercel serverless API, and the order workflow we use on pizza nights.",
+        built: [
+          "React 19 single-page app with hand-rolled History API routing (no React Router), GSAP scroll reveals, and Tailwind",
+          "Vercel serverless API for orders, store hours, and admin auth, with all pricing computed server-side from a shared catalog",
+          "Upstash Redis for orders, store settings, and rate limiting, with an in-memory fallback for local development",
+          "Admin board behind an HMAC-signed HttpOnly cookie, polling for live orders",
+          "Vitest suite and production build run in CI on every pull request",
+        ],
+        highlights: [
+          "Dough stock is checked and committed in one Redis Lua script, so two staff devices can't both sell the last slice",
+          "Per-slice add-ons carried through the cart, server-side validation and pricing, and the admin view",
+          "Open/closed/auto store hours and a sold-out (86) list, both enforced on the server",
+          "Used Claude throughout development for features, refactors, and bug fixes",
         ],
       },
     },
@@ -505,33 +532,6 @@ import {
           "Recipes generated by the Claude API from the user's expiring ingredients",
           "Push-notification reminders as items approach their use-by date",
           "Wrote the start script that brings up the whole stack with one command",
-        ],
-      },
-    },
-    {
-      name: "Bricked",
-      description:
-        "A 3D-printed block with an NFC tag that blocks distracting apps when I tap my phone on it. A homemade take on Brick.",
-      tags: [
-        { name: "3d printing", color: "blue-text-gradient" },
-        { name: "nfc",         color: "green-text-gradient" },
-        { name: "prusaslicer", color: "orange-text-gradient" },
-      ],
-      image: brickedFront,
-      gallery: [{ src: brickedNfc, alt: "Back of the Bricked case with its NFC tag" }],
-      privateRepo: true,
-      noDemo: true,
-      details: {
-        overview: "A homemade version of Brick, the gadget you tap your phone against to block distracting apps. A 3D-printed case carries an NFC tag, and tapping my phone on it blocks the apps I've chosen.",
-        role: "Solo project, from the print to the NFC setup.",
-        built: [
-          "56 mm rounded-square case, 8 mm thick, with debossed BRICKED lettering",
-          "Sliced in PrusaSlicer and printed in PLA on a Prusa MK4 at 0.2 mm layers and 15% infill",
-          "NFC sticker tag mounted on the back of the case",
-        ],
-        highlights: [
-          "A plate of four cases prints in about an hour and a half",
-          "Each case uses roughly 12 g of filament",
         ],
       },
     },
