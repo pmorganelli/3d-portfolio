@@ -189,7 +189,7 @@ const ComputersCanvas = () => {
 
       {playing && (
         <>
-          <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center">
+          <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col items-center gap-1">
             <div
               role="status"
               aria-live="polite"
@@ -207,6 +207,13 @@ const ComputersCanvas = () => {
                     ? "Drag a face to turn it · drag outside to rotate"
                     : `${moves} ${moves === 1 ? "move" : "moves"} · ${formatTime(elapsed)}`}
             </div>
+            {/* Once the counter replaces the instructions, keep the orbit tip
+                around — it sits outside the live region so it isn't re-read */}
+            {!solved && !busy && moves > 0 && (
+              <span className="text-[11px] font-medium text-white/60">
+                Drag outside the cube to rotate it
+              </span>
+            )}
           </div>
 
           <div className="absolute inset-x-0 bottom-0 flex flex-wrap justify-center gap-2">
