@@ -16,7 +16,11 @@ const GooeyNav = ({
   const navRef = useRef(null);
   const filterRef = useRef(null);
   const textRef = useRef(null);
+  // -1 = no item active (e.g. still on the hero, which has no nav entry)
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+  // While a clicked link is smooth-scrolling to its section the scroll spy is
+  // held: otherwise the pill hops through every section the page passes.
+  const spyLock = useRef({ locked: false, timer: null, release: null });
 
   const noise = (n = 1) => n / 2 - Math.random() * n;
 
@@ -121,6 +125,13 @@ const GooeyNav = ({
     if (liEl) {
       handleItemActivate(liEl, index);
     }
+
+    const lock = spyLock.current;
+    lock.locked = true;
+    clearTimeout(lock.timer);
+    // Released when the scroll finishes (see the listeners below); this first
+    // timer covers a click that doesn't scroll at all.
+    lock.timer = setTimeout(() => lock.release?.(), 300);
   };
 
   // Scroll spy — without this the pill stays wherever it was last clicked (or on
@@ -137,7 +148,42 @@ const GooeyNav = ({
 
     if (!targets.length) return;
 
+    const lock = spyLock.current;
     const visible = new Map();
+    const apply = () => {
+      if (lock.locked) return;
+      let next;
+      if (visible.size) {
+        // topmost section currently on screen wins
+        next = Math.min(...visible.keys());
+      } else if (targets[0].el.getBoundingClientRect().top > 0) {
+        // above the first section (the hero) — nothing is active
+        next = -1;
+      } else {
+        return;
+      }
+      setActiveIndex((current) => (current === next ? current : next));
+    };
+    lock.release = () => {
+      clearTimeout(lock.timer);
+      if (!lock.locked) return;
+      lock.locked = false;
+      apply();
+    };
+    // `scrollend` is the exact signal. Where it's missing (Safari until
+    // recently) fall back to scroll-idle detection; where it exists the idle
+    // timer is only a long safety net, because a janky frame mid-scroll can
+    // leave a gap between scroll events that looks like the scroll ended.
+    const hasScrollEnd = "onscrollend" in window;
+    const onScroll = () => {
+      if (!lock.locked) return;
+      clearTimeout(lock.timer);
+      lock.timer = setTimeout(() => lock.release?.(), hasScrollEnd ? 3000 : 200);
+    };
+    const onScrollEnd = () => lock.release?.();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scrollend", onScrollEnd);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -146,17 +192,20 @@ const GooeyNav = ({
           if (entry.isIntersecting) visible.set(match.index, entry.intersectionRatio);
           else visible.delete(match.index);
         });
-        if (!visible.size) return;
-        // topmost section currently on screen wins
-        const next = Math.min(...visible.keys());
-        setActiveIndex((current) => (current === next ? current : next));
+        apply();
       },
       // offset by the fixed navbar so a section counts as active once it clears it
       { rootMargin: "-80px 0px -55% 0px", threshold: [0, 0.25, 0.5] }
     );
 
     targets.forEach((t) => observer.observe(t.el));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scrollend", onScrollEnd);
+      clearTimeout(lock.timer);
+      lock.release = null;
+    };
   }, [items]);
 
   useEffect(() => {
@@ -165,6 +214,13 @@ const GooeyNav = ({
     if (activeLi) {
       updateEffectPosition(activeLi);
       textRef.current?.classList.add("active");
+    } else if (textRef.current && filterRef.current) {
+      // No active item: collapse the pill instead of leaving it on the last one
+      textRef.current.classList.remove("active");
+      textRef.current.innerText = "";
+      const collapsed = { width: "0px", height: "0px" };
+      Object.assign(filterRef.current.style, collapsed);
+      Object.assign(textRef.current.style, collapsed);
     }
 
     const resizeObserver = new ResizeObserver(() => {

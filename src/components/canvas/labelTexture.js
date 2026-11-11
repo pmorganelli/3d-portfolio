@@ -4,9 +4,15 @@ import { prepareWithSegments, layoutWithLines } from '@chenglou/pretext'
 // ─── Canvas dimensions & font strings ────────────────────────────────────────
 export const LBL_W   = 320;
 export const LBL_H   = 88;
+// Drawn at 2× so the pill stays sharp on retina screens and when zoomed in.
+// LBL_W / LBL_H remain the logical (CSS px) size everything is laid out in.
+const LBL_SCALE = 2;
 const NAME_F  = 'bold 15px system-ui, -apple-system, sans-serif';
 const TAG_F   = '11px system-ui, -apple-system, sans-serif';
 const TEXT_LH = 22;
+const PILL_PAD_Y = 10;
+/** Height of the visible pill within the LBL_H-tall texture (logical px). */
+export const LBL_PILL_H = TEXT_LH + PILL_PAD_Y * 2;
 
 /**
  * ctx.roundRect is Safari 16.4+ / Chrome 99+. Without a fallback an older
@@ -46,9 +52,10 @@ export function lighten(hex, ratio) {
  */
 export function makeLabelTexture(name, tag, color) {
   const canvas  = document.createElement('canvas');
-  canvas.width  = LBL_W;
-  canvas.height = LBL_H;
+  canvas.width  = LBL_W * LBL_SCALE;
+  canvas.height = LBL_H * LBL_SCALE;
   const ctx = canvas.getContext('2d');
+  ctx.scale(LBL_SCALE, LBL_SCALE);
 
   const namePrepared = prepareWithSegments(name, NAME_F);
   const tagPrepared  = tag ? prepareWithSegments(tag, TAG_F) : null;
@@ -59,7 +66,7 @@ export function makeLabelTexture(name, tag, color) {
     : 0;
 
   const dotR     = 5, dotGap = 7, segGap = 9, chipPadX = 9;
-  const pillPadX = 14, pillPadY = 10;
+  const pillPadX = 14, pillPadY = PILL_PAD_Y;
   const chipW    = tag ? tagW + chipPadX * 2 : 0;
   const chipH    = TEXT_LH - 4;
   const contentW = dotR * 2 + dotGap + nameW + (tag ? segGap + chipW : 0);
@@ -105,5 +112,7 @@ export function makeLabelTexture(name, tag, color) {
     ctx.fillText(tag, chipX + (chipW - tagW) / 2, chipY + chipH * 0.72);
   }
 
-  return new THREE.CanvasTexture(canvas);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.anisotropy = 4;
+  return texture;
 }

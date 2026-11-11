@@ -42,6 +42,7 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 - Every canvas component is imported with `React.lazy` from its own file (`./canvas/Stars`, `./canvas/Computers`, …) so three.js stays out of the entry bundle (~360 kB instead of ~1.4 MB). There is no `canvas/index.js` barrel — a barrel import would pull three.js back into the entry chunk
 - Sections themselves are **not** lazy: GooeyNav's scroll spy looks up section anchors once on mount
+- The Earth canvas and the Tech scene (solar system / ball grid) only *mount* once their section is within ~1000px of the viewport (`useInView(..., { once: true })` on an untransformed wrapper) — this defers the 2.9 MB globe model and the SolarSystem chunk until they're needed
 
 ### Canvas frameloop modes
 
@@ -72,7 +73,12 @@ Project context, architectural decisions, and implementation notes for Claude Co
 ### SolarSystem camera (camera-controls, NOT OrbitControls)
 
 - yomotsu camera-controls has **no autoRotate** — idle rotation is driven manually via `useFrame` → `cc.rotate(IDLE_ROTATE_SPEED * delta, 0, false)`
+- `cc.rotate` must be called with `enableTransition = true` — `false` copies the end angles onto the current ones, which snaps the glide back home and strips damping from drags
 - While a planet is selected, `useFrame` re-targets `setLookAt(..., true)` every frame from the shared `planetPositions` map — smooth damped follow that keeps the orbiting planet in frame
+- Orbit angles are accumulated with `delta` in a ref, **not** derived from `clock.elapsedTime` — R3F zeroes the clock whenever `frameloop` changes, which teleported every planet back to its start angle on scroll-in
+- Deselect is the Canvas's `onPointerMissed` (no backdrop div), so clicking another planet switches straight to it; Escape also closes the card
+- Hovering any body slows the orbits (shared `hoverCount` / `timeScale` refs); planets have a larger invisible hit sphere
+- A row of DOM chips under the canvas selects planets (keyboard / screen-reader path); the canvas container is `calc(100vh - 96px)` so the chips stay on screen below the fixed navbar
 
 ### SectionWrapper
 
@@ -83,6 +89,15 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 - `options` prop on `<Tilt>`, not on child divs
 
+### Reduced motion
+
+- `<MotionConfig reducedMotion="user">` wraps the app; canvases read framer's `useReducedMotion()` to stop auto-rotation, orbits and ball spin (Stars switches to `frameloop="demand"`); CSS disables smooth scroll
+
+### GooeyNav scroll spy
+
+- `activeIndex` is `-1` above the first section (hero) — no pill
+- A click on a nav link locks the spy until `scrollend` (scroll-idle fallback) so the pill doesn't hop through every section the smooth scroll passes
+
 ### Social icons
 
 - Mobile nav: use `<li>`, not `<h1>`
@@ -90,7 +105,7 @@ Project context, architectural decisions, and implementation notes for Claude Co
 
 ### Playable Rubik's cube (RubiksCube.jsx + Computers.jsx)
 
-- The cube is built in code (26 cubies sharing one body geometry + sticker materials) — the old `public/rubiks_cube` GLTF was a single fused mesh and is no longer loaded
+- The cube is built in code (26 cubies sharing one body geometry + sticker materials) — the old `public/rubiks_cube` GLTF was a single fused mesh and has been deleted
 - Two modes: idle (auto-rotate, a click on the cube enters play mode and scrambles a solved cube) and play (`interactive`): dragging on the cube turns a layer, dragging empty space orbits, Escape / Done exits
 - Game state (cubie `pos`/`quat`, current turn, move queue, history) lives in refs and is applied imperatively in `useFrame` — cubie groups take **no** position props, so React re-renders can't snap a half-dragged layer back
 - One invisible 3×3×3 box receives all pointer hits; the hit point gives the face (largest |coord|) and the layer. The drag direction is matched against the face's two tangent axes projected to screen space
@@ -146,11 +161,12 @@ const { lines, lineCount, height } = layoutWithLines(prepared, maxWidth, lineHei
 
 ## SolarSystem Label Sprites
 
-`src/components/canvas/labelTexture.js` builds a `THREE.CanvasTexture` (320×88px) for each planet/sun using Pretext. Layout: colored dot → tech name (bold 15px) → version tag chip (11px). Used exclusively by `SolarSystem.jsx`.
+`src/components/canvas/labelTexture.js` builds a `THREE.CanvasTexture` (320×88 logical px, drawn at 2×) for each planet/sun using Pretext. Layout: colored dot → tech name (bold 15px) → version tag chip (11px). Used exclusively by `SolarSystem.jsx`.
 
 Key decisions:
 - **`useMemo([name, tag, color])`** — Pretext `prepare` runs once per planet at mount
 - **Sprite outside the mesh group** — no Float in SolarSystem planets, so no orbiting issue
+- **Screen-space sizing** — the `Label` component rescales the sprite every frame from its camera distance (62% of native size idle, 100% hovered/selected) and hangs it along the camera's down axis; world-sized labels were ~2px text from the home camera
 - **`spriteMaterial depthWrite={false}`** — prevents z-fighting with the planet geometry
 - **`lighten(hex, ratio)` helper** — brightens tech color for tag chip text legibility
 

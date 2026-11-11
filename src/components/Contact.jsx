@@ -27,6 +27,12 @@ const Contact = () => {
   const formRef = useRef();
   const globeRef = useRef(null);
   const globeInView = useInView(globeRef, { margin: "200px 0px" });
+  // The globe is ~2.9 MB of model + textures at the very bottom of the page.
+  // Don't mount it (and so don't fetch it) until Contact is about a screen
+  // away. Watched on the untransformed wrapper: the globe's own box starts
+  // slid 100% off to the side, which can keep it from ever intersecting.
+  const wrapRef = useRef(null);
+  const globeWanted = useInView(wrapRef, { margin: "1000px 0px", once: true });
   // emailjs.send resolves after the user may have navigated away — don't set
   // state on an unmounted component.
   const mountedRef = useRef(true);
@@ -100,7 +106,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="xl:mt-12 flex flex-col xl:flex-row-reverse items-center justify-center gap-8 xl:gap-12 overflow-visible">
+    <div ref={wrapRef} className="xl:mt-12 flex flex-col xl:flex-row-reverse items-center justify-center gap-8 xl:gap-12 overflow-visible">
       {/* Fixed height at every breakpoint. This used to stretch to match the
           form, so dragging the textarea's resize handle resized the canvas
           and the globe rescaled with it. */}
@@ -109,9 +115,11 @@ const Contact = () => {
         variants={slideIn('right', "tween", 0.2, 1)}
         className="w-full max-w-[520px] sm:max-w-[640px] xl:max-w-[560px] h-[300px] sm:h-[380px] lg:h-[460px] xl:h-[600px] xl:flex-1"
       >
-        <Suspense fallback={null}>
-          <EarthCanvas active={globeInView} />
-        </Suspense>
+        {globeWanted && (
+          <Suspense fallback={null}>
+            <EarthCanvas active={globeInView} />
+          </Suspense>
+        )}
       </motion.div>
 
       <motion.div variants={slideIn('left', "tween", 0.2, 1)}

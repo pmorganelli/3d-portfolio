@@ -1,9 +1,8 @@
-import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useInView, useReducedMotion } from "framer-motion";
 import { Canvas, useThree } from "@react-three/fiber";
-import { OrbitControls, Preload, AdaptiveDpr } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 
-import CanvasLoader from "../Loader";
 import RubiksCube from "./RubiksCube";
 
 // Radius of the sphere a 3×3×3 cube sweeps — corners stay inside it mid-turn
@@ -54,6 +53,7 @@ const ComputersCanvas = () => {
   // Stop rendering once the hero has scrolled away
   const wrapRef = useRef(null);
   const inView = useInView(wrapRef, { margin: "200px 0px" });
+  const reducedMotion = useReducedMotion();
 
   // ── Game state ─────────────────────────────────────────────────────────
   const cubeRef = useRef(null);
@@ -82,8 +82,9 @@ const ComputersCanvas = () => {
   }, [running]);
 
   const scramble = useCallback(() => {
-    resetStats();
-    cubeRef.current?.scramble();
+    // Only clear the stats if the scramble actually started — the cube refuses
+    // while a layer is mid-drag, and the attempt in progress should survive.
+    if (cubeRef.current?.scramble()) resetStats();
   }, [resetStats]);
 
   const handleActivate = useCallback(() => {
@@ -142,22 +143,20 @@ const ComputersCanvas = () => {
         className={playing ? "" : "scroll-safe"}
         style={{ width: "100%", height: "100%", touchAction: playing ? "none" : "pan-y" }}
       >
-        <AdaptiveDpr />
-
         <ambientLight intensity={0.9} />
         <directionalLight position={[6, 8, 5]} intensity={1.3} />
         <directionalLight position={[-6, -5, -6]} intensity={0.7} />
         <hemisphereLight intensity={0.3} groundColor={"#222"} />
 
-        <Suspense fallback={<CanvasLoader />}>
-          <OrbitControls
+        {/* No Suspense/loader: the cube is built in code, nothing here loads */}
+        <OrbitControls
             makeDefault
             enableZoom={false}
             enablePan={false}
             enableDamping
             dampingFactor={0.08}
             rotateSpeed={0.9}
-            autoRotate={!playing}
+            autoRotate={!playing && !reducedMotion}
             autoRotateSpeed={0.6}
             minPolarAngle={0.05}
             maxPolarAngle={Math.PI - 0.05}
@@ -173,9 +172,6 @@ const ComputersCanvas = () => {
             onSolved={handleSolved}
             onBusyChange={setBusy}
           />
-
-          <Preload all />
-        </Suspense>
       </Canvas>
 
       {/* HUD — plain DOM over the canvas */}
@@ -203,13 +199,13 @@ const ComputersCanvas = () => {
                 ? `Solved! ${moves} moves · ${formatTime(elapsed)}`
                 : busy
                   ? "Scrambling…"
-                  : moves === 0
+                  : !running
                     ? "Drag a face to turn it · drag outside to rotate"
                     : `${moves} ${moves === 1 ? "move" : "moves"} · ${formatTime(elapsed)}`}
             </div>
             {/* Once the counter replaces the instructions, keep the orbit tip
                 around — it sits outside the live region so it isn't re-read */}
-            {!solved && !busy && moves > 0 && (
+            {!solved && !busy && running && (
               <span className="text-[11px] font-medium text-white/60">
                 Drag outside the cube to rotate it
               </span>

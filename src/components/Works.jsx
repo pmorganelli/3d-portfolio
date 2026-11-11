@@ -251,13 +251,15 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
 
         {!privateRepo && (
           <div className="absolute top-0 left-0 z-10">
-            <button
-              onClick={() => window.open(source_code_link, '_blank', 'noopener,noreferrer')}
+            <a
+              href={source_code_link}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={`${name} source code on GitHub`}
               className="black-gradient w-10 h-10 rounded-full flex justify-center items-center"
             >
               <img src={github} alt="" className="w-1/2 h-1/2 object-contain" />
-            </button>
+            </a>
           </div>
         )}
 
@@ -267,11 +269,21 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
       </div>
 
       <div className="mt-5">
-        <h3
-          className={`text-white font-bold text-[24px] break-words ${(!noDemo && demo_link) ? 'cursor-pointer' : ''}`}
-          onClick={(!noDemo && demo_link) ? () => window.open(demo_link, '_blank', 'noopener,noreferrer') : undefined}
-        >
-          {breakAtSlash(name)}
+        {/* A real link (not an onClick on the heading) so the demo is reachable
+            by keyboard and announced as a link */}
+        <h3 className="text-white font-bold text-[24px] break-words">
+          {!noDemo && demo_link ? (
+            <a
+              href={demo_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded outline-none hover:text-blue-200 focus-visible:ring-2 focus-visible:ring-white/70 transition-colors"
+            >
+              {breakAtSlash(name)}
+            </a>
+          ) : (
+            breakAtSlash(name)
+          )}
         </h3>
         <p className="mt-2 text-secondary text-[14px]">{description}</p>
       </div>

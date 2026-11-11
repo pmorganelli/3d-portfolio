@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { useReducedMotion } from "framer-motion"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, useGLTF } from "@react-three/drei"
 import { MOUSE } from "three"
@@ -20,6 +21,7 @@ const Earth = () => {
 // `active` is false while the globe is off screen. autoRotate is what keeps a
 // demand-driven canvas rendering, so switching it off idles the GPU.
 const EarthCanvas = ({ active = true }) => {
+  const reducedMotion = useReducedMotion()
   return (
     <Canvas
       className="scroll-safe"
@@ -34,7 +36,7 @@ const EarthCanvas = ({ active = true }) => {
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
-          autoRotate={active}
+          autoRotate={active && !reducedMotion}
           enablePan={false}
           enableZoom={false}
           mouseButtons={{

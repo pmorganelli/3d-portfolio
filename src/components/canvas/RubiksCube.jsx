@@ -251,9 +251,10 @@ const RubiksCube = forwardRef(function RubiksCube(
 
       isAutomating: () => game.queue.length > 0 || (game.turn && game.turn.record !== "user"),
 
+      /** Returns false when it could not start (a layer is mid-drag or mid-move). */
       scramble() {
         if (game.turn?.record === "user") this.flush();
-        if (game.queue.length || game.turn) return;
+        if (game.queue.length || game.turn) return false;
         const moves = [];
         let last = null;
         while (moves.length < SCRAMBLE_LENGTH) {
@@ -273,6 +274,7 @@ const RubiksCube = forwardRef(function RubiksCube(
         game.scrambled = false;
         game.queue.push(...moves);
         setBusy(true);
+        return true;
       },
 
       reset() {
