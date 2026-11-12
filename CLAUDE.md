@@ -96,7 +96,9 @@ Project context, architectural decisions, and implementation notes for Claude Co
 ### GooeyNav scroll spy
 
 - `activeIndex` is `-1` above the first section (hero) — no pill
-- A click on a nav link locks the spy until `scrollend` (scroll-idle fallback) so the pill doesn't hop through every section the smooth scroll passes
+- A click on a nav link locks the spy so the pill doesn't hop through every section the smooth scroll passes. The lock is released by a rAF loop once `scrollY` has been still for ~150ms of smooth frames — **not** by timers or `scroll`/`scrollend` events, which a busy main thread delays (a 300ms timer used to expire first and snap the pill back to the old section)
+- At the very bottom of the page the last section is active — on a tall window Contact can't scroll up to the navbar, so "topmost visible" would pick Projects
+- The pill is positioned in the click handler / a layout effect, and particles are added in one synchronous batch (no per-particle timers)
 
 ### Social icons
 
