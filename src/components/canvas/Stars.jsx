@@ -1,6 +1,7 @@
 import { Suspense, useMemo, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Points, PointMaterial } from "@react-three/drei"
+import { useReducedMotion } from "framer-motion"
 import * as random from "maath/random/dist/maath-random.esm"
 
 const StarLayer = ({ count, radius, size, color, speed = 1 }) => {
@@ -52,9 +53,12 @@ const Stars = () => (
 )
 
 const StarsCanvas = () => {
+  // Reduced motion: draw the field once and leave it still
+  const reducedMotion = useReducedMotion()
   return (
     <div className="pointer-events-none fixed inset-0 z-0">
       <Canvas
+        frameloop={reducedMotion ? "demand" : "always"}
         dpr={[1, 1.5]}
         camera={{ position: [0, 0, 1.9] }}
         gl={{ antialias: false, powerPreference: "high-performance" }}

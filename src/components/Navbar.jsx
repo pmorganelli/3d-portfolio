@@ -72,16 +72,16 @@ const Navbar = () => {
             particleCount={6}
             particleDistances={[48, 8]}
             particleR={48}
-            initialActiveIndex={0}
+            initialActiveIndex={-1}
             animationTime={390}
             timeVariance={150}
             colors={[2, 3, 4, 3, 2]}
           />
           <div className='flex items-center gap-4 text-secondary'>
-            <a href='https://github.com/pmorganelli' aria-label='GitHub' className='hover:text-white transition-colors'>
+            <a href='https://github.com/pmorganelli' target='_blank' rel='noopener noreferrer' aria-label='GitHub' className='hover:text-white transition-colors'>
               <Github />
             </a>
-            <a href='https://www.linkedin.com/in/peter-morganelli-102860258/' aria-label='LinkedIn' className='hover:text-white transition-colors'>
+            <a href='https://www.linkedin.com/in/peter-morganelli-102860258/' target='_blank' rel='noopener noreferrer' aria-label='LinkedIn' className='hover:text-white transition-colors'>
               <Linkedin />
             </a>
           </div>
@@ -132,10 +132,10 @@ const Navbar = () => {
                     </motion.li>
                   ))}
                   <li className="ps-8 justify-self-center">
-                    <a href="https://github.com/pmorganelli" aria-label="GitHub"><Github /></a>
+                    <a href="https://github.com/pmorganelli" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github /></a>
                   </li>
                   <li className="ps-8 justify-self-center">
-                    <a href="https://www.linkedin.com/in/peter-morganelli-102860258/" aria-label="LinkedIn"><Linkedin /></a>
+                    <a href="https://www.linkedin.com/in/peter-morganelli-102860258/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin /></a>
                   </li>
                 </ul>
               </motion.div>

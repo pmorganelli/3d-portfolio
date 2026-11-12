@@ -3,7 +3,7 @@ import { createPortal } from "react-dom"
 import { SectionWrapper } from "../hoc"
 import TechProjectLinks from "./TechProjectLinks"
 import { technologies } from "../constants"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useInView } from "framer-motion"
 import { styles } from "../styles"
 import { textVariant } from "../utils/motion"
 
@@ -89,6 +89,8 @@ const Tech = () => {
   )
   const [selectedTech, setSelectedTech] = useState(null)
   const sectionRef = useRef(null)
+  // Defer the 3D scene (its chunk and textures) until the section is close
+  const sceneWanted = useInView(sectionRef, { margin: "1000px 0px", once: true })
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
@@ -130,12 +132,19 @@ const Tech = () => {
       {isMobile ? (
         // min-height matches the 4-row grid so nothing jumps when it loads
         <Suspense fallback={<div className="mt-8 h-[484px]" />}>
-          <TechBallGrid technologies={technologies} onSelect={setSelectedTech} />
+          {sceneWanted ? (
+            <TechBallGrid technologies={technologies} onSelect={setSelectedTech} />
+          ) : (
+            <div className="mt-8 h-[484px]" />
+          )}
         </Suspense>
       ) : (
-        <div className="w-full h-screen mt-6">
+        // Leaves room for the fixed navbar: selecting a planet scrolls the
+        // canvas to just below it, and a full 100vh canvas then pushed its
+        // bottom edge (hint + tech chips) off screen
+        <div className="w-full h-[calc(100vh-96px)] min-h-[480px] mt-6">
           <Suspense fallback={null}>
-            <SolarSystemCanvas technologies={technologies} />
+            {sceneWanted && <SolarSystemCanvas technologies={technologies} />}
           </Suspense>
         </div>
       )}

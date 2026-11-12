@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useLayoutEffect, useState } from "react";
 import "./GooeyNav.css";
 
 const GooeyNav = ({
@@ -16,7 +16,11 @@ const GooeyNav = ({
   const navRef = useRef(null);
   const filterRef = useRef(null);
   const textRef = useRef(null);
+  // -1 = no item active (e.g. still on the hero, which has no nav entry)
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+  // While a clicked link is smooth-scrolling to its section the scroll spy is
+  // held: otherwise the pill hops through every section the page passes.
+  const spyLock = useRef({ locked: false, raf: 0, hold: null, release: null });
 
   const noise = (n = 1) => n / 2 - Math.random() * n;
 
@@ -44,37 +48,38 @@ const GooeyNav = ({
     const bubbleTime = animationTime * 2 + timeVariance;
     element.style.setProperty("--time", `${bubbleTime}ms`);
 
+    // Restart the pill animation in this frame (reflow between remove/add)
+    // rather than after a timer — the pill used to blank out for ~50ms.
+    element.classList.remove("active");
+    void element.offsetWidth;
+
+    const batch = document.createDocumentFragment();
     for (let i = 0; i < particleCount; i++) {
       const t = animationTime * 2 + noise(timeVariance * 2);
       const p = createParticle(i, t, d, r);
-      element.classList.remove("active");
+      const particle = document.createElement("span");
+      const point = document.createElement("span");
+      particle.classList.add("particle");
+      particle.style.setProperty("--start-x", `${p.start[0]}px`);
+      particle.style.setProperty("--start-y", `${p.start[1]}px`);
+      particle.style.setProperty("--end-x", `${p.end[0]}px`);
+      particle.style.setProperty("--end-y", `${p.end[1]}px`);
+      particle.style.setProperty("--time", `${p.time}ms`);
+      particle.style.setProperty("--scale", `${p.scale}`);
+      particle.style.setProperty("--color", `var(--color-${p.color}, white)`);
+      particle.style.setProperty("--rotate", `${p.rotate}deg`);
 
+      point.classList.add("point");
+      particle.appendChild(point);
+      batch.appendChild(particle);
       setTimeout(() => {
-        const particle = document.createElement("span");
-        const point = document.createElement("span");
-        particle.classList.add("particle");
-        particle.style.setProperty("--start-x", `${p.start[0]}px`);
-        particle.style.setProperty("--start-y", `${p.start[1]}px`);
-        particle.style.setProperty("--end-x", `${p.end[0]}px`);
-        particle.style.setProperty("--end-y", `${p.end[1]}px`);
-        particle.style.setProperty("--time", `${p.time}ms`);
-        particle.style.setProperty("--scale", `${p.scale}`);
-        particle.style.setProperty("--color", `var(--color-${p.color}, white)`);
-        particle.style.setProperty("--rotate", `${p.rotate}deg`);
-
-        point.classList.add("point");
-        particle.appendChild(point);
-        element.appendChild(particle);
-        requestAnimationFrame(() => {
-          element.classList.add("active");
-        });
-        setTimeout(() => {
-          if (particle.parentNode === element) {
-            element.removeChild(particle);
-          }
-        }, t);
-      }, 30);
+        if (particle.parentNode === element) {
+          element.removeChild(particle);
+        }
+      }, t);
     }
+    element.appendChild(batch);
+    element.classList.add("active");
   };
 
   const updateEffectPosition = (element) => {
@@ -95,6 +100,10 @@ const GooeyNav = ({
 
   const handleItemActivate = (liEl, index) => {
     if (activeIndex === index) return;
+
+    // Move the pill before restarting its animations, so they don't start on
+    // the previously selected item and jump over a frame later.
+    updateEffectPosition(liEl);
 
     if (filterRef.current) {
       const particles = filterRef.current.querySelectorAll(".particle");
@@ -121,6 +130,8 @@ const GooeyNav = ({
     if (liEl) {
       handleItemActivate(liEl, index);
     }
+
+    spyLock.current.hold?.();
   };
 
   // Scroll spy — without this the pill stays wherever it was last clicked (or on
@@ -137,7 +148,81 @@ const GooeyNav = ({
 
     if (!targets.length) return;
 
+    const lock = spyLock.current;
     const visible = new Map();
+    const lastIndex = targets[targets.length - 1].index;
+    const apply = () => {
+      if (lock.locked) return;
+      const doc = document.documentElement;
+      let next;
+      if (
+        window.scrollY > 0 &&
+        window.innerHeight + window.scrollY >= doc.scrollHeight - 2
+      ) {
+        // At the very bottom the last section wins: on a tall window it can't
+        // scroll up to the navbar, so the one above it is still "topmost".
+        next = lastIndex;
+      } else if (visible.size) {
+        // topmost section currently on screen wins
+        next = Math.min(...visible.keys());
+      } else if (targets[0].el.getBoundingClientRect().top > 0) {
+        // above the first section (the hero) — nothing is active
+        next = -1;
+      } else {
+        return;
+      }
+      setActiveIndex((current) => (current === next ? current : next));
+    };
+    lock.release = () => {
+      cancelAnimationFrame(lock.raf);
+      if (!lock.locked) return;
+      lock.locked = false;
+      apply();
+    };
+    // Hold the spy until the page has actually stopped moving. This is judged
+    // by sampling scrollY per frame, not by timers or scroll events: a busy
+    // main thread (3D scenes mounting mid-scroll) delays scroll events past
+    // any timeout, which used to release the lock early and snap the pill
+    // back to the old section before hopping through every one on the way.
+    lock.hold = () => {
+      lock.locked = true;
+      cancelAnimationFrame(lock.raf);
+      let lastY = window.scrollY;
+      let lastT = performance.now();
+      let stillSince = lastT;
+      let stillFrames = 0;
+      let smoothStillFrames = 0;
+      const tick = (now) => {
+        const y = window.scrollY;
+        const gap = now - lastT;
+        lastT = now;
+        if (y !== lastY) {
+          lastY = y;
+          stillSince = now;
+          stillFrames = 0;
+          smoothStillFrames = 0;
+        } else {
+          stillFrames += 1;
+          // a frame that follows a stall says nothing about the scroll
+          if (gap <= 100) smoothStillFrames += 1;
+        }
+        const idle = now - stillSince;
+        if (
+          (smoothStillFrames >= 5 && idle >= 150) ||
+          (stillFrames >= 3 && idle >= 1000)
+        ) {
+          lock.release?.();
+        } else {
+          lock.raf = requestAnimationFrame(tick);
+        }
+      };
+      lock.raf = requestAnimationFrame(tick);
+    };
+    // Unlocked, this catches reaching the bottom of the page (no intersection
+    // changes there, so the observer alone would miss it).
+    const onScroll = () => apply();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -146,25 +231,37 @@ const GooeyNav = ({
           if (entry.isIntersecting) visible.set(match.index, entry.intersectionRatio);
           else visible.delete(match.index);
         });
-        if (!visible.size) return;
-        // topmost section currently on screen wins
-        const next = Math.min(...visible.keys());
-        setActiveIndex((current) => (current === next ? current : next));
+        apply();
       },
       // offset by the fixed navbar so a section counts as active once it clears it
       { rootMargin: "-80px 0px -55% 0px", threshold: [0, 0.25, 0.5] }
     );
 
     targets.forEach((t) => observer.observe(t.el));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(lock.raf);
+      lock.locked = false;
+      lock.hold = null;
+      lock.release = null;
+    };
   }, [items]);
 
-  useEffect(() => {
+  // Layout effect: the pill moves in the same frame as the `active` class
+  useLayoutEffect(() => {
     if (!navRef.current || !containerRef.current) return;
     const activeLi = navRef.current.querySelectorAll("li")[activeIndex];
     if (activeLi) {
       updateEffectPosition(activeLi);
       textRef.current?.classList.add("active");
+    } else if (textRef.current && filterRef.current) {
+      // No active item: collapse the pill instead of leaving it on the last one
+      textRef.current.classList.remove("active");
+      textRef.current.innerText = "";
+      const collapsed = { width: "0px", height: "0px" };
+      Object.assign(filterRef.current.style, collapsed);
+      Object.assign(textRef.current.style, collapsed);
     }
 
     const resizeObserver = new ResizeObserver(() => {
