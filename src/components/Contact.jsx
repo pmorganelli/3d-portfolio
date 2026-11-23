@@ -19,6 +19,13 @@ const requiredEmailJsVars = {
   VITE_EMAILJS_PUBLIC_KEY: emailJsConfig.publicKey,
 };
 
+// Spam guards. These only stop casual bots; the real limits (allowed origins,
+// rate limit, CAPTCHA, fixed recipient) are set in the EmailJS dashboard,
+// because the public key in the bundle can be called from anywhere.
+const MAX_LEN = { name: 100, email: 254, message: 5000 };
+const SEND_COOLDOWN_MS = 60_000;
+const COOLDOWN_KEY = 'contact:lastSentAt';
+
 const missingEmailJsVars = Object.entries(requiredEmailJsVars)
   .filter(([, value]) => !value)
   .map(([name]) => name);
@@ -42,6 +49,8 @@ const Contact = () => {
     email: '',
     message: '',
   });
+  // Honeypot: hidden from people, filled in by form-stuffing bots.
+  const [website, setWebsite] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null); // null | { type: 'success' | 'error', message: string }
@@ -62,6 +71,20 @@ const Contact = () => {
       return;
     }
 
+    if (website) {
+      // Bot. Pretend it worked so it doesn't retry.
+      setStatus({ type: 'success', message: "Message sent to my inbox! I'll get back to you soon. —Peter" });
+      setForm({ name: "", email: "", message: "" });
+      return;
+    }
+
+    let lastSent = 0;
+    try { lastSent = Number(localStorage.getItem(COOLDOWN_KEY)) || 0; } catch { /* storage blocked */ }
+    if (Date.now() - lastSent < SEND_COOLDOWN_MS) {
+      setStatus({ type: 'error', message: 'Please wait a minute before sending another message.' });
+      return;
+    }
+
     if (missingEmailJsVars.length > 0) {
       setStatus({
         type: 'error',
@@ -76,16 +99,17 @@ const Contact = () => {
         emailJsConfig.serviceId,
         emailJsConfig.templateId,
         {
-          from_name: form.name,
+          from_name: form.name.slice(0, MAX_LEN.name),
           to_name: 'Peter',
-          from_email: form.email,
+          from_email: form.email.slice(0, MAX_LEN.email),
           to_email: 'petercarlmorganelli@gmail.com',
-          message: form.message,
+          message: form.message.slice(0, MAX_LEN.message),
         },
         { publicKey: emailJsConfig.publicKey },
       )
       .then(
         () => {
+          try { localStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch { /* storage blocked */ }
           if (!mountedRef.current) return;
           setLoading(false);
           setStatus({
@@ -139,6 +163,7 @@ const Contact = () => {
               type="text"
               name="name"
               value={form.name}
+              maxLength={MAX_LEN.name}
               onChange={handleChange}
               required
               placeholder="What's your name?"
@@ -151,6 +176,7 @@ const Contact = () => {
               type="email"
               name="email"
               value={form.email}
+              maxLength={MAX_LEN.email}
               onChange={handleChange}
               required
               placeholder="What's your email?"
@@ -163,12 +189,28 @@ const Contact = () => {
               rows={7}
               name='message'
               value={form.message}
+              maxLength={MAX_LEN.message}
               onChange={handleChange}
               required
               placeholder='What would you like to say?'
               className='resize-y min-h-[120px] max-h-[60vh] bg-tertiary py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent focus-visible:border-[#3fe9ff] focus-visible:ring-2 focus-visible:ring-[#3fe9ff]/30 font-medium transition-colors'
             />
           </label>
+
+          {/* Honeypot — off-screen, skipped by keyboard and screen readers. */}
+          <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+            <label>
+              Website
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </label>
+          </div>
 
           <button
             type="submit"
